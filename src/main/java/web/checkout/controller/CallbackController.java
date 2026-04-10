@@ -2,6 +2,7 @@ package web.checkout.controller;
 
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -11,11 +12,8 @@ import web.checkout.service.CallbackService;
 @RestController
 public class CallbackController {
 
-    private final CallbackService callbackService;
-
-    public CallbackController(CallbackService callbackService) {
-        this.callbackService = callbackService;
-    }
+    @Autowired
+    private CallbackService callbackService;
 
     @PostMapping("/checkout/ecpay/callback")
     public String handleCallback(@RequestParam Map<String, String> params) {

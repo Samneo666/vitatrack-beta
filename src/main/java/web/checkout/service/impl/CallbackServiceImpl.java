@@ -3,8 +3,6 @@ package web.checkout.service.impl;
 import java.util.Map;
 import java.util.TreeMap;
 
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,20 +16,13 @@ public class CallbackServiceImpl implements CallbackService {
 
 	private static final String HASH_KEY = "pwFHCqoQZGmho4w6";
 	private static final String HASH_IV = "EkRm7IFT261dpevs";
-	private final OrderDao orderDao;
-	private final SessionFactory sessionFactory;
 
 	@Autowired
-	public CallbackServiceImpl(OrderDao orderDao, SessionFactory sessionFactory) {
-		this.orderDao = orderDao;
-		this.sessionFactory = sessionFactory;
-	}
+	private OrderDao orderDao;
 
 	@Transactional
 	@Override
 	public String handleCallback(Map<String, String> params) {
-
-		Session session = sessionFactory.getCurrentSession();
 
 		// 1.取得綠界提供的 CheckMacValue
 		String cmv = params.get("CheckMacValue");

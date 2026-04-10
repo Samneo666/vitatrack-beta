@@ -3,6 +3,7 @@ package web.checkout.controller;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -18,14 +19,13 @@ import web.checkout.vo.EcpayCheckoutPayload;
 @RequestMapping("/api/checkout")
 public class PaymentController {
 
-    private final PaymentService paymentService;
-
-    public PaymentController(PaymentService paymentService) {
-        this.paymentService = paymentService;
-    }
+    @Autowired
+    private PaymentService paymentService;
 
     @PostMapping("/payment")
-    public ResponseEntity<?> createPayment(@RequestParam("orderId") String orderIdStr) {
+    public ResponseEntity<?> createPayment(
+            @RequestParam("orderId") String orderIdStr,
+            @RequestParam(value = "paymentMethod", required = false, defaultValue = "Credit") String paymentMethod) {
 
         // 1.如果沒有傳 orderId 或內容是空
         if (orderIdStr == null || orderIdStr.isBlank()) {
@@ -44,8 +44,8 @@ public class PaymentController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
         }
 
-        // 3.呼叫 Service
-        EcpayCheckoutPayload payload = paymentService.createEcpayCheckout(orderId);
+        // 3.呼叫 Service（傳入前端選擇的付款方式）
+        EcpayCheckoutPayload payload = paymentService.createEcpayCheckout(orderId, paymentMethod);
 
         // 4.訂單不存在或已付款
         if (payload == null) {

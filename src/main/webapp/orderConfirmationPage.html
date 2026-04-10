@@ -3,192 +3,492 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>訂單已確認</title>
+  <title>確認訂單 — VitaTrack</title>
   <style>
-    body { font-family: Arial, "Microsoft JhengHei", sans-serif; margin: 24px; }
-    .card { border: 1px solid #ddd; border-radius: 10px; padding: 16px; max-width: 720px; }
-    .row { display: flex; gap: 16px; margin: 8px 0; }
-    .label { width: 120px; color: #555; }
-    .value { font-weight: 600; }
-    .hint { color: #666; font-size: 14px; margin-top: 12px; }
-    .status-ok { color: #0a7b2e; }
-    .status-warn { color: #b56b00; }
-    .status-err { color: #b00020; }
-    pre { background: #f6f8fa; padding: 12px; border-radius: 8px; overflow: auto; }
-    button { padding: 10px 14px; border: 1px solid #ccc; border-radius: 8px; cursor: pointer; }
-    button:disabled { opacity: 0.6; cursor: not-allowed; }
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      font-family: "Microsoft JhengHei", Arial, sans-serif;
+      background: #f5f6f8;
+      margin: 0;
+      padding: 32px 16px 64px;
+      color: #1a1a2e;
+    }
+
+    .page-title {
+      text-align: center;
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 24px;
+      color: #1a1a2e;
+    }
+
+    /* ── 步驟列 ── */
+    .steps {
+      display: flex;
+      justify-content: center;
+      gap: 0;
+      margin-bottom: 32px;
+      max-width: 480px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      flex: 1;
+      position: relative;
+      font-size: 12px;
+      color: #aaa;
+    }
+    .step::before {
+      content: '';
+      position: absolute;
+      top: 14px;
+      left: 50%;
+      width: 100%;
+      height: 2px;
+      background: #ddd;
+      z-index: 0;
+    }
+    .step:last-child::before { display: none; }
+    .step-dot {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: #ddd;
+      color: #fff;
+      font-size: 13px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      z-index: 1;
+      margin-bottom: 6px;
+    }
+    .step.active .step-dot { background: #2d6a4f; }
+    .step.active { color: #2d6a4f; font-weight: 700; }
+    .step.done .step-dot { background: #52b788; }
+
+    /* ── 卡片 ── */
+    .card {
+      background: #fff;
+      border-radius: 14px;
+      box-shadow: 0 2px 12px rgba(0,0,0,.08);
+      max-width: 640px;
+      margin: 0 auto 20px;
+      padding: 24px 28px;
+    }
+
+    .card-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: #2d6a4f;
+      margin: 0 0 16px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #eee;
+    }
+
+    /* ── 訂單摘要列 ── */
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 14px;
+      padding: 5px 0;
+      color: #444;
+    }
+    .summary-row .label { color: #777; }
+
+    /* ── 商品明細表格 ── */
+    .item-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+      margin-top: 4px;
+    }
+    .item-table th {
+      text-align: left;
+      padding: 8px 6px;
+      border-bottom: 2px solid #eee;
+      color: #777;
+      font-weight: 600;
+      font-size: 13px;
+    }
+    .item-table td {
+      padding: 10px 6px;
+      border-bottom: 1px solid #f0f0f0;
+      vertical-align: middle;
+    }
+    .item-table tr:last-child td { border-bottom: none; }
+    .item-table .num { text-align: right; }
+
+    /* ── 商品名稱骨架 loading ── */
+    .skeleton {
+      height: 14px;
+      border-radius: 6px;
+      background: linear-gradient(90deg, #eee 25%, #f5f5f5 50%, #eee 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.2s infinite;
+    }
+    @keyframes shimmer { to { background-position: -200% 0; } }
+
+    /* ── 合計列 ── */
+    .total-row {
+      display: flex;
+      justify-content: flex-end;
+      gap: 24px;
+      font-size: 15px;
+      font-weight: 700;
+      padding-top: 12px;
+      margin-top: 4px;
+      border-top: 2px solid #eee;
+      color: #1a1a2e;
+    }
+    .total-amount { color: #c0392b; font-size: 18px; }
+
+    /* ── 付款方式選擇 ── */
+    .payment-methods { display: flex; flex-direction: column; gap: 10px; }
+    .payment-option {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 16px;
+      border: 2px solid #eee;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: border-color .15s, background .15s;
+    }
+    .payment-option:hover { border-color: #52b788; background: #f6fdf9; }
+    .payment-option.selected { border-color: #2d6a4f; background: #f0faf5; }
+    .payment-option input[type="radio"] { accent-color: #2d6a4f; width: 17px; height: 17px; flex-shrink: 0; }
+    .payment-option .pm-icon { font-size: 22px; line-height: 1; }
+    .payment-option .pm-info { display: flex; flex-direction: column; gap: 2px; }
+    .payment-option .pm-name { font-size: 14px; font-weight: 700; }
+    .payment-option .pm-desc { font-size: 12px; color: #888; }
+
+    /* ── 確認付款按鈕 ── */
+    .btn-pay {
+      display: block;
+      width: 100%;
+      max-width: 640px;
+      margin: 0 auto;
+      padding: 16px;
+      background: #2d6a4f;
+      color: #fff;
+      font-size: 16px;
+      font-weight: 700;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      letter-spacing: .5px;
+      transition: background .15s, transform .1s;
+    }
+    .btn-pay:hover:not(:disabled) { background: #1b4332; }
+    .btn-pay:active:not(:disabled) { transform: scale(.98); }
+    .btn-pay:disabled { opacity: .55; cursor: not-allowed; }
+
+    /* ── 錯誤提示 ── */
+    .error-msg {
+      display: none;
+      background: #fff0f0;
+      border: 1px solid #f5c6cb;
+      border-radius: 8px;
+      padding: 12px 16px;
+      font-size: 13px;
+      color: #c0392b;
+      max-width: 640px;
+      margin: 12px auto 0;
+    }
+    .error-msg.show { display: block; }
+
+    /* ── 跳轉提示 ── */
+    .redirect-notice {
+      display: none;
+      text-align: center;
+      font-size: 14px;
+      color: #2d6a4f;
+      max-width: 640px;
+      margin: 12px auto 0;
+    }
+    .redirect-notice.show { display: block; }
+    .spinner {
+      display: inline-block;
+      width: 16px; height: 16px;
+      border: 2px solid #52b788;
+      border-top-color: transparent;
+      border-radius: 50%;
+      animation: spin .7s linear infinite;
+      vertical-align: middle;
+      margin-right: 6px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
   </style>
 </head>
 
 <body>
-  <h2>訂單已確認</h2>
 
-  <div class="card">
-    <div class="row">
-      <div class="label">訂單編號</div>
-      <div class="value" id="orderId">-</div>
-    </div>
-    <div class="row">
-      <div class="label">訂單金額</div>
-      <div class="value" id="totalAmount">-</div>
-    </div>
-    <div class="row">
-      <div class="label">訂單狀態</div>
-      <div class="value" id="status">-</div>
-    </div>
+  <h1 class="page-title">訂單確認</h1>
 
-    <hr style="margin:16px 0; border:none; border-top:1px solid #eee;">
-
-    <div class="row">
-      <div class="label">付款流程</div>
-      <div class="value" id="payFlowMsg">準備中…</div>
+  <!-- 步驟列 -->
+  <div class="steps">
+    <div class="step done">
+      <div class="step-dot">✓</div>
+      <span>購物車</span>
     </div>
-
-    <div class="hint">
-      這頁會在載入後自動呼叫後端 <code>POST /api/checkout/payment</code>。<br>
-      目前先確認「打得到後端 + 回傳結果」；等後端回傳綠界表單參數後，再改成自動跳轉綠界。
+    <div class="step active">
+      <div class="step-dot">2</div>
+      <span>確認付款</span>
     </div>
-
-    <div style="margin-top:12px;">
-      <button id="retryBtn" type="button">重新呼叫付款 API</button>
-    </div>
-
-    <div style="margin-top:12px;">
-      <div class="hint">後端回應（除錯用）</div>
-      <pre id="debugBox">(尚未呼叫)</pre>
+    <div class="step">
+      <div class="step-dot">3</div>
+      <span>付款完成</span>
     </div>
   </div>
 
+  <!-- 訂單摘要 -->
+  <div class="card">
+    <div class="card-title">訂單摘要</div>
+    <div class="summary-row">
+      <span class="label">訂單編號</span>
+      <span id="summaryOrderId">-</span>
+    </div>
+    <div class="summary-row">
+      <span class="label">訂單狀態</span>
+      <span id="summaryStatus">-</span>
+    </div>
+  </div>
+
+  <!-- 商品明細 -->
+  <div class="card">
+    <div class="card-title">商品明細</div>
+    <table class="item-table">
+      <thead>
+        <tr>
+          <th style="width:44%">商品名稱</th>
+          <th class="num">單價</th>
+          <th class="num">數量</th>
+          <th class="num">小計</th>
+        </tr>
+      </thead>
+      <tbody id="itemTableBody">
+        <!-- 載入中骨架 -->
+        <tr>
+          <td><div class="skeleton" style="width:80%"></div></td>
+          <td><div class="skeleton" style="width:60%;margin-left:auto"></div></td>
+          <td><div class="skeleton" style="width:40%;margin-left:auto"></div></td>
+          <td><div class="skeleton" style="width:70%;margin-left:auto"></div></td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="total-row">
+      <span>訂單合計</span>
+      <span class="total-amount" id="totalAmount">-</span>
+    </div>
+  </div>
+
+  <!-- 付款方式 -->
+  <div class="card">
+    <div class="card-title">付款方式</div>
+    <div class="payment-methods">
+      <label class="payment-option selected" id="optCredit">
+        <input type="radio" name="paymentMethod" value="Credit" checked />
+        <span class="pm-icon">💳</span>
+        <div class="pm-info">
+          <span class="pm-name">信用卡 / 金融卡</span>
+          <span class="pm-desc">VISA、Mastercard、JCB，支援分期付款</span>
+        </div>
+      </label>
+    </div>
+  </div>
+
+  <!-- 確認付款按鈕 -->
+  <button class="btn-pay" id="payBtn" disabled>載入中…</button>
+
+  <!-- 錯誤訊息 -->
+  <div class="error-msg" id="errorMsg"></div>
+
+  <!-- 跳轉提示 -->
+  <div class="redirect-notice" id="redirectNotice">
+    <span class="spinner"></span>正在連線到綠界付款頁，請稍候…
+  </div>
+
   <script>
-    // =========================
-    // 0) 取得 URL 參數並顯示
-    // =========================
-    const qs = new URLSearchParams(location.search);
-    const orderId = qs.get('orderId') || '';
-    const totalAmount = qs.get('totalAmount') || '';
-    const status = qs.get('status') || '';
-
-    document.getElementById('orderId').textContent = orderId || '-';
-    document.getElementById('totalAmount').textContent = totalAmount || '-';
-    document.getElementById('status').textContent = status || '-';
-
-    const payFlowMsgEl = document.getElementById('payFlowMsg');
-    const debugBoxEl = document.getElementById('debugBox');
-    const retryBtn = document.getElementById('retryBtn');
-
+    // ── 工具 ──────────────────────────────────────────
     function getContextPath() {
-  const parts = window.location.pathname.split('/').filter(Boolean);
-  return parts.length > 0 ? '/' + parts[0] : '';
-}
+      const parts = window.location.pathname.split('/').filter(Boolean);
+      return parts.length > 0 ? '/' + parts[0] : '';
+    }
+    const CTX = getContextPath();
 
-const CONTEXT_PATH = getContextPath();
-const PAYMENT_API = `${CONTEXT_PATH}/api/checkout/payment`;
+    function fmtMoney(val) {
+      const n = typeof val === 'string' ? parseFloat(val) : val;
+      return 'NT$ ' + (isNaN(n) ? '-' : n.toLocaleString('zh-TW'));
+    }
 
-    // =========================
-    // 1) 呼叫 PaymentServlet（POST）
-    // =========================
-    async function callPaymentApi() {
-      debugBoxEl.textContent = '(呼叫中...)';
-      retryBtn.disabled = true;
+    function showError(msg) {
+      const el = document.getElementById('errorMsg');
+      el.textContent = msg;
+      el.classList.add('show');
+    }
+    function clearError() {
+      document.getElementById('errorMsg').classList.remove('show');
+    }
 
+    // ── 取 URL 參數 ───────────────────────────────────
+    const qs           = new URLSearchParams(location.search);
+    const orderId      = qs.get('orderId') || '';
+    const totalAmountQ = qs.get('totalAmount') || '';
+    const statusQ      = qs.get('status') || '';
+
+    document.getElementById('summaryOrderId').textContent = orderId || '-';
+    document.getElementById('summaryStatus').textContent  = statusQ || '-';
+    document.getElementById('totalAmount').textContent    = totalAmountQ ? fmtMoney(totalAmountQ) : '-';
+
+    // ── 高亮已選付款方式 ──────────────────────────────
+    document.querySelectorAll('.payment-option input[type="radio"]').forEach(radio => {
+      radio.addEventListener('change', () => {
+        document.querySelectorAll('.payment-option').forEach(el => el.classList.remove('selected'));
+        radio.closest('.payment-option').classList.add('selected');
+      });
+    });
+
+    // ── 載入商品明細 ──────────────────────────────────
+    async function loadOrderItems() {
       if (!orderId) {
-        payFlowMsgEl.textContent = '缺少 orderId，無法呼叫付款 API';
-        payFlowMsgEl.className = 'value status-err';
-        debugBoxEl.textContent = '請確認網址有帶 ?orderId=xxx';
-        retryBtn.disabled = false;
+        document.getElementById('itemTableBody').innerHTML =
+          '<tr><td colspan="4" style="text-align:center;color:#aaa;padding:20px">找不到訂單編號</td></tr>';
         return;
       }
 
-      payFlowMsgEl.textContent = '呼叫付款 API 中…';
-      payFlowMsgEl.className = 'value status-warn';
+      try {
+        const res  = await fetch(`${CTX}/api/checkout/order-items?orderId=${encodeURIComponent(orderId)}`);
+        const data = await res.json();
 
-      const url = PAYMENT_API;
+        if (!res.ok || !Array.isArray(data) || data.length === 0) {
+          document.getElementById('itemTableBody').innerHTML =
+            '<tr><td colspan="4" style="text-align:center;color:#aaa;padding:20px">查無商品明細</td></tr>';
+          return;
+        }
+
+        // 渲染明細列
+        const rows = data.map(item => `
+          <tr>
+            <td>${escapeHtml(item.productName)}</td>
+            <td class="num">${fmtMoney(item.unitPrice)}</td>
+            <td class="num">${item.quantity}</td>
+            <td class="num">${fmtMoney(item.subtotal)}</td>
+          </tr>
+        `).join('');
+        document.getElementById('itemTableBody').innerHTML = rows;
+
+        // 若 URL 沒帶 totalAmount，從 items 加總
+        if (!totalAmountQ) {
+          const total = data.reduce((acc, i) => acc + parseFloat(i.subtotal || 0), 0);
+          document.getElementById('totalAmount').textContent = fmtMoney(total);
+        }
+
+        // 明細載入成功後才啟用付款按鈕
+        const payBtn = document.getElementById('payBtn');
+        payBtn.disabled = false;
+        payBtn.textContent = '確認付款 →';
+
+      } catch (e) {
+        document.getElementById('itemTableBody').innerHTML =
+          '<tr><td colspan="4" style="text-align:center;color:#c0392b;padding:20px">載入商品明細失敗</td></tr>';
+        console.error('載入商品明細失敗:', e);
+      }
+    }
+
+    // ── 送出付款 ──────────────────────────────────────
+    async function submitPayment() {
+      clearError();
+
+      if (!orderId) {
+        showError('缺少訂單編號，無法進行付款。');
+        return;
+      }
+
+      const payBtn       = document.getElementById('payBtn');
+      const redirectNote = document.getElementById('redirectNotice');
+      const selectedMethod = document.querySelector('input[name="paymentMethod"]:checked')?.value || 'Credit';
+
+      payBtn.disabled    = true;
+      payBtn.textContent = '處理中…';
 
       try {
-        const body = `orderId=${encodeURIComponent(orderId)}`;
+        const body = `orderId=${encodeURIComponent(orderId)}&paymentMethod=${encodeURIComponent(selectedMethod)}`;
 
-        const res = await fetch(url, {
-          method: 'POST',
+        const res = await fetch(`${CTX}/api/checkout/payment`, {
+          method : 'POST',
           headers: {
             'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
-            'Accept': 'application/json'
+            'Accept'       : 'application/json'
           },
           body
         });
 
-        const bodyText = await res.text(); // 先用 text，避免不是 JSON 時 parse 壞掉
+        const data = await res.json().catch(() => null);
 
-        console.log('PaymentServlet URL:', url);
-        console.log('PaymentServlet response status:', res.status);
-        console.log('PaymentServlet response body:', bodyText);
-
-        debugBoxEl.textContent =
-          `URL: ${url}\n` +
-          `METHOD: POST\n` +
-          `BODY: ${body}\n` +
-          `HTTP: ${res.status}\n\n` +
-          bodyText;
-
-        if (res.status === 200) {
-          // 2) 若後端回傳的是綠界導轉 payload（actionUrl + formParams），就自動送出 form 進綠界
-          let payload = null;
-          try {
-            payload = JSON.parse(bodyText);
-          } catch (err) {
-            // 不是 JSON 就維持除錯模式
-            payload = null;
-          }
-
-          if (payload && payload.actionUrl && payload.formParams) {
-            payFlowMsgEl.textContent = '取得綠界表單參數，準備跳轉到綠界付款頁…';
-            payFlowMsgEl.className = 'value status-ok';
-
-            const form = document.createElement('form');
-            form.method = 'POST';
-            form.action = payload.actionUrl;
-
-            Object.entries(payload.formParams).forEach(([k, v]) => {
-              const input = document.createElement('input');
-              input.type = 'hidden';
-              input.name = k;
-              input.value = v ?? '';
-              form.appendChild(input);
-            });
-
-            document.body.appendChild(form);
-            form.submit();
-            return; // submit 後不需要再往下跑 UI 狀態分支
-          }
-
-          // 仍保留原本「先確認 API 打通」的訊息（當後端還沒回 payload 時）
-          payFlowMsgEl.textContent = '後端回 200（代表：可付款 / API 打通）';
-          payFlowMsgEl.className = 'value status-ok';
-        } else if (res.status === 409) {
-          payFlowMsgEl.textContent = '後端回 409（可能：已付款不可再付）';
-          payFlowMsgEl.className = 'value status-err';
-        } else if (res.status === 404) {
-          payFlowMsgEl.textContent = '後端回 404（訂單不存在）';
-          payFlowMsgEl.className = 'value status-err';
-        } else if (res.status === 400) {
-          payFlowMsgEl.textContent = '後端回 400（參數錯誤）';
-          payFlowMsgEl.className = 'value status-err';
-        } else {
-          payFlowMsgEl.textContent = `後端回 ${res.status}（請看下方回應內容）`;
-          payFlowMsgEl.className = 'value status-err';
+        if (res.status === 409) {
+          showError('此訂單已付款或無效，無法重複付款。');
+          payBtn.disabled    = false;
+          payBtn.textContent = '確認付款 →';
+          return;
         }
 
+        if (!res.ok || !data) {
+          const msg = data?.message || `伺服器錯誤（HTTP ${res.status}）`;
+          showError(msg);
+          payBtn.disabled    = false;
+          payBtn.textContent = '確認付款 →';
+          return;
+        }
+
+        if (!data.actionUrl || !data.formParams) {
+          showError('付款服務回應格式異常，請重新整理後再試。');
+          payBtn.disabled    = false;
+          payBtn.textContent = '確認付款 →';
+          return;
+        }
+
+        // ── 顯示跳轉提示，動態建立 form 並自動送出 ──
+        redirectNote.classList.add('show');
+
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.action = data.actionUrl;
+
+        Object.entries(data.formParams).forEach(([k, v]) => {
+          const input   = document.createElement('input');
+          input.type    = 'hidden';
+          input.name    = k;
+          input.value   = v ?? '';
+          form.appendChild(input);
+        });
+
+        document.body.appendChild(form);
+        form.submit();
+
       } catch (e) {
-        console.error('Call PaymentServlet failed:', e);
-        payFlowMsgEl.textContent = '呼叫付款 API 失敗（請看 Console）';
-        payFlowMsgEl.className = 'value status-err';
-        debugBoxEl.textContent = String(e);
-      } finally {
-        retryBtn.disabled = false;
+        console.error('付款 API 呼叫失敗:', e);
+        showError('網路異常，請確認連線後重試。');
+        payBtn.disabled    = false;
+        payBtn.textContent = '確認付款 →';
       }
     }
 
-    window.addEventListener('load', callPaymentApi);
-    retryBtn.addEventListener('click', callPaymentApi);
+    // ── HTML 跳脫 ─────────────────────────────────────
+    function escapeHtml(str) {
+      return String(str)
+        .replace(/&/g,'&amp;').replace(/</g,'&lt;')
+        .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    }
+
+    // ── 初始化 ────────────────────────────────────────
+    window.addEventListener('load', loadOrderItems);
+    document.getElementById('payBtn').addEventListener('click', submitPayment);
   </script>
 </body>
 </html>

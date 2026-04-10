@@ -3,6 +3,7 @@ package web.checkout.service.impl;
 import java.math.BigDecimal;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,15 +19,14 @@ import web.checkout.vo.Orders;
 @Service
 public class CheckoutServiceImpl implements CheckoutService {
 
-	private final CartDao cartDao;
-	private final OrderDao orderDao;
-	private final OrderItemDao orderItemDao;
+	@Autowired
+	private CartDao cartDao;
 
-	public CheckoutServiceImpl(CartDao cartDao, OrderDao orderDao, OrderItemDao orderItemDao) {
-		this.cartDao = cartDao;
-		this.orderDao = orderDao;
-		this.orderItemDao = orderItemDao;
-	}
+	@Autowired
+	private OrderDao orderDao;
+
+	@Autowired
+	private OrderItemDao orderItemDao;
 
 	@Override
 	@Transactional
