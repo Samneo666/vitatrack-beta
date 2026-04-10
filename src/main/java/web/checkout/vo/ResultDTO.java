@@ -2,7 +2,10 @@ package web.checkout.vo;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
