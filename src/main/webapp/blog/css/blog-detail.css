@@ -1,0 +1,293 @@
+/*   Blog Detail Page Styles   */
+
+/* Chinese font family */
+body {
+  font-family: 'Noto Sans TC', 'Microsoft JhengHei', sans-serif;
+}
+
+/* Initial hidden states */
+#mn-overlay {
+  display: none;
+}
+
+/* Better font sizes for Chinese content */
+.mn-single-blog-item .single-blog-info .single-blog-detail p,
+.mn-single-blog-item .single-blog-info .single-blog-detail .mn-text {
+  font-size: 18px;
+  line-height: 1.8;
+  margin-bottom: 1.8em;
+}
+
+.single-blog-detail h3 {
+  font-size: 28px;
+  line-height: 1.4;
+  margin-bottom: 0.8em;
+}
+
+.single-blog-detail label {
+  font-size: 14px;
+}
+
+/* Article title */
+#article-title {
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 1.4;
+  margin-bottom: 1em;
+}
+
+/* Author avatar */
+#author-avatar {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  margin-right: 12px;
+  object-fit: cover;
+}
+
+#author-avatar-fallback {
+  display: none;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  margin-right: 12px;
+  background: #6c757d;
+  color: white;
+  font-size: 24px;
+  font-weight: bold;
+  align-items: center;
+  justify-content: center;
+}
+
+#article-content {
+  display: none;
+}
+
+/* Featured image container */
+.featured-image-container {
+  max-height: 350px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f5f5f5;
+}
+
+#featured-image {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+/* Author info */
+#author-info {
+  color: #6c757d;
+  font-size: 14px;
+}
+
+.author-separator {
+  margin: 0 8px;
+}
+
+/* Action buttons container */
+.action-buttons-container {
+  border-top: 1px solid #eee;
+}
+
+/* Share icon size */
+.share-icon {
+  width: 24px;
+  height: 24px;
+}
+
+/* Like and Share buttons */
+#like-btn.btn-outline-danger,
+#share-btn.btn-outline-primary {
+  min-width: 140px;
+  border-radius: 25px;
+  text-align: center;
+}
+
+#like-btn.btn-outline-danger,
+#like-btn.btn-danger.liked,
+#share-btn.btn-outline-primary,
+#share-btn.btn-primary {
+  min-width: 140px;
+  border-radius: 25px;
+}
+
+#like-btn.btn-outline-danger {
+  border-color: var(--accent-red);
+  color: var(--accent-red);
+}
+
+#like-btn.btn-outline-danger:hover,
+#like-btn.btn-outline-danger.liked {
+  background-color: var(--accent-red);
+  color: var(--white);
+}
+
+#share-btn.btn-outline-primary {
+  border-color: var(--secondary);
+  color: var(--secondary);
+}
+
+#share-btn.btn-outline-primary:hover {
+  background-color: var(--secondary);
+  color: var(--white);
+}
+
+/* Toast notification */
+.toast-container {
+  z-index: 9999;
+}
+
+.toast-container .toast {
+  padding: 8px 24px;
+  min-height: auto;
+  font-size: 1rem;
+  border-radius: 25px;
+  width: auto;
+  max-width: fit-content;
+  margin: 0 auto;
+}
+
+.toast-container .toast .toast-body {
+  padding: 0;
+  text-align: left;
+}
+
+/* Article content formatting */
+#article-content-text.ql-editor {
+  padding: 0;
+}
+
+#article-content-text p + p {
+  margin-top: 1em;
+}
+
+#article-content-text p:has(> br:only-child) {
+  min-height: 0;
+  margin-top: 0.5em;
+}
+
+#article-content-text.ql-editor p {
+  margin: 0;
+  padding: 0;
+}
+/* Custom CSS Variables for Mantu Template */
+:root {
+  /* Primary Colors */
+  --primary: #ffd783;
+  --secondary: #3a4ee5;
+  --accent-green: #54d3c2;
+  --accent-blue: #4e52fa;
+  --accent-red: #f90c4c;
+
+  /* Background Colors */
+  --body-bg: #f1f0f4;
+  --card-bg: #e1e5e9;
+  --section-bg: #f1f4f7;
+
+  /* Text Colors */
+  --title-color: #313b50;
+  --text-primary: #777;
+  --text-secondary: #999;
+  --text-light: #f1f4f7;
+  --icon-color: #485568;
+
+  /* Status Colors */
+  --status-hold: #FB7D44;
+  --status-progress: #2A92BF;
+  --status-review: #F4CE46;
+  --status-approved: #00B961;
+  --status-up: #2bbb93;
+  --status-down: #f90c4c;
+
+  /* Border Colors */
+  --border-light: #eee;
+  --border-medium: #e5e5e5;
+  --border-dark: #ddd;
+  --border-subtle: #f2f2f2;
+
+  /* Utility Colors */
+  --white: #fff;
+  --black: #000;
+  --yellow-off: #e2ba54;
+  --trans-bg: rgba(72, 85, 104, 0.1);
+  --hover-drop: rgba(72, 85, 104, 0.1);
+
+  /* Shadows & Effects */
+  --card-shadow: 0 0 10px -3px rgba(0, 0, 0, 0.15);
+  --box-shadow: 0 7px 15px 5px rgba(67, 73, 118, 0.03);
+  --transition: 0.75s cubic-bezier(0.255, 0.67, 0, 1.01);
+  --ease-out: all .3s cubic-bezier(0.23, 1, 0.32, 1);
+
+  /* Border Radius */
+  --radius: 30px;
+  --radius-20: 20px;
+  --radius-15: 15px;
+  --radius-10: 10px;
+  --radius-5: 5px;
+  --main-border-radius: 15px;
+}
+
+/* Dark theme variant */
+[data-theme="dark"] {
+  --body-bg: #1a1a1a;
+  --card-bg: #2d2d2d;
+  --section-bg: #242424;
+  --title-color: #ffffff;
+  --text-primary: #cccccc;
+  --text-secondary: #999999;
+  --border-light: #333;
+  --border-medium: #444;
+  --border-dark: #555;
+}
+
+/*   Error Display Styles。 */
+
+.error-display {
+  text-align: center;
+  padding: 60px 20px;
+  background: #fff;
+  border: 1px solid #e5e5e5;
+  border-radius: 15px;
+}
+
+.error-icon {
+  font-size: 56px;
+  color: #3a4ee5;
+  display: block;
+  margin-bottom: 15px;
+}
+
+.error-title {
+  border: none;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.error-message {
+  color: #777;
+  margin-bottom: 25px;
+}
+
+.error-button {
+  text-decoration: none;
+}
+
+/*   Author and Category Link Styles */
+
+.author-link,
+.category-link {
+  color: #007bff;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.author-link:hover,
+.category-link:hover {
+  text-decoration: underline;
+  color: #0056b3;
+}

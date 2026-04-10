@@ -1,0 +1,134 @@
+/** Start Contact Section **/
+.mn-contact {
+  iframe {
+    width: 100%;
+    height: 100%;
+    margin-bottom: -7px;
+    border: 1px solid $border-e5e5e5;
+    border-radius: $radius-15;
+  }
+  form{
+    .form-group {
+      margin-bottom: 30px;
+      input, textarea {
+        padding: 10px 15px;
+        border-color: $border-e5e5e5;
+        border-radius: $radius-15;
+        font-size: 15px;
+        color: $text-777;
+        &:focus {
+          outline: none;
+          box-shadow: none;
+        }
+        &::placeholder {
+          color: $text-777;
+        }
+      }
+    }
+  }
+  .mn-contact-detail {
+	.mn-box {
+		padding: 24px;
+		border: 1px solid $border-e5e5e5;
+		background-color: $fff;
+		position: relative;
+		border-radius: $radius-15;
+		.detail {
+			display: flex;
+			justify-content: flex-start;
+			align-items: center;
+			text-align: left;
+		}
+		.info {
+			width: calc(100% - 70px);
+			h3 {
+				font-size: 18px;
+				font-weight: 600;
+				color: $title-color;
+				text-transform: capitalize;
+			}
+			p {
+				margin: 0;
+				font-size: 14px;
+    			color: $text-777;
+			}
+		}
+		.icon {
+			width: 70px;
+			height: 70px;
+			margin-right: 15px;
+			background-color: $secondary;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			border-radius: $radius-15;
+			i {
+				font-size: 25px;
+				color: $fff;
+			}
+		}
+	}
+  }
+}
+
+/* Responsive Contact page CSS */
+@media only screen and (max-width: 991px) {
+	.mn-contact {
+		.mn-contact-detail {
+			.mn-box {
+				.info {
+					h3 {
+						font-size: 19px;
+					}
+				}
+			}
+		}
+	}
+}
+@media only screen and (max-width: 767px) {
+	.mn-contact {
+		iframe {
+			height: 300px;
+		}
+	}
+}
+@media only screen and (max-width: 575px) {
+	.mn-contact {
+		iframe {
+			height: 250px;
+		}
+		.mn-contact-detail {
+			.mn-box {
+				.info {
+					h3 {
+						font-size: 18px;
+					}
+				}
+			}
+		}
+	}
+}
+@media only screen and (max-width: 420px) {
+	.mn-contact {
+		.mn-contact-detail {
+			.mn-box {
+				.icon {
+					width: 50px;
+    				height: 50px;
+					margin: 0 0 15px 0;
+					i {
+						font-size: 23px;
+					}
+				}
+				.detail {
+					flex-direction: column;
+				}
+				.info {
+					width: 100%;
+					text-align: center;
+				}
+			}
+		}
+	}
+}

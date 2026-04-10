@@ -1,0 +1,159 @@
+/*-------------------------------------------------
+  Register Page CSS
+---------------------------------------------------*/
+.mn-register-wrapper {
+  max-width: 934px;
+  margin: 0 auto 0;
+  .mn-register-container {
+    border: 1px solid $border-e5e5e5;
+    padding: 30px;
+    text-align: left;
+    background-color: $fff;
+    border-radius: $radius-15;
+    .mn-register-form {
+      .mn-register-wrap {
+        width: 100%;
+        padding: 0 15px;
+      }
+      .mn-register-wrap.mn-register-half {
+        width: 50%;
+      }
+      form {
+        display: flex;
+        flex-flow: row wrap;
+        margin: 0 -15px;
+      }
+      label {
+        margin-bottom: 9px;
+        color: $title-color;
+        font-size: 14px;
+        font-weight: 500;
+        letter-spacing: 0;
+        line-height: 1;
+      }
+      input {
+        width: 100%;
+        height: 50px;
+        background-color: transparent;
+        border: 1px solid $border-e5e5e5;
+        color: $text-777;
+        font-size: 14px;
+        margin-bottom: 26px;
+        padding: 0 15px;
+        width: 300;
+        outline: none;
+        border-radius: $radius-15;
+        &::placeholder {
+          color: $text-777 !important;
+        }
+      }
+      .mn-register-fp {
+        label {
+          margin-bottom: 0;
+          a {
+            color: $title-color;
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 0px;
+          }
+        }
+      }
+      .mn-rg-select-inner {
+        width: 300;
+        height: 50px;
+        padding: 0;
+        margin-bottom: 30px;
+        position: relative;
+        display: flex;
+        border-radius: $radius-15;
+        border: 1px solid $border-e5e5e5;
+        font-size: 14px;
+        overflow: hidden;
+        select {
+          padding: 0 15px;
+          appearance: none;
+          outline: 0;
+          box-shadow: none;
+          border: 0 !important;
+          background: $fff;
+          background-image: none;
+          flex: 1;
+          color: $text-777;
+          font-weight: 300;
+          cursor: pointer;
+        }
+        &::after {
+          content: '\ea4e';
+          position: absolute;
+          font-family: $remixico;
+          top: 0;
+          right: 0;
+          padding: 0 10px;
+          cursor: pointer;
+          pointer-events: none;
+          font-size: 24px;
+          display: flex;
+          height: 50px;
+          line-height: 1;
+          justify-content: center;
+          align-items: center;
+          color: $text-777;
+        }
+      }
+      .mn-register-wrap.mn-recaptcha {
+        display: flex;
+        justify-content: center;
+      }
+      .mn-register-btn {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        button {
+          padding: 8px 15px;
+          span {
+            @include ease3;
+            color: $title-color;
+          }
+          &:hover {
+            span {
+            color: $fff;
+          }
+          }
+        }
+        span {
+          font-size: 14px;
+          color: $text-777;
+          a {
+            margin-left: 10px;
+            color: $title-color;
+            font-weight: 600;
+            &:hover {              
+              color: $secondary;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+/* Responsive Register CSS */
+@media only screen and (max-width: 575px) {
+  .mn-register-wrapper {
+    .mn-register-container {
+      padding: 15px;
+      .mn-register-form {
+        .mn-register-wrap.mn-register-half {
+          width: 100%;
+        }
+        .mn-register-btn {
+          flex-direction: column;
+          > span {
+            margin-bottom: 15px;
+          }
+        }
+      }
+    }
+  }
+}
+

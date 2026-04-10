@@ -1,0 +1,87 @@
+/* 遮罩層，覆蓋整個視窗 */
+.alert-cover {
+    position: fixed; /* 固定在畫面上，不會隨滾動改變 */
+    top: 0;
+    left: 0;
+    width: 100vw;   /* 滿版寬度 */
+    height: 100vh;  /* 滿版高度 */
+    background-color: rgba(0, 0, 0, 0.5); /* 半透明黑色遮罩 */
+    display: flex;   /* 使用 flex 對齊 */
+    justify-content: center; /* 水平置中 */
+    align-items: center;     /* 垂直置中 */
+    z-index: 9999;  /* 確保在最上層 */
+}
+
+/* 彈窗盒子 */
+.alert-box {
+    background-color: #fff;   /* 白色背景 */
+    padding: 30px 40px;
+    border-radius: 10px;      /* 圓角 */
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3); /* 陰影 */
+    text-align: center;
+    max-width: 400px;
+    width: 90%;
+}
+.alert-box .alert-title {
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+.alert-box .alert-btn {
+    padding: 10px 20px;
+    background-color: #4e7dffdc; /* 藍色按鈕 */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.alert-box .alert-btn:hover {
+    background-color: #4e88ff;
+}
+/* 欄位為格式提醒 */
+.hint-text {
+    display: block;
+    font-size: 13px;
+    margin-bottom: 10px;
+    height: 18px; /* 固定高度防止頁面跳動 */
+}
+
+input {
+    margin-bottom: 2px; /* 縮小 input 底部間距，讓提示文字靠近一點 */
+}
+
+/* 密碼欄位的眼睛圖示 */
+.mn-register-wrap {
+    position: relative;
+}
+
+#toggleEye {
+    position: absolute;
+    right: 25px;
+    top: 62%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-size: 18px;
+    color: #888;
+    z-index: 2;
+    transition: color 0.2s ease;
+}
+
+#toggleEye:hover {
+    color: #333;
+}
+
+#toggleConfirmEye {
+    position: absolute;
+    right: 25px;
+    top: 62%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-size: 18px;
+    color: #888;
+    z-index: 2;
+    transition: color 0.2s ease;
+}
+
+#toggleConfirmEye:hover {
+    color: #333;
+}

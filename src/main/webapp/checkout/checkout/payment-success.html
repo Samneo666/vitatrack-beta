@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>付款成功</title>
+  <link rel="shortcut icon" href="assets/img/favicon/favicon.png">
+  <link href="assets/css/vendor/bootstrap.min.css" rel="stylesheet">
+  <link id="mainCss" href="assets/css/style.css" rel="stylesheet">
+  <style>
+    body { background:#f6f8fb; color:#222; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans TC", "Helvetica", "Arial", sans-serif; }
+    .wrap { min-height:100vh; display:flex; align-items:center; justify-content:center; padding:24px; box-sizing:border-box; }
+    .card {
+      width:820px;
+      max-width:95%;
+      border:4px solid #1e88e5; /* 青藍外框像附圖 */
+      background:#fff;
+      padding:28px;
+      box-sizing:border-box;
+      border-radius:6px;
+      text-align:center;
+    }
+    .check {
+      width:48px;height:48px;border-radius:50%;background:#e8f8ee;display:inline-flex;align-items:center;justify-content:center;margin:6px auto 12px;
+      box-shadow:0 1px 0 rgba(0,0,0,0.04);
+    }
+    .check svg { width:26px;height:26px; color:#1aa04a; }
+    h1 { font-size:20px;margin:6px 0 8px; }
+    p.lead { margin:0 0 18px;color:#444; }
+    .info-box { width:100%; max-width:740px; margin: 12px auto 18px; border:1px solid #bdbdbd; padding:16px; text-align:left; background:#fafafa; }
+    .info-box dt { font-weight:700; margin-top:6px; }
+    .info-box dd { margin:0 0 6px 0; color:#333; }
+    .btns { display:flex; gap:12px; justify-content:center; margin-top:14px; flex-wrap:wrap; }
+    .note { text-align:left; font-size:13px; color:#666; margin-top:18px; max-width:740px; margin-left:auto; margin-right:auto; }
+    @media (max-width:520px) {
+      .card { padding:18px; border-width:3px; }
+      .info-box { padding:12px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card" role="main" aria-labelledby="title">
+      <div class="check" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M20 6L9 17l-5-5" stroke="#1aa04a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <h1 id="title">付款成功</h1>
+      <p class="lead">付款成功，訂單已成立</p>
+
+      <div class="info-box" id="orderInfo">
+        <dl>
+          <dt>訂單編號：</dt><dd id="orderId">ODR001</dd>
+          <dt>付款方式：</dt><dd id="payMethod">信用卡</dd>
+          <dt>金額：</dt><dd id="totalAmt">$1500</dd>
+          <dt>收件人：</dt><dd id="recipient">王小明</dd>
+          <dt>配送方式：</dt><dd id="shipMethod">宅配</dd>
+          <dt>預計出貨時間：</dt><dd id="shipDate">2025-01-02</dd>
+        </dl>
+      </div>
+
+      <div class="btns">
+        <a class="btn btn-outline-primary" href="訂單列表 copy.html">查看訂單列表</a>
+        <a class="btn btn-outline-secondary" href="index.html">回首頁 / 繼續逛</a>
+      </div>
+
+      <div class="note">
+        系統同時會將「訂單成立通知 Email」發送給使用者。如要顯示實際訂單資料，請在付款流程成功時將訂單資訊以 query string 或 server-side 注入到此頁面。
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // 範例：若後端 redirect 到此頁並帶 query string（例如 ?id=ODR123&amt=1500&name=王小明），可解開並填入頁面
+    (function(){
+      const params = new URLSearchParams(window.location.search);
+      const map = {
+        orderId: params.get('id'),
+        payMethod: params.get('pay') || params.get('method'),
+        totalAmt: params.get('amt') ? ('$' + params.get('amt')) : null,
+        recipient: params.get('name'),
+        shipMethod: params.get('ship'),
+        shipDate: params.get('shipDate')
+      };
+      Object.keys(map).forEach(k=>{
+        if(map[k]) {
+          const el = document.getElementById(k);
+          if(el) el.textContent = map[k];
+        }
+      });
+    })();
+  </script>
+</body>
+</html>

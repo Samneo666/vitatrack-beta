@@ -1,0 +1,62 @@
+/* =============================================
+   Blog Admin Edit Page Styles
+   ============================================= */
+
+/* Toast Notifications */
+.admin-toast {
+  position: fixed;
+  top: 80px;
+  right: 20px;
+  min-width: 300px;
+  padding: 16px 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  z-index: 9999;
+  font-family: 'Quicksand', sans-serif;
+  font-weight: 600;
+  font-size: 15px;
+  animation: slideInRight 0.3s ease-out;
+}
+
+.admin-toast.admin-toast-success {
+  background: #2ab7a5;
+  color: #fff;
+}
+
+.admin-toast.admin-toast-error {
+  background: #f90c4c;
+  color: #fff;
+}
+
+@keyframes slideInRight {
+  from {
+    transform: translateX(400px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* Quill Editor */
+.ql-editor {
+  color: #333;
+}
+
+/* Image Upload */
+#previewContainer {
+  display: none;
+}
+
+#fileInput {
+  display: none;
+}
+
+/* Logout Link Style */
+.logout-link {
+  color: #dc3545;
+}

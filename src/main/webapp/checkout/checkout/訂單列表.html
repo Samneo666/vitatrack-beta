@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="zh-TW" dir="ltr">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>後台 - 訂單處理</title>
+
+    <!-- App favicon -->
+    <link rel="shortcut icon" href="assets/img/favicon/favicon.png">
+
+    <!-- Icon CSS -->
+    <link href="assets/css/vendor/materialdesignicons.min.css" rel="stylesheet">
+    <link href="assets/css/vendor/remixicon.css" rel="stylesheet">
+
+    <!-- Vendor -->
+    <link href="assets/css/vendor/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Main CSS -->
+    <link id="mainCss" href="assets/css/style.css" rel="stylesheet">
+
+    <style>
+        /* 小幅客製化，使後台選單與內容看起來像附圖 */
+        body { background: #fff; }
+        .admin-wrapper { display: flex; min-height: 80vh; }
+        .admin-sidebar {
+            width: 220px;
+            border-right: 1px dashed #ccc;
+            padding: 24px;
+            background: #fafafa;
+        }
+        .admin-sidebar h3 { font-size: 16px; margin-bottom: 12px; }
+        .admin-sidebar ul { padding-left: 16px; }
+        .admin-sidebar li { margin: 8px 0; list-style: none; }
+        .admin-content { flex: 1; padding: 24px; }
+        .search-box { border: 1px solid #ccc; padding: 14px; margin-bottom: 18px; border-radius: 4px; }
+        .status-filters a { margin-right: 8px; color: #333; text-decoration: none; }
+        .order-row { border: 1px dashed #cfcfcf; padding: 12px; margin-bottom: 12px; border-radius: 4px; }
+        .order-actions .btn { margin-left: 8px; }
+        .table thead th { border-bottom: 2px solid #eee; }
+    </style>
+</head>
+
+<body>
+
+    <main class="wrapper sb-default">
+
+        <header class="p-3 border-bottom">
+            <div class="container-fluid">
+                <div class="d-flex align-items-center">
+                    <div class="me-auto">
+                        <a href="index.html" class="logo"><img src="assets/img/logo/logo.png" alt="logo" style="height:36px;"></a>
+                    </div>
+                    <div>
+                        <span>管理後台</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="admin-wrapper container-fluid">
+            <!-- 左側後台選單 -->
+            <aside class="admin-sidebar">
+                <h3>後台選單</h3>
+                <ul>
+                    <li><a href="#" class="fw-bold">訂單處理</a></li>
+                    <li><a href="#">商品管理</a></li>
+                    <li><a href="#">會員管理</a></li>
+                    <li><a href="#">報表</a></li>
+                </ul>
+            </aside>
+
+            <!-- 右側主要內容：訂單列表 -->
+            <section class="admin-content">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h2 class="mb-0">訂單列表</h2>
+                    <small>共 4 筆範例</small>
+                </div>
+
+                <!-- 搜尋與狀態 -->
+                <div class="search-box">
+                    <form class="row g-2 align-items-center">
+                        <div class="col-md-6">
+                            <label class="form-label mb-1">搜尋關鍵字</label>
+                            <input type="text" class="form-control" placeholder="輸入訂單ID或客戶姓名">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label mb-1">狀態：</label>
+                            <div class="status-filters mt-1">
+                                <a href="#" class="badge bg-light border">全部</a>
+                                <a href="#" class="badge bg-light border">已付款</a>
+                                <a href="#" class="badge bg-light border">未付款</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- 表格版：桌面視窗 -->
+                <div class="table-responsive d-none d-md-block">
+                    <table class="table align-middle">
+                        <thead>
+                            <tr>
+                                <th>訂單ID</th>
+                                <th>日期</th>
+                                <th>金額</th>
+                                <th>付款狀態</th>
+                                <th style="width:220px">操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="order-row">
+                                <td>ODR001</td>
+                                <td>2025-01-01</td>
+                                <td>$1500</td>
+                                <td>已付款</td>
+                                <td class="order-actions">
+                                    <a href="#" class="btn btn-sm btn-outline-primary">訂單明細</a>
+                                    <a href="#" class="btn btn-sm btn-outline-secondary">出貨處理</a>
+                                </td>
+                            </tr>
+                            <tr class="order-row">
+                                <td>ODR002</td>
+                                <td>2025-01-01</td>
+                                <td>$1500</td>
+                                <td>已付款</td>
+                                <td class="order-actions">
+                                    <a href="#" class="btn btn-sm btn-outline-primary">訂單明細</a>
+                                    <a href="#" class="btn btn-sm btn-outline-secondary">出貨處理</a>
+                                </td>
+                            </tr>
+                            <tr class="order-row">
+                                <td>ODR003</td>
+                                <td>2025-01-01</td>
+                                <td>$1500</td>
+                                <td>已付款</td>
+                                <td class="order-actions">
+                                    <a href="#" class="btn btn-sm btn-outline-primary">訂單明細</a>
+                                    <a href="#" class="btn btn-sm btn-outline-secondary">出貨處理</a>
+                                </td>
+                            </tr>
+                            <tr class="order-row">
+                                <td>ODR004</td>
+                                <td>2025-01-01</td>
+                                <td>$1500</td>
+                                <td>已付款</td>
+                                <td class="order-actions">
+                                    <a href="#" class="btn btn-sm btn-outline-primary">訂單明細</a>
+                                    <a href="#" class="btn btn-sm btn-outline-secondary">出貨處理</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- 手機版：卡片列表 -->
+                <div class="d-block d-md-none">
+                    <div class="order-row">
+                        <div class="d-flex justify-content-between">
+                            <strong>ODR001</strong>
+                            <span>$1500</span>
+                        </div>
+                        <div class="small text-muted">2025-01-01 · 已付款</div>
+                        <div class="mt-2">
+                            <a href="#" class="btn btn-sm btn-outline-primary">訂單明細</a>
+                            <a href="#" class="btn btn-sm btn-outline-secondary">出貨處理</a>
+                        </div>
+                    </div>
+                    <div class="order-row">
+                        <div class="d-flex justify-content-between">
+                            <strong>ODR002</strong>
+                            <span>$1500</span>
+                        </div>
+                        <div class="small text-muted">2025-01-01 · 已付款</div>
+                        <div class="mt-2">
+                            <a href="#" class="btn btn-sm btn-outline-primary">訂單明細</a>
+                            <a href="#" class="btn btn-sm btn-outline-secondary">出貨處理</a>
+                        </div>
+                    </div>
+                    <!-- 其餘項目省略… -->
+                </div>
+
+            </section>
+        </div>
+
+        <footer class="p-3 border-top text-center">
+            <small>© <span id="copyright_year"></span> The Mantu</small>
+        </footer>
+
+    </main>
+
+    <!-- Vendor JS -->
+    <script src="assets/js/vendor/jquery-3.7.1.min.js"></script>
+    <script src="assets/js/vendor/bootstrap.bundle.min.js"></script>
+
+    <!-- Main JS -->
+    <script src="assets/js/main.js"></script>
+
+    <script>
+        // 設定 footer 年份
+        document.getElementById('copyright_year').textContent = new Date().getFullYear();
+    </script>
+</body>
+
+</html>

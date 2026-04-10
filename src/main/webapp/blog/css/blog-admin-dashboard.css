@@ -1,0 +1,198 @@
+/* =============================================
+   Blog Dashboard Styles
+   ============================================= */
+
+/* Override sidebar padding - dashboard has no sidebar */
+.wrapper .mn-main-content.sb-hide {
+  padding-left: 30px;
+}
+
+/* Chinese font family */
+body {
+  font-family: 'Noto Sans TC', 'Microsoft JhengHei', sans-serif;
+}
+
+/* =============================================
+   Stats Cards
+   ============================================= */
+
+.dashboard-stats-row {
+  margin-bottom: 30px;
+}
+
+.dashboard-stat-col {
+  margin-bottom: 24px;
+}
+
+.dashboard-stat-card {
+  padding: 24px;
+  background: #fff;
+  border-radius: 15px;
+  border: 1px solid #e5e5e5;
+}
+
+.stat-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.stat-info {
+  flex: 1;
+}
+
+.stat-label {
+  color: #777;
+  font-size: 14px;
+  margin: 0 0 10px 0;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+.stat-value {
+  font-size: 36px;
+  font-weight: 700;
+  margin: 0 0 10px 0;
+  color: #313b50;
+}
+
+.stat-growth {
+  color: #54d3c2;
+  font-size: 13px;
+  margin: 0;
+  display: flex;
+  align-items: center;
+}
+
+.stat-growth i {
+  font-size: 16px;
+  margin-right: 4px;
+}
+
+.stat-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.stat-icon i {
+  font-size: 28px;
+  color: #fff;
+}
+
+.stat-icon-blue {
+  background: linear-gradient(135deg, #3a4ee5 0%, #5a6ef5 100%);
+}
+
+.stat-icon-red {
+  background: linear-gradient(135deg, #f90c4c 0%, #ff2c6c 100%);
+}
+
+.stat-icon-green {
+  background: linear-gradient(135deg, #54d3c2 0%, #74e3d2 100%);
+}
+
+/* =============================================
+   Chart Cards
+   ============================================= */
+
+.dashboard-charts-row {
+  margin-bottom: 30px;
+}
+
+.dashboard-chart-col {
+  margin-bottom: 24px;
+}
+
+.dashboard-chart-card {
+  padding: 24px;
+  background: #fff;
+  border-radius: 15px;
+  border: 1px solid #e5e5e5;
+  height: 100%;
+}
+
+.chart-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #313b50;
+  margin: 0 0 20px 0;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Chart containers need minimum height for Highcharts */
+#categoryChart,
+#userTrendChart,
+#viewTrendChart,
+#trafficSourceChart {
+  min-height: 300px;
+}
+
+/* =============================================
+   Responsive Breakpoints
+   ============================================= */
+
+/* Tablet (768px - 991px) */
+@media (min-width: 768px) and (max-width: 991px) {
+  .stat-value {
+    font-size: 28px;
+  }
+  
+  .stat-icon {
+    width: 48px;
+    height: 48px;
+  }
+  
+  .stat-icon i {
+    font-size: 24px;
+  }
+}
+
+/* Mobile (< 768px) */
+@media (max-width: 767px) {
+  .dashboard-stat-card {
+    padding: 20px;
+  }
+  
+  .stat-value {
+    font-size: 32px;
+  }
+  
+  .stat-label {
+    font-size: 13px;
+  }
+  
+  .stat-growth {
+    font-size: 12px;
+  }
+  
+  .dashboard-chart-card {
+    padding: 20px;
+  }
+  
+  .chart-title {
+    font-size: 14px;
+    margin-bottom: 15px;
+  }
+}
+
+/* Small Mobile (< 576px) */
+@media (max-width: 575px) {
+  .stat-value {
+    font-size: 28px;
+  }
+  
+  .stat-icon {
+    width: 48px;
+    height: 48px;
+  }
+  
+  .stat-icon i {
+    font-size: 24px;
+  }
+}

@@ -1,0 +1,537 @@
+/**  Banner Section  **/
+.mn-modern-banner {
+    .modern-banner {
+        position: relative;
+        .mn-banner-img {
+            width: calc(100% - 400px);
+            height: 500px;
+            border-radius: $radius-15;
+            background-size: cover;
+            background-position: center;
+        }
+        .mn-banner-img.img-1 {
+            background-image: url("../img/banner/1.jpg");
+        }
+        .mn-banner-img.img-2 {
+            background-image: url("../img/banner/2.jpg");
+        }
+        .mn-banner-contact {
+            width: 370px;
+            position: absolute;
+            top: 0;
+            right: 0;
+        }
+    }
+    .banner-animation {
+        >* {
+            animation-duration: 1s;
+            animation-fill-mode: both;
+            animation-name: fadeOutDown;
+        }
+    }
+
+    :root {
+        --transition: 0.75s cubic-bezier(0.255, 0.67, 0, 1.01);
+    }
+
+    .mn-slide {
+        overflow: hidden;
+        position: relative;
+        transition:
+            transform var(--transition),
+            box-shadow var(--transition);
+    }
+
+    .active {
+        .banner-animation {
+            >* {
+                &:nth-child(1) {
+                    animation-name: fadeInRight;
+                    animation-delay: 1s;
+                }
+
+                &:nth-child(2) {
+                    animation-name: fadeInUp;
+                    animation-delay: 1.5s;
+                }
+
+                &:nth-child(3) {
+                    animation-name: fadeInUp;
+                    animation-delay: 2s;
+                }
+            }
+        }
+    }
+}
+
+.mn-banner-contact {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    .inner-banner {
+        margin-bottom: 16px;
+        position: relative;
+        left: -100px;
+        width: calc(100% + 100px);
+
+        h4 {
+            margin: 0;
+            font-size: 68px;
+            font-weight: 700;
+            color: $secondary;
+            text-shadow:
+                2px 2px $fff,
+                -2px 2px $fff,
+                2px -2px $fff,
+                -2px -2px $fff,
+                2px 2px 5px $text-color;
+                text-transform: uppercase;
+        }
+
+        h3 {
+            color: $title-color;
+            font-weight: 900;
+            font-size: 35px;
+            letter-spacing: -1px;
+            text-shadow:
+                1px 1px $fff,
+                -1px 1px $fff,
+                1px -1px $fff,
+                -1px -1px $fff,
+                1px 1px 5px $text-color;
+            line-height: 0.8;
+        }
+    }
+
+    .inner-text {
+        .bnr-text {
+            display: block;
+            font-size: 20px;
+            font-weight: 600;
+        }
+    }
+
+    p {
+        margin-bottom: 16px;
+    }
+
+    .banner-btn {
+        display: flex;
+        flex-wrap: wrap;
+    }
+}
+
+.mn-modern-banner {
+    .owl-dots {
+        background-color: $bg;
+        padding: 10px 10px 0 10px;
+        position: absolute;
+        bottom: 0;
+        right: 392px;
+
+        button {
+            @include ease3;
+            width: 12px;
+            height: 12px;
+            margin: 3px;
+            border: 1px solid $title-color;
+            border-radius: $radius-15;
+        }
+
+        button.active {
+            width: 25px;
+            border-color: $secondary;
+            background-color: $secondary;
+        }
+    }
+}
+.mn-offer-section {
+	overflow: hidden;
+}
+.mn-ofr-banners {
+	.mn-bnr-body {
+		display: flex;
+		flex-direction: row;
+		position: relative;
+		overflow: hidden;
+		&::before {
+			background: linear-gradient(
+				to right,
+				fade_out(#fff, 1) 0%,
+				fade_out(#fff, 0.7) 100%
+			);
+			content: "";
+			display: block;
+			height: 100%;
+			left: -75%;
+			position: absolute;
+			top: 0;
+			transform: skewX(-25deg);
+			width: 50%;
+			z-index: 2;
+		}
+		&:hover,
+		&:focus {
+			&::before {
+				animation: shine 0.85s;
+			}
+		}
+	
+		@keyframes shine {
+			100% {
+				left: 125%;
+			}
+		}
+		.mn-bnr-img {
+			width: 100%;
+			position: relative;
+			img {
+				width: 100%;
+				border-radius: $radius-15;
+                border: 1px solid $border-ddd;
+			}
+			.lbl {
+				padding: 2px 7px;
+				font-size: 12px;
+				border-radius: $radius-15;
+				position: absolute;
+				top: 15px;
+				left: 15px;
+				text-transform: capitalize;
+				background-color: $secondary;
+				color: $white;
+				opacity: .8;
+			}
+		}
+		.mn-bnr-detail {
+			max-width: 300px;
+            padding: 15px;
+			display: flex;
+			flex-direction: column;
+			align-items: flex-start;
+			justify-content: center;
+			position: absolute;
+			top: 50%;
+			right: 30px;
+			transform: translateY(-50%);
+            background-color: rgba(255, 255, 255, .6);
+            border-radius: $radius-15;
+			h5 {
+				color: $title-color;
+				font-size: 30px;
+				font-weight: 700;
+				text-transform: capitalize;
+			}
+			p {
+				color: $text-777;
+				text-transform: capitalize;
+				font-size: 16px;
+				line-height: 22px;
+				font-weight: 400;
+			}
+			a {
+				padding: 5px 15px;
+			}
+		}
+	}
+}
+
+/* Responsive */
+@media screen and (max-width: 1599px) {
+    .mn-banner-contact {
+        .inner-banner {
+            h4 {
+                font-size: 52px;
+            }
+            h3 {
+                font-size: 30px;
+            }
+        }
+    }
+    .mn-ofr-banners {
+        .mn-bnr-body {
+            .mn-bnr-detail {
+                    max-width: 250px;
+                h5 {
+                    font-size: 25px;
+                }
+            }
+        }
+    }
+}
+@media screen and (max-width: 1499px) {
+    .mn-banner-contact {
+        .inner-banner {
+            h4 {
+                font-size: 44px;
+            }
+            h3 {
+                font-size: 22px;
+            }
+        }
+    }
+    .mn-modern-banner {
+        .modern-banner {
+            .mn-banner-contact {
+                width: 270px;
+            }
+            .mn-banner-img {
+                width: calc(100% - 300px);
+            }
+        }
+    }
+    .mn-ofr-banners {
+        .mn-bnr-body {
+            .mn-bnr-detail {
+                max-width: 230px;
+                h5 {
+                    font-size: 22px;
+                }
+            }
+        }
+    }
+}
+@media screen and (max-width: 1399px) {
+    .mn-modern-banner {
+        .owl-dots {
+            right: 375px;
+        }
+    }
+
+    .mn-banner-contact {
+        .inner-banner {
+            h4 {
+                font-size: 60px;
+            }
+        }
+    }
+    .mn-ofr-banners {
+        .mn-bnr-body {
+            .mn-bnr-detail {
+                h5 {
+                    font-size: 25px;
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 1199px) {
+    .mn-modern-banner {
+        .owl-dots {
+            right: 315px;
+        }
+        .modern-banner {
+            .mn-banner-img {
+                height: 400px;
+            }
+        }
+    }
+
+    .mn-banner-contact {
+        .inner-banner {
+            h4 {
+                font-size: 52px;
+            }
+        }
+    }
+    .mn-ofr-banners {
+        .mn-bnr-body {
+            .mn-bnr-detail {
+                background-color: rgba(255, 255, 255, 0.7);
+                h5 {
+                    font-size: 22px;
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 991px) {
+    .mn-banner-img {
+        img {
+            border-top-left-radius: 500px;
+            border-top-right-radius: 500px;
+            border-bottom-left-radius: 500px;
+            border-bottom-right-radius: 500px;
+        }
+    }
+    .mn-modern-banner {
+        .owl-dots {
+            display: none;
+        }
+        .modern-banner {
+            .mn-banner-img {
+                width: 100%;
+                background-position: left;
+            }
+            .mn-banner-contact {
+                width: 100%;
+                margin-top: 30px;
+                position: relative;
+            }
+        }
+    }
+
+    .mn-banner-contact {
+        align-items: center;
+        text-align: center;
+
+        .inner-banner {
+            left: 0;
+            width: 100%;
+
+            h4 {
+                font-size: 42px;
+            }
+            h3 {
+                font-size: 21px;
+            }
+        }
+    }
+    .mn-ofr-banners {
+        .mn-bnr-body {
+            .mn-bnr-detail {
+                max-width: 200px;
+                h5 {
+                    margin-bottom: 15px;
+                }
+                p {
+                    display: none;
+                }
+            }
+        }
+    }
+}
+@media screen and (max-width: 767px) {
+    .mn-modern-banner {
+        .modern-banner {
+            .mn-banner-img {
+                height: 300px;
+            }
+        }
+    }
+    .mn-banner-contact {
+        .inner-banner {
+            h4 {
+                font-size: 40px;
+            }
+            h3 {
+                font-size: 20px;
+            }
+        }
+    }
+    .mn-ofr-banners {
+        .mn-bnr-body {
+            .mn-bnr-detail {
+                max-width: 250px;
+                h5 {
+                    margin-bottom: 15px;
+                    font-size: 25px;
+                }
+                p {
+                    display: block;
+                }
+            }
+        }
+    }
+}
+@media screen and (max-width: 575px) {
+    .mn-banner-contact {
+        .inner-banner {
+            margin-bottom: 8px;
+
+            h4 {
+                font-size: 32px;
+            }
+            h3 {
+                font-size: 18px;
+            }
+        }
+        .inner-text {
+            .bnr-text {
+                font-size: 18px;
+            }
+        }
+    }
+    .mn-modern-banner {
+        .modern-banner {
+            .mn-banner-img {
+                height: 250px;
+            }
+        }
+    }
+    .mn-ofr-banners {
+        .mn-bnr-body {
+            .mn-bnr-detail {
+                max-width: 200px;
+                h5 {
+                    font-size: 22px;
+                }
+                p {
+                    display: block;
+                }
+            }
+        }
+    }
+}
+@media screen and (max-width: 480px) {
+    .mn-banner-contact {
+        .inner-banner {
+            h3 {
+                font-size: 16px;
+            }
+            h4 {
+                font-size: 26px;
+            }
+        }
+        .inner-text {
+            .bnr-text {
+                font-size: 16px;
+            }
+        }
+    }
+    .mn-ofr-banners {
+        .mn-bnr-body {
+            .mn-bnr-detail {
+                max-width: 200px;
+                h5 {
+                    font-size: 22px;
+                }
+                p {
+                    display: none;
+                }
+            }
+        }
+    }
+}
+@media screen and (max-width: 420px) {
+    .mn-modern-banner {
+        .modern-banner {
+            .mn-banner-img {
+                height: 200px;
+            }
+        }
+    }
+    .mn-banner-contact {
+        .inner-banner {
+            h4 {
+                font-size: 22px;
+            }
+        }
+    }
+    
+    .mn-ofr-banners {
+        .mn-bnr-body {
+            .mn-bnr-detail {
+                max-width: 160px;
+                    right: 15px;
+                h5 {
+                    font-size: 16px;
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,234 @@
+/** Shop Page CSS **/
+.width-100 {
+    flex: 0 0 auto !important;
+    width: 100% !important;
+}
+.width-50 {
+    -webkit-box-flex: 0 !important;
+    -mn-flex: 0 0 auto !important;
+    flex: 0 0 auto !important;
+    width: 50% !important;
+}
+.list-view, .list-view-50 {
+	@include ease3;
+	.mn-product-card {
+		display: flex;
+		flex-direction: row;
+		.mn-product-img {
+			max-width: 250px;
+			margin: 0 15px 0 0;
+		}
+		.mn-product-detail {
+			width: 100%;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			.mn-pro-title {
+				a{
+					font-size: 16px;
+					color: $title-color;
+					font-weight: 20px;
+				}
+			}
+			.mn-info {
+				@include ease3;
+				margin: 5px 0;
+				font-size: 13px;
+				color: $text-777;
+				display: block;
+			}
+		}
+	}
+}
+.mn-shop {
+	.mn-product-content {
+		padding-top: 0;
+	}
+	.mn-pro-list-top {
+		margin-bottom: 30px;
+		align-self: center;
+		align-items: center;
+		justify-content: space-between;
+		font-size: 14px;
+		background-color: $fff;
+		border: 1px solid $border-e5e5e5;
+		border-radius: $radius-15;
+		.mn-gl-btn {
+			margin-left: 5px;
+			display: flex;
+			align-items: center;
+			flex-direction: row;
+			.grid-btn {
+				height: 40px;
+				width: 40px;
+				border: 0;
+				border-radius: 0;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				flex-direction: row;
+				background: transparent;
+				i {
+					font-size: 23px;
+					color: $secondary;
+					line-height: 0;
+				}
+			}
+		}
+		.grid-btn.active {
+			background: $primary;
+			border: 1px solid $primary;
+			border-radius: $radius-10;
+			i {
+				color: $title-color;
+			}
+		}
+		.mn-sort-select {
+			display: flex;
+			justify-content: flex-end;
+			align-items: center;
+			.sort-by {
+				font-size: 14px;
+				color: $text-777;
+				padding-right: 22px;
+			}
+			.mn-select-inner {
+				position: relative;
+				display: flex;
+				width: 170px;
+				height: 50px;
+				line-height: 1.5;
+				background: transparent;
+				overflow: hidden;
+				border-radius: 0;
+				border-left: 1px solid $border-e5e5e5;
+				&:after {
+					padding: 0 10px;
+					content: "\ea4e";
+					position: absolute;
+					font-family: $remixico;
+					top: 50%;
+					right: 0;
+					cursor: pointer;
+					pointer-events: none;
+					font-size: 24px;
+					display: flex;
+					line-height: 1;
+					justify-content: center;
+					align-items: center;
+					color: $text-777;
+					transform: translateY(-50%);
+				}
+				select {
+					appearance: none;
+					outline: 0;
+					box-shadow: none;
+					border: 0 !important;
+					background: transparent;
+					background-image: none;
+					flex: 1;
+					padding: 0 10px;
+					color: $text-777;
+					cursor: pointer;
+				}
+			}
+		}
+	}
+	.mn-select-bar {
+		margin: -5px -5px 25px -5px;
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: flex-end;
+		.mn-select-btn {
+			margin: 5px;
+			padding: 0 10px;
+			border: 1px solid $border-e5e5e5;
+			border-radius: $radius-10;
+			color: $text-777;
+			font-size: 14px;
+			display: flex;
+			align-items: center;
+			text-transform: capitalize;
+			.mn-select-cancel {
+				margin-left: 15px;
+				color: #ff8585;
+				font-size: 18px;
+			}
+		}
+	}
+	.mn-select-btn-clear {
+		padding: 0 !important;
+		.mn-select-clear {
+			@include ease3;
+			height: 100%;
+			margin: 0;
+			padding: 3px 10px;
+			font-size: 14px;
+			display: flex;
+			align-items: center;
+			background-color: $secondary;
+			color: $white;
+			border-radius: $radius-10;
+			&:hover {
+				color: $title-color;
+				background-color: $primary;
+			}
+		}
+	}
+}
+/* Responsive Shop CSS */
+@media only screen and (max-width: 1199px) {
+	.width-50 {
+		width: 33.3333% !important;
+	}
+	.list-view-50 {
+		.mn-product-card {			
+			flex-direction: column;
+			.mn-product-img {
+				max-width: 100%;
+				margin: 0 0 15px 0;
+			}
+		}
+	}
+}
+@media only screen and (max-width: 767px) {
+	.list-view {
+		.mn-product-card {
+			max-width: 400px;
+        	margin: auto;
+			flex-direction: column;
+			.mn-product-img {
+				max-width: 100%;
+				margin: 0 0 15px 0;
+			}
+		}
+	}
+	.width-50 {
+		width: 50% !important;
+	}
+}
+@media only screen and (max-width: 575px) {
+	.width-50 {
+		width: 100% !important;
+	}
+	.list-view, .list-view-50 {
+		.mn-product-card {
+			max-width: 100%;
+		}
+	}
+}
+@media only screen and (max-width: 420px) {
+	.mn-shop {
+		.mn-pro-list-top {
+			.mn-gl-btn {
+				.grid-btn {
+    					width: 35px;
+					    height: 35px;
+					i {
+						font-size: 22px;
+					}
+				}
+			}
+		}
+	}
+}

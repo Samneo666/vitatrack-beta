@@ -1,0 +1,237 @@
+/** Sidebar **/
+.mn-sidebar.sidebar-hide {
+	left: -300px;
+}
+.mn-sidebar {
+	@include ease1;
+	width: 300px;
+	height: calc(100vh - 60px);
+	margin: 30px 0 30px 0;
+	background-color: #181e28;
+	border-radius: 0 $radius-15 $radius-15 0;
+	position: fixed;
+	top: 0;
+	left: 0;
+	border: 1px solid #181e28;
+	border-left: 0;
+	&:after {
+		width: 290px;
+		height: 148px;
+		content: "";
+		position: absolute;
+		right: 0;
+		bottom: 0;
+		background-image: url("../img/icons/bg-icon.png");
+		background-repeat: no-repeat;
+		background-size: 100%;
+		z-index: -1;
+		opacity: .03;
+	}
+	&:hover {
+		.mn-sidebar-body {
+			@include hoverscrollbar;
+		}
+	}
+	.side-close {
+        @include ease3;
+        width: 16px;
+        height: 16px;
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        border: 0;
+        background-color: rgba(224, 78, 78, 0.7);
+        border-radius: 10px;
+        cursor: pointer;
+        z-index: 5;
+		display: none;
+        &:hover {
+            background-color: rgba(224, 78, 78, 1);
+        }
+
+        &:after {
+            content: "";
+            width: 10px;
+            height: 10px;
+            position: absolute;
+            bottom: 3px;
+            left: 3px;
+            border: 2px solid #fff;
+            border-radius: 50%;
+        }
+    }
+	.mn-sidebar-body {
+		@include defaultcrollbar;
+		@include ease1;
+		height: 100%;
+		padding: 30px;
+		overflow: auto;
+		position: relative;
+		.mn-sb-list {
+			margin: -15px 0;
+			.mn-sb-item {
+				.mn-drop-toggle {
+					padding: 15px 0;
+					display: flex;
+					color: #b9c2d0;
+					font-size: 16px;
+					position: relative;
+					text-transform: capitalize;
+					&:hover {
+						color: $primary;
+					}
+					> svg, > img {
+						@include ease3;
+						margin-right: 10px;
+						width: 24px;
+						height: 24px;
+					}
+					.condense {
+						> i {
+							margin-right: -5px;
+							font-size: 22px;
+							position: absolute;
+							right: 0;
+						}
+					}
+				}
+				.mn-drop-toggle.active-nav {
+					color: $primary;
+				}
+				.mn-sb-drop {
+					margin: 15px 0;
+					padding: 15px;
+					background-color: rgba(43, 51, 67, .5);
+					border-radius: $radius-15;
+					display: none;
+					box-shadow: 0 7px 15px 5px rgba(10, 10, 12, 0.2);
+					.list {
+						padding: 15px;
+						a {
+							padding-left: 20px;
+							color: #9ba6b7;
+							display: flex;
+							position: relative;
+							text-transform: capitalize;
+							&:after {
+								@include ease3;
+								content: "";
+								width: 8px;
+								height: 8px;
+								border: 2px solid #9ba6b7;
+								position: absolute;
+								top: 46%;
+								left: 0;
+								border-radius: 50%;
+								transform: translateY(-50%);
+							}
+							&:hover {
+								color: #e4eefd;
+								&:after {
+									border: 2px solid #e4eefd;
+								}
+							}
+						}
+						a.active-nav {
+							color: #e4eefd;
+							&:after {
+								border: 2px solid #e4eefd;
+							}
+						}
+					}
+				}
+			}
+			.mn-sb-item-separator {
+				width: 100%;
+				height: 1px;
+				margin: 12px 0;
+				padding: 0;
+				display: block;
+				background-color: #293343;
+			}
+			.mn-sb-title {
+				padding: 12px 0;
+				text-transform: uppercase;
+				color: #505d74;
+				font-size: 13px;
+				font-weight: 600;
+				position: relative;
+				&:after {
+					content: "";
+					width: 100%;
+					height: 1px;
+					background-color: #293343;
+					display: flex;
+					position: absolute;
+					top: 26px;
+					right: 0;
+					z-index: -1;
+				}
+				span {
+					padding-right: 10px;
+					background-color: #181e28;
+				}
+			}
+		}
+	}
+}
+
+/* Responsive css */
+@media only screen and (max-width: 1399px) {
+
+	.mn-sidebar-overlay {
+		width: 100%;
+		height: 100%;
+		position: fixed;
+		top: 0;
+		background-color: rgba(24, 30, 40, 0.5);
+		z-index: 40;
+		display: none;
+	}
+	.mn-sidebar-overlay-hide {
+		display: block;
+	}
+	.mn-sidebar.sidebar-hide {
+		left: 0;
+	}
+	.mn-sidebar {
+		height: 100%;
+		margin: 0;
+		border-radius: 0;
+		z-index: 40;
+		left: -300px;		
+		border-right: 1px solid #293343;
+		.side-close {
+			display: flex;
+		}
+	}
+}
+
+@media only screen and (max-width: 767px) {
+	.mn-sidebar {
+		.mn-sidebar-body {
+			height: 100%;
+		}
+	}
+}
+
+@media only screen and (max-width: 575px) {
+	.mn-sidebar {
+		.mn-sidebar-body {
+			.mn-sb-list {
+				.mn-sb-item {
+					.mn-sb-drop{
+						padding: 8px;
+					}
+				}
+			}
+		}
+	}
+}
+
+@media only screen and (max-width: 420px) {
+	.mn-sidebar {
+		width: 95%;
+		left: -95%;
+	}
+}

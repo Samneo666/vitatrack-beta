@@ -1,0 +1,119 @@
+/*   Blog List Page Styles   */
+
+/* Chinese font family */
+body {
+  font-family: 'Noto Sans TC', 'Microsoft JhengHei', sans-serif;
+}
+
+/* Initial hidden states */
+#mn-overlay {
+  display: none;
+}
+
+#pagination {
+  display: none;
+}
+
+/* Pagination button width fix */
+.mn-pro-pagination ul li a.prev {
+  width: auto;
+  padding: 0 13px;
+  white-space: nowrap;
+}
+
+/* Browse articles button in index.html */
+a.btn.btn-primary {
+  background-color: var(--primary);
+  border-color: var(--primary);
+  color: var(--title-color);
+}
+
+a.btn.btn-primary:hover {
+  background-color: var(--secondary);
+  border-color: var(--secondary);
+  color: var(--white);
+}
+
+/* Pagination colors */
+.pagination .page-link {
+  color: var(--primary);
+  border-color: var(--primary);
+}
+
+.pagination .page-link:hover {
+  background-color: var(--primary);
+  border-color: var(--primary);
+  color: var(--title-color);
+}
+
+.pagination .page-item.active .page-link {
+  background-color: var(--primary);
+  border-color: var(--primary);
+  color: var(--title-color);
+}
+
+.pagination .page-item.disabled .page-link {
+  color: #777;
+  border-color: #e5e5e5;
+}
+
+/* Remove double border between table and pagination */
+#pagination-container .mn-pro-pagination {
+  border-top: none;
+  padding-top: 30px;
+}
+
+/*   Error Display Styles  */
+
+.error-display {
+  text-align: center;
+  padding: 60px 20px;
+  background: #fff;
+  border: 1px solid #e5e5e5;
+  border-radius: 15px;
+}
+
+.error-icon {
+  font-size: 56px;
+  color: #3a4ee5;
+  display: block;
+  margin-bottom: 15px;
+}
+
+.error-title {
+  border: none;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.error-message {
+  color: #777;
+  margin-bottom: 25px;
+}
+
+.error-button {
+  text-decoration: none;
+}
+
+/*   Blog Card Styles   */
+
+.blog-card-clickable {
+  cursor: pointer;
+}
+
+.mn-blog-card .blog-card-image {
+  height: 250px !important;
+}
+
+.mn-blog-card .blog-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.mn-blog-card .blog-card-detail {
+  min-height: 120px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}

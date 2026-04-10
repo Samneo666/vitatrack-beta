@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>付款成功 - Vitatrack</title>
+
+  <!-- App favicon (同 index) -->
+  <link rel="shortcut icon" href="assets/img/favicon/favicon.png">
+
+  <!-- Icon CSS (同 index) -->
+  <link href="assets/css/vendor/materialdesignicons.min.css" rel="stylesheet">
+  <link href="assets/css/vendor/remixicon.css" rel="stylesheet">
+
+  <!-- Vendor (同 index) -->
+  <link href="assets/css/vendor/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/css/vendor/animate.min.css" rel="stylesheet">
+  <link href="assets/css/vendor/owl.carousel.min.css" rel="stylesheet">
+  <link href="assets/css/vendor/slick.min.css" rel="stylesheet">
+  <link href="assets/css/vendor/swiper-bundle.min.css" rel="stylesheet">
+  <link href="assets/css/vendor/nouislider.css" rel="stylesheet">
+
+  <!-- Main CSS (同 index) -->
+  <link id="mainCss" href="assets/css/style.css" rel="stylesheet">
+
+  <style>
+    /* 只做「卡片內容」的微調，外框交給模板/Bootstrap */
+    .pay-card{
+      border-radius: 18px;
+      box-shadow: 0 10px 25px rgba(0,0,0,.08);
+      border: 1px solid rgba(0,0,0,.06);
+      overflow: hidden;
+    }
+    .iconWrap{
+      width:104px;height:104px;border-radius:999px;
+      background:#ecfdf5;border:2px solid #bbf7d0;
+      display:flex;align-items:center;justify-content:center;
+      margin: 0 auto 14px;
+    }
+    .title{ font-size:24px; font-weight:800; margin:8px 0 6px; letter-spacing:.5px; }
+    .sub{ color:#6b7280; line-height:1.55; font-size:14.5px; margin:0 0 18px; }
+    .info{
+      background:#f8fafc; border:1px solid #e5e7eb;
+      border-radius:14px; padding:16px 16px 6px; text-align:left;
+    }
+    .rowx{
+      display:flex; justify-content:space-between; gap:12px;
+      padding:10px 0; border-bottom:1px dashed #e5e7eb;
+      font-size:14.5px;
+    }
+    .rowx:last-child{ border-bottom:none; padding-bottom:12px; }
+    .label{ color:#6b7280; }
+    .value{ font-weight:700; color:#111827; word-break:break-all; }
+    .check{ width:56px; height:56px; }
+  </style>
+</head>
+
+<body data-mn-mode="light">
+<main class="wrapper sb-default">
+
+  <!-- Header（精簡版：沿用 index 的 class 命名風格） -->
+  <header class="sb-hide">
+    <div class="mn-header">
+      <div class="mn-header-items">
+        <div class="left-header">
+          <a href="index.html" class="logo">
+            <img src="assets/img/logo/logo.png" alt="logo">
+          </a>
+        </div>
+        <div class="right-header">
+          <div class="mn-tool-icons">
+            <div class="mn-tool-cart">
+              <a href="cart.html" class="mn-main-cart">
+                <svg class="svg-icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M351.552 831.424c-35.328 0-63.968 28.64-63.968 63.968 0 35.328 28.64 63.968 63.968 63.968 35.328 0 63.968-28.64 63.968-63.968C415.52 860.064 386.88 831.424 351.552 831.424zM799.296 831.424c-35.328 0-63.968 28.64-63.968 63.968 0 35.328 28.64 63.968 63.968 63.968 35.328 0 63.968-28.64 63.968-63.968C863.264 860.064 834.624 831.424 799.296 831.424z"></path>
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content（用 Bootstrap 置中，整體會跟 index 的字體/色系一致） -->
+  <div class="mn-main-content sb-hide">
+    <div class="container py-5">
+      <div class="row justify-content-center">
+        <div class="col-lg-7 col-xl-6">
+          <div class="bg-white p-4 p-md-5 pay-card text-center">
+            <div class="iconWrap" aria-label="付款成功">
+              <svg class="check" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M20 6L9 17l-5-5" stroke="#16a34a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+
+            <div class="title">付款成功</div>
+            <p class="sub">感謝您的購買！我們已確認收到款項，訂單處理中。</p>
+
+            <div class="info">
+              <div class="rowx">
+                <div class="label">訂單編號</div>
+                <div class="value" id="orderId">—</div>
+              </div>
+              <div class="rowx">
+                <div class="label">付款金額</div>
+                <div class="value" id="totalAmount">—</div>
+              </div>
+              <div class="rowx">
+                <div class="label">付款時間</div>
+                <div class="value" id="paymentTime">—</div>
+              </div>
+              <div class="rowx">
+                <div class="label">付款方式</div>
+                <div class="value" id="paymentMethod">—</div>
+              </div>
+            </div>
+
+            <div class="mt-4 d-flex gap-2 justify-content-center flex-wrap">
+              <button class="btn btn-dark px-4" id="btnHome">回首頁</button>
+              <button class="btn btn-outline-dark px-4" id="btnOrderList">查看訂單列表</button>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<script>
+  // ✅ 自動抓 contextPath：/vitatrack 或 ''
+  const parts = location.pathname.split("/").filter(Boolean);
+  const ctx = parts.length > 0 ? `/${parts[0]}` : "";
+
+  // ✅ 正確 API
+  const API_BASE = `${ctx}/api/checkout/result`;
+
+  function getQueryParam(name) {
+    const params = new URLSearchParams(location.search);
+    return params.get(name);
+  }
+
+  function fmtMoney(n) {
+    if (n === null || n === undefined || n === "") return "—";
+    const num = Number(n);
+    if (Number.isNaN(num)) return String(n);
+    return num.toLocaleString("zh-TW");
+  }
+
+  function setText(id, text) {
+    const el = document.getElementById(id);
+    if (el) el.textContent = (text === null || text === undefined || text === "") ? "—" : text;
+  }
+
+  async function fetchResult(orderId) {
+    const url = `${API_BASE}?orderId=${encodeURIComponent(orderId)}`;
+    const res = await fetch(url, { method: "GET" });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    return await res.json();
+  }
+
+  async function init() {
+    const orderId = getQueryParam("orderId");
+    if (!orderId) return;
+
+    setText("orderId", orderId);
+
+    try {
+      const data = await fetchResult(orderId);
+      setText("orderId", data.orderId ?? orderId);
+      setText("totalAmount", fmtMoney(data.totalAmount));
+      setText("paymentTime", data.paymentTime ?? "—");
+      setText("paymentMethod", data.paymentMethod ?? "—");
+    } catch (e) {
+      console.warn("fetchResult error:", e);
+    }
+  }
+
+  init();
+
+  document.getElementById("btnHome").addEventListener("click", () => {
+    location.href = "index.html";
+  });
+
+  document.getElementById("btnOrderList").addEventListener("click", () => {
+    location.href = "訂單列表.html";
+  });
+</script>
+</body>
+</html>

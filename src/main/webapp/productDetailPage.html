@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="keywords"
+		content="ecommerce, store, mart, fashion, grocery, super store, market, organic food, super market">
+	<meta name="description" content="Best multipurpose ecommerce html template for your online store.">
+	<meta name="author" content="Maraviya Infotech">
+
+	<title>VitaTrack</title>
+
+	<!-- App favicon -->
+	<link rel="shortcut icon" href="assets/img/favicon/favicon.png">
+
+	<!-- Icon CSS -->
+	<link href="assets/css/vendor/materialdesignicons.min.css" rel="stylesheet">
+	<link href="assets/css/vendor/remixicon.css" rel="stylesheet">
+
+	<!-- Vendor -->
+	<link href="assets/css/vendor/bootstrap.min.css" rel="stylesheet">
+	<link href="assets/css/vendor/animate.min.css" rel="stylesheet">
+	<link href="assets/css/vendor/owl.carousel.min.css" rel="stylesheet">
+	<link href="assets/css/vendor/slick.min.css" rel="stylesheet">
+	<link href="assets/css/vendor/swiper-bundle.min.css" rel="stylesheet">
+	<link href="assets/css/vendor/nouislider.css" rel="stylesheet">
+
+	<!-- Main CSS -->
+	<link id="mainCss" href="assets/css/style.css" rel="stylesheet">
+</head>
+
+<body data-mn-mode="light">
+
+	<main class="wrapper sb-default">
+
+		<!-- Loader -->
+		<div id="mn-overlay">
+			<div class="loader">
+				<img src="assets/img/logo/loader.png" alt="loader">
+				<span class="shape"></span>
+			</div>
+		</div>
+
+		<!--尚未登入的header -->
+		<header id="header-guest" class="sb-hide">
+			<div class="mn-header">
+				<div class="mn-header-items">
+					<div class="left-header">
+						<a href="index.html" class="logo"><img src="assets/img/logo/logo.png" alt="logo"></a>
+						<a href="javascript:void(0)" class="mn-toggle-menu">
+							<div class="header-icon">
+								<i class="ri-menu-3-fill"></i>
+							</div>
+						</a>
+					</div>
+					<div class="right-header">
+						<!-- Main Menu Start -->
+						<div id="mn-main-menu-desk" class="d-none d-lg-block sticky-nav">
+							<div class="nav-desk">
+								<div class="row">
+									<div class="col-md-12 align-self-center">
+										<div class="mn-main-menu">
+											<ul>
+												<li class="non-drop">
+													<a href="index.html">首頁</a>
+												</li>
+												
+											</ul>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="mn-mobile-menu-overlay"></div>
+						
+						<!-- Main menu icons -->
+						<div class="mn-tool-icons">
+							<div class="mn-tool-user">
+								<a href="javascript:void(0)" class="mn-main-user">
+									<svg class="svg-icon" viewBox="0 0 1024 1024" version="1.1"
+										xmlns="http://www.w3.org/2000/svg">
+										<path
+											d="M512.476 648.247c-170.169 0-308.118-136.411-308.118-304.681 0-168.271 137.949-304.681 308.118-304.681 170.169 0 308.119 136.411 308.119 304.681C820.594 511.837 682.645 648.247 512.476 648.247L512.476 648.247zM512.476 100.186c-135.713 0-246.12 109.178-246.12 243.381 0 134.202 110.407 243.381 246.12 243.381 135.719 0 246.126-109.179 246.126-243.381C758.602 209.364 648.195 100.186 512.476 100.186L512.476 100.186zM935.867 985.115l-26.164 0c-9.648 0-17.779-6.941-19.384-16.35-2.646-15.426-6.277-30.52-11.142-44.95-24.769-87.686-81.337-164.13-159.104-214.266-63.232 35.203-134.235 53.64-207.597 53.64-73.555 0-144.73-18.537-208.084-53.922-78 50.131-134.75 126.68-159.564 214.549 0 0-4.893 18.172-11.795 46.4-2.136 8.723-10.035 14.9-19.112 14.9L88.133 985.116c-9.415 0-16.693-8.214-15.47-17.452C91.698 824.084 181.099 702.474 305.51 637.615c58.682 40.472 129.996 64.267 206.966 64.267 76.799 0 147.968-23.684 206.584-63.991 124.123 64.932 213.281 186.403 232.277 329.772C952.56 976.901 945.287 985.115 935.867 985.115L935.867 985.115z">
+										</path>
+									</svg>
+								</a>
+								<ul class="sub-menu">
+								<li>
+										<div class="d-flex align-items-center ps-3">
+											<i class="ri-login-box-line fs-6"></i>
+											<a href="login.html">登入</a>
+										</div>
+									</li>
+									<li>
+										<div class="d-flex align-items-center ps-3">
+											<i class="ri-user-add-line fs-6"></i>
+											<a href="register.html">註冊</a>
+										</div>
+									</li>
+								</ul>
+							</div>
+							<div class="mn-tool-cart">
+								<a href="cartPage.html" class="mn-main-cart">
+									<span id="cartBadge" class="cart-count">0</span>
+									<svg class="svg-icon" viewBox="0 0 1024 1024" version="1.1"
+										xmlns="http://www.w3.org/2000/svg">
+										<path
+											d="M351.552 831.424c-35.328 0-63.968 28.64-63.968 63.968 0 35.328 28.64 63.968 63.968 63.968 35.328 0 63.968-28.64 63.968-63.968C415.52 860.064 386.88 831.424 351.552 831.424L351.552 831.424 351.552 831.424zM799.296 831.424c-35.328 0-63.968 28.64-63.968 63.968 0 35.328 28.64 63.968 63.968 63.968 35.328 0 63.968-28.64 63.968-63.968C863.264 860.064 834.624 831.424 799.296 831.424L799.296 831.424 799.296 831.424zM862.752 799.456 343.264 799.456c-46.08 0-86.592-36.448-92.224-83.008L196.8 334.592 165.92 156.128c-1.92-15.584-16.128-28.288-29.984-28.288L95.2 127.84c-17.664 0-32-14.336-32-31.968 0-17.664 14.336-32 32-32l40.736 0c46.656 0 87.616 36.448 93.28 83.008l30.784 177.792 54.464 383.488c1.792 14.848 15.232 27.36 28.768 27.36l519.488 0c17.696 0 32 14.304 32 31.968S880.416 799.456 862.752 799.456L862.752 799.456zM383.232 671.52c-16.608 0-30.624-12.8-31.872-29.632-1.312-17.632 11.936-32.928 29.504-34.208l433.856-31.968c15.936-0.096 29.344-12.608 31.104-26.816l50.368-288.224c1.28-10.752-1.696-22.528-8.128-29.792-4.128-4.672-9.312-7.04-15.36-7.04L319.04 223.84c-17.664 0-32-14.336-32-31.968 0-17.664 14.336-31.968 32-31.968l553.728 0c24.448 0 46.88 10.144 63.232 28.608 18.688 21.088 27.264 50.784 23.52 81.568l-50.4 288.256c-5.44 44.832-45.92 81.28-92 81.28L385.6 671.424C384.8 671.488 384 671.52 383.232 671.52L383.232 671.52zM383.232 671.52">
+									</svg>
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</header>
+		
+		<!-- 會員登入後的header -->
+		<header id="header-member" class="sb-hide" style="display: none" >
+			<div class="mn-header">
+				<div class="mn-header-items">
+					<div class="left-header">
+						<a href="index.html" class="logo"><img src="assets/img/logo/logo.png" alt="logo"></a>
+						<a href="javascript:void(0)" class="mn-toggle-menu">
+						</a>
+					</div>
+					<div class="right-header">
+						<!-- Main Menu Start -->
+						<div id="mn-main-menu-desk" class="d-none d-lg-block sticky-nav">
+							<div class="nav-desk">
+								<div class="row">
+									<div class="col-md-12 align-self-center">
+										<div class="mn-main-menu">
+											<ul>
+												<li class="non-drop">
+													<a href="index.html">首頁</a>
+												</li>
+												<!-- <li class="dropdown drop-list">
+													<a href="javascript:void(0)" class="dropdown-arrow">文章</a>
+												</li> -->
+											</ul>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- Main menu icons -->
+						<div class="mn-tool-icons">
+							<div class="mn-tool-user">
+								<a href="javascript:void(0)" class="mn-main-user">
+									<svg class="svg-icon" viewBox="0 0 1024 1024" version="1.1"
+										xmlns="http://www.w3.org/2000/svg">
+										<path
+											d="M512.476 648.247c-170.169 0-308.118-136.411-308.118-304.681 0-168.271 137.949-304.681 308.118-304.681 170.169 0 308.119 136.411 308.119 304.681C820.594 511.837 682.645 648.247 512.476 648.247L512.476 648.247zM512.476 100.186c-135.713 0-246.12 109.178-246.12 243.381 0 134.202 110.407 243.381 246.12 243.381 135.719 0 246.126-109.179 246.126-243.381C758.602 209.364 648.195 100.186 512.476 100.186L512.476 100.186zM935.867 985.115l-26.164 0c-9.648 0-17.779-6.941-19.384-16.35-2.646-15.426-6.277-30.52-11.142-44.95-24.769-87.686-81.337-164.13-159.104-214.266-63.232 35.203-134.235 53.64-207.597 53.64-73.555 0-144.73-18.537-208.084-53.922-78 50.131-134.75 126.68-159.564 214.549 0 0-4.893 18.172-11.795 46.4-2.136 8.723-10.035 14.9-19.112 14.9L88.133 985.116c-9.415 0-16.693-8.214-15.47-17.452C91.698 824.084 181.099 702.474 305.51 637.615c58.682 40.472 129.996 64.267 206.966 64.267 76.799 0 147.968-23.684 206.584-63.991 124.123 64.932 213.281 186.403 232.277 329.772C952.56 976.901 945.287 985.115 935.867 985.115L935.867 985.115z">
+										</path>
+									</svg>
+								</a>
+								<ul class="sub-menu">
+									<li>
+										<a href="memberCenter.html" id="memberInfo">會員資訊</a>
+									</li>
+									<li>
+										<a href="javascript:void(0)" id="orderInfo">我的訂單</a>
+									</li>
+									<li>
+										<a href="javascript:void(0)" id="logoutBtn">登出</a>
+									</li>
+								</ul>
+							</div>
+							<div class="mn-tool-cart">
+								<a href="cart.html" class="mn-main-cart">
+									<span id="cartBadge" class="cart-count"></span>
+									<svg class="svg-icon" viewBox="0 0 1024 1024" version="1.1"
+										xmlns="http://www.w3.org/2000/svg">
+										<path
+											d="M351.552 831.424c-35.328 0-63.968 28.64-63.968 63.968 0 35.328 28.64 63.968 63.968 63.968 35.328 0 63.968-28.64 63.968-63.968C415.52 860.064 386.88 831.424 351.552 831.424L351.552 831.424 351.552 831.424zM799.296 831.424c-35.328 0-63.968 28.64-63.968 63.968 0 35.328 28.64 63.968 63.968 63.968 35.328 0 63.968-28.64 63.968-63.968C863.264 860.064 834.624 831.424 799.296 831.424L799.296 831.424 799.296 831.424zM862.752 799.456 343.264 799.456c-46.08 0-86.592-36.448-92.224-83.008L196.8 334.592 165.92 156.128c-1.92-15.584-16.128-28.288-29.984-28.288L95.2 127.84c-17.664 0-32-14.336-32-31.968 0-17.664 14.336-32 32-32l40.736 0c46.656 0 87.616 36.448 93.28 83.008l30.784 177.792 54.464 383.488c1.792 14.848 15.232 27.36 28.768 27.36l519.488 0c17.696 0 32 14.304 32 31.968S880.416 799.456 862.752 799.456L862.752 799.456zM383.232 671.52c-16.608 0-30.624-12.8-31.872-29.632-1.312-17.632 11.936-32.928 29.504-34.208l433.856-31.968c15.936-0.096 29.344-12.608 31.104-26.816l50.368-288.224c1.28-10.752-1.696-22.528-8.128-29.792-4.128-4.672-9.312-7.04-15.36-7.04L319.04 223.84c-17.664 0-32-14.336-32-31.968 0-17.664 14.336-31.968 32-31.968l553.728 0c24.448 0 46.88 10.144 63.232 28.608 18.688 21.088 27.264 50.784 23.52 81.568l-50.4 288.256c-5.44 44.832-45.92 81.28-92 81.28L385.6 671.424C384.8 671.488 384 671.52 383.232 671.52L383.232 671.52zM383.232 671.52">
+									</svg>
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</header>
+
+		<!-- Main Content -->
+		<div class="mn-main-content sb-hide">
+			<div class="mn-breadcrumb m-b-30">
+				<div class="row">
+					<div class="col-12">
+						<div class="row gi_breadcrumb_inner">
+							<div class="col-md-6 col-sm-12">
+								<h2 class="mn-breadcrumb-title">商品介紹</h2>
+							</div>
+							<div class="col-md-6 col-sm-12">
+								<!-- mn-breadcrumb-list start -->
+								<ul class="mn-breadcrumb-list">
+									<li class="mn-breadcrumb-item"><a href="index.html">首頁</a></li>
+									<li class="mn-breadcrumb-item active">商品介紹</li>
+								</ul>
+								<!-- mn-breadcrumb-list end -->
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xxl-12">
+					<section class="mn-single-product">
+						<div class="row">
+							<div class="mn-pro-rightside mn-common-rightside col-lg-12 col-md-12 m-b-15">
+								<!-- Single product content Start -->
+								<div class="single-pro-block">
+									<div class="single-pro-inner">
+										<div class="row">
+											<div class="single-pro-img">
+												<div class="single-product-scroll">
+													<div class="single-product-cover">
+														<div class="single-slide zoom-image-hover">
+															<img class="img-responsive" src="assets/img/product/27.jpg"
+																alt="">
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="single-pro-desc m-t-991">
+												<div class="single-pro-content">
+													<h5 class="mn-single-title" id="pName">載入中...</h5>
+													<div class="mn-single-rating-wrap">
+														<div class="mn-single-rating mn-pro-rating">
+															<i class="ri-star-fill"></i>
+															<i class="ri-star-fill"></i>
+															<i class="ri-star-fill"></i>
+															<i class="ri-star-fill"></i>
+															<i class="ri-star-fill grey"></i>
+														</div>
+														<span class="mn-read-review">
+															|&nbsp;&nbsp;<a href="#mn-spt-nav-review">992 Ratings</a>
+														</span>
+													</div>
+
+													<div class="mn-single-price-stoke">
+														<div class="mn-single-price">
+															<div class="final-price" id="pPrice">$0<span class="price-des" id="pPriceDes"></span></div>
+															<div class="mrp" id="pMrp" style="display:none;"></div>
+														</div>
+														<div class="mn-single-stoke">
+															<span class="mn-single-sku">商品編號：<span id="pSku"></span></span>
+															<span class="mn-single-ps-title" id="pStockText">載入中</span>
+														</div>
+													</div>
+													<div class="mn-single-desc" id="pShortDesc">載入中...</div>
+
+													<div class="mn-single-list">
+														<ul>
+															<li><strong>商品特性 :</strong> 維生素補充品</li>
+															<li><strong>使用方式 :</strong> 一天1~2粒</li>
+															<li><strong>規格 :</strong> 60粒</li>
+															<li><strong>商品試用 :</strong> 90天無風險試用；開封後90天內如不適合，可申請退換</li>
+
+														</ul>
+													</div>
+
+													<div class="mn-pro-variation">
+														<div
+															class="mn-pro-variation-inner mn-pro-variation-size m-b-24">
+															<div class="mn-pro-variation-content">
+																
+															</div>
+														</div>
+													</div>
+													<div class="mn-single-qty">
+														<div class="qty-plus-minus">
+															<input class="qty-input" type="text" name="ms_qtybtn"
+																value="1">
+														</div>
+														<div class="mn-btns">
+															<div class="mn-single-cart">
+																<button
+																	class="btn btn-primary mn-btn-2 mn-add-cart"><span>加入購物車</span></button>
+															</div>
+															<div class="mn-single-wishlist">
+																<a href="javascript:void(0)"
+																	class="mn-btn-group wishlist mn-wishlist"
+																	title="Wishlist">
+																	<i class="ri-heart-line"></i>
+																</a>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<!-- Single product tab start -->
+								<div class="mn-single-pro-tab">
+									<div class="mn-single-pro-tab-wrapper">
+										<div class="mn-single-pro-tab-nav">
+											<ul class="nav nav-tabs" id="myTab" role="tablist">
+												<li class="nav-item" role="presentation">
+													<button class="nav-link active" id="details-tab"
+														data-bs-toggle="tab" data-bs-target="#mn-spt-nav-details"
+														type="button" role="tab" aria-controls="mn-spt-nav-details"
+														aria-selected="true">Detail</button>
+												</li>
+											</ul>
+
+										</div>
+										<div class="tab-content  mn-single-pro-tab-content">
+											<div id="mn-spt-nav-details" class="tab-pane fade show active">
+												<div class="mn-single-pro-tab-desc" id="pDesc"><p>載入中...</p></div>
+											</div>
+											<div id="mn-spt-nav-info" class="tab-pane fade">
+												<div class="mn-single-pro-tab-moreinfo">
+													<p>Lorem Ipsum is simply dummy text of the printing and typesetting
+														industry.
+														Lorem Ipsum has been the industry's standard dummy text ever
+														since the
+														1500s, when an unknown printer took a galley of type and
+														scrambled it to
+														make a type specimen book. It has survived not only five
+														centuries.
+													</p>
+													<ul>
+														<li><span>Model</span> SKU140</li>
+														<li><span>Weight</span> 500 g</li>
+														<li><span>Dimensions</span> 35 × 30 × 7 cm</li>
+														<li><span>Color</span> Black, Pink, Red, White</li>
+														<li><span>Size</span> 10 X 20</li>
+													</ul>
+												</div>
+											</div>
+											<div id="mn-spt-nav-vendor" class="tab-pane fade">
+												<div class="mn-single-pro-tab-moreinfo">
+													<div class="mn-product-vendor">
+														<div class="mn-vendor-info">
+															<span>
+																<img src="assets/img/vendor/1.jpg" alt="vendor">
+															</span>
+															<div>
+																<h5>Ocean Crate</h5>
+																<p>Products : 358</p>
+																<p>Sales : 5587</p>
+															</div>
+														</div>
+														<div class="mn-detail">
+															<ul>
+																<li><span>Phone No. :</span> +00 987654321</li>
+																<li><span>Email. :</span> Example@gmail.com</li>
+																<li><span>Address. :</span> 2548 Broaddus Maple Court,
+																	Madisonville
+																	KY 4783, USA.</li>
+															</ul>
+															<p class="mb-0">Lorem Ipsum is simply dummy text of the
+																printing and
+																typesetting
+																industry.
+																Lorem Ipsum has been the industry's standard dummy text
+																ever since
+																the
+																1500s, when an unknown printer took a galley of type and
+																scrambled
+																it to
+																make a type specimen book. It has survived not only five
+																centuries,
+																but also
+																the leap into electronic typesetting, remaining
+																essentially
+																unchanged.
+															</p>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div id="mn-spt-nav-review" class="tab-pane fade">
+												<div class="row">
+													<div class="mn-t-review-wrapper mt-0">
+														<div class="mn-t-review-item">
+															<div class="mn-t-review-avtar">
+																<img src="assets/img/user/1.jpg" alt="user">
+															</div>
+															<div class="mn-t-review-content">
+																<div class="mn-t-review-top">
+																	<div class="mn-t-review-name">Mariya Lykra</div>
+																	<div class="mn-t-review-rating mn-pro-rating">
+																		<i class="ri-star-fill"></i>
+																		<i class="ri-star-fill"></i>
+																		<i class="ri-star-fill"></i>
+																		<i class="ri-star-fill"></i>
+																		<i class="ri-star-fill grey"></i>
+																	</div>
+																</div>
+																<div class="mn-t-review-bottom">
+																	<p>Lorem Ipsum is simply dummy text of the printing
+																		and
+																		typesetting industry. Lorem Ipsum has been the
+																		industry's
+																		standard dummy text ever since the 1500s, when
+																		an unknown
+																		printer took a galley of type and scrambled it
+																		to make a
+																		type specimen.
+																	</p>
+																</div>
+															</div>
+														</div>
+														<div class="mn-t-review-item">
+															<div class="mn-t-review-avtar">
+																<img src="assets/img/user/2.jpg" alt="user">
+															</div>
+															<div class="mn-t-review-content">
+																<div class="mn-t-review-top">
+																	<div class="mn-t-review-name">Moris Willson</div>
+																	<div class="mn-t-review-rating mn-pro-rating">
+																		<i class="ri-star-fill"></i>
+																		<i class="ri-star-fill"></i>
+																		<i class="ri-star-fill"></i>
+																		<i class="ri-star-fill grey"></i>
+																		<i class="ri-star-fill grey"></i>
+																	</div>
+																</div>
+																<div class="mn-t-review-bottom">
+																	<p>Lorem Ipsum has been the industry's
+																		standard dummy text ever since the 1500s, when
+																		an unknown
+																		printer took a galley of type and scrambled it
+																		to make a
+																		type specimen.
+																	</p>
+																</div>
+															</div>
+														</div>
+
+													</div>
+													<div class="mn-ratting-content">
+														<h3>Add a Review</h3>
+														<div class="mn-ratting-form">
+															<form action="#">
+																<div class="mn-ratting-star">
+																	<span>Your rating:</span>
+																	<div class="mn-t-review-rating mn-pro-rating">
+																		<i class="ri-star-fill"></i>
+																		<i class="ri-star-fill"></i>
+																		<i class="ri-star-fill grey"></i>
+																		<i class="ri-star-fill grey"></i>
+																		<i class="ri-star-fill grey"></i>
+																	</div>
+																</div>
+																<div class="mn-ratting-input">
+																	<input name="your-name" placeholder="Name"
+																		type="text">
+																</div>
+																<div class="mn-ratting-input">
+																	<input name="your-email" placeholder="Email*"
+																		type="email" required>
+																</div>
+																<div class="mn-ratting-input form-submit">
+																	<textarea name="your-commemt"
+																		placeholder="Enter Your Comment"></textarea>
+																	<button class="mn-btn-2" type="submit"
+																		value="Submit"><span>Submit</span></button>
+																</div>
+															</form>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<!-- Related Section -->
+								<section class="mn-related-product m-t-30">
+									<div class="mn-title">
+										<h2>Related <span>Products</span></h2>
+									</div>
+									<div class="mn-related owl-carousel" id="relatedProductsContainer">
+									</div>
+								</section>
+							</div>
+						</div>
+					</section>
+				</div>
+			</div>
+		</div>
+
+		<!-- Footer -->
+		<footer class="m-t-15 sb-hide">
+			<div class="mn-footer">
+				<div class="footer-container">
+					<div class="footer-top p-tb-30">
+						<div class="row m-minus-991">
+							<div class="col-sm-12 col-lg-3 mn-footer-cat">
+								<div class="mn-footer-widget mn-footer-company">
+									<img src="assets/img/logo/logo.png" class="mn-footer-logo" alt="footer logo">
+									<img src="assets/img/logo/logo-dark.png" class="mn-footer-dark-logo"
+										alt="footer logo">
+									<p class="mn-footer-detail">我們是一家多元的保健品網站，能快速查詢你需要的商品</p>
+								</div>
+							</div>
+							<div class="col-sm-12 col-lg-2 mn-footer-info">
+								<div class="mn-footer-widget">
+									<h4 class="mn-footer-heading">商品類別</h4>
+									<div class="mn-footer-links mn-footer-dropdown">
+										<ul class="align-items-center">
+											<li class="mn-footer-link">
+												<a href="shop-list-left-sidebar.html">腸胃</a>
+											</li>
+											<li class="mn-footer-link">
+												<a href="shop-list-left-sidebar.html">眼睛</a>
+											</li>
+											<li class="mn-footer-link">
+												<a href="shop-list-left-sidebar.html">膝蓋</a>
+											</li>
+											<li class="mn-footer-link">
+												<a href="shop-list-left-sidebar.html">基礎營養</a>
+											</li>
+											<li class="mn-footer-link">
+												<a href="shop-list-left-sidebar.html">心血管</a>
+											</li>
+											<li class="mn-footer-link">
+												<a href="shop-list-left-sidebar.html">抗氧化/免疫</a>
+											</li>
+										</ul>
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-12 col-lg-2 mn-footer-account">
+								<div class="mn-footer-widget">
+									<h4 class="mn-footer-heading">公司簡介</h4>
+									<div class="mn-footer-links mn-footer-dropdown">
+										<ul class="align-items-center">
+											<li class="mn-footer-link">
+												<a href="about-us.html">關於我們</a>
+											</li>
+											<li class="mn-footer-link">
+												<a href="track-order.html">服務條款</a>
+											</li>
+											<li class="mn-footer-link">
+												<a href="faq.html">法律聲明</a>
+										</ul>
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-12 col-lg-2 mn-footer-service">
+								<div class="mn-footer-widget">
+									<h4 class="mn-footer-heading">帳戶</h4>
+									<div class="mn-footer-links mn-footer-dropdown">
+										<ul class="align-items-center">
+											<li class="mn-footer-link">
+												<a href="login.html">登入</a>
+											</li>
+											<li class="mn-footer-link">
+												<a href="cart.html">查看購物車</a>
+											</li>
+											<li class="mn-footer-link">
+												<a href="faq.html">退貨政策</a>
+											</li>
+											<li class="mn-footer-link">
+												<a href="checkout.html">隱私政策</a>
+											</li>
+										</ul>
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-12 col-lg-3 mn-footer-cont-social">
+								<div class="mn-footer-contact">
+									<div class="mn-footer-widget">
+										<h4 class="mn-footer-heading">聯絡我們</h4>
+										<div class="mn-footer-links mn-footer-dropdown">
+											<ul class="align-items-center">
+												<li class="mn-footer-link mn-foo-location">
+													<span class="mt-15px">
+														<i class="ri-map-pin-line"></i>
+													</span>
+													<p>104臺北市中山區南京東路三段219號4F
+													</p>
+												</li>
+												<li class="mn-footer-link mn-foo-call">
+													<span>
+														<i class="ri-whatsapp-line"></i>
+													</span>
+													<a href="tel:+009876543210">02 2712 0589</a>
+												</li>
+												<li class="mn-footer-link mn-foo-mail">
+													<span>
+														<i class="ri-mail-line"></i>
+													</span>
+													<a href="mailto:example@email.com">example@TibaMe.com</a>
+												</li>
+											</ul>
+										</div>
+									</div>
+								</div>
+								<div class="mn-footer-social">
+									<div class="mn-footer-widget">
+										<div class="mn-footer-links mn-footer-dropdown">
+											<ul class="align-items-center">
+												<li class="mn-footer-link">
+													<a href="javascript:void(0)"><i class="ri-facebook-fill"></i></a>
+												</li>
+												<li class="mn-footer-link">
+													<a href="javascript:void(0)"><i class="ri-twitter-fill"></i></a>
+												</li>
+												<li class="mn-footer-link">
+													<a href="javascript:void(0)"><i class="ri-linkedin-fill"></i></a>
+												</li>
+												<li class="mn-footer-link">
+													<a href="javascript:void(0)"><i class="ri-instagram-line"></i></a>
+												</li>
+											</ul>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="footer-bottom">
+						<div class="row">
+							<div class="mn-bottom-info">
+								<div class="footer-copy">
+									<div class="footer-bottom-copy ">
+										<div class="mn-copy">Copyright © <span id="copyright_year"></span>
+											<a class="site-name" href="index.html">VitaTrack</a> all rights
+											reserved.
+										</div>
+									</div>
+								</div>
+								<div class="footer-bottom-right">
+									<div class="footer-bottom-payment d-flex justify-content-center">
+										<div class="payment-link">
+											<img src="assets/img/footer/payment.png" alt="payment">
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</footer>
+
+		<!-- Footer Nav For Mobile -->
+		<div class="mn-footer-nav">
+			<ul>
+				<li>
+					<a href="login.html" class="mn-main-user">
+						<svg class="svg-icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+							<path
+								d="M512.476 648.247c-170.169 0-308.118-136.411-308.118-304.681 0-168.271 137.949-304.681 308.118-304.681 170.169 0 308.119 136.411 308.119 304.681C820.594 511.837 682.645 648.247 512.476 648.247L512.476 648.247zM512.476 100.186c-135.713 0-246.12 109.178-246.12 243.381 0 134.202 110.407 243.381 246.12 243.381 135.719 0 246.126-109.179 246.126-243.381C758.602 209.364 648.195 100.186 512.476 100.186L512.476 100.186zM935.867 985.115l-26.164 0c-9.648 0-17.779-6.941-19.384-16.35-2.646-15.426-6.277-30.52-11.142-44.95-24.769-87.686-81.337-164.13-159.104-214.266-63.232 35.203-134.235 53.64-207.597 53.64-73.555 0-144.73-18.537-208.084-53.922-78 50.131-134.75 126.68-159.564 214.549 0 0-4.893 18.172-11.795 46.4-2.136 8.723-10.035 14.9-19.112 14.9L88.133 985.116c-9.415 0-16.693-8.214-15.47-17.452C91.698 824.084 181.099 702.474 305.51 637.615c58.682 40.472 129.996 64.267 206.966 64.267 77.01 0 148.327-23.795 207.01-64.267 124.411 64.859 213.812 186.469 229.35 330.049C952.56 976.901 945.282 985.115 935.867 985.115z"
+								fill="#000000" opacity="1" data-original="#000000"></path>
+							</svg>
+					</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+
+		<!-- Vendor Custom -->
+	<script src="assets/js/vendor/jquery-3.7.1.min.js"></script>
+	<script src="assets/js/vendor/bootstrap.bundle.min.js"></script>
+	<script src="assets/js/vendor/owl.carousel.min.js"></script>
+	<script src="assets/js/vendor/slick.min.js"></script>
+	<script src="assets/js/vendor/swiper-bundle.min.js"></script>
+	<script src="assets/js/vendor/countdownTimer.js"></script>
+	<script src="assets/js/vendor/infiniteslidev2.js"></script>
+	<script src="assets/js/vendor/nouislider.js"></script>
+	<script src="assets/js/vendor/smoothscroll.min.js"></script>
+	<script src="assets/js/vendor/jquery.zoom.min.js"></script>
+	<script src="assets/js/main.js"></script>
+	<script src="product/js/addcart.js"></script>
+	<script src="product/js/productDetailPage.js"></script>
+
+</body>
+
+</html>

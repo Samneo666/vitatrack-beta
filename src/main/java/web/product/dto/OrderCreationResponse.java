@@ -1,0 +1,16 @@
+package web.product.dto;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class OrderCreationResponse {
+	private  Integer memberId;
+	private  Integer orderId;
+    private  Integer totalAmount;
+    private  String  status;
+    
+}

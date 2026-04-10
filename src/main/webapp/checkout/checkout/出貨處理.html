@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="zh-TW" dir="ltr">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>後台 - 出貨處理</title>
+
+    <!-- App favicon -->
+    <link rel="shortcut icon" href="assets/img/favicon/favicon.png">
+
+    <!-- Icon CSS -->
+    <link href="assets/css/vendor/materialdesignicons.min.css" rel="stylesheet">
+    <link href="assets/css/vendor/remixicon.css" rel="stylesheet">
+
+    <!-- Vendor -->
+    <link href="assets/css/vendor/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Main CSS -->
+    <link id="mainCss" href="assets/css/style.css" rel="stylesheet">
+
+    <style>
+        /* 後台出貨處理客製化樣式（輕量） */
+        body { background: #fff; }
+        .admin-wrapper { display: flex; min-height: 78vh; }
+        .admin-sidebar {
+            width: 220px;
+            border-right: 1px dashed #c8c8c8;
+            padding: 28px 18px;
+            background: #fafafa;
+        }
+        .admin-sidebar h3 { font-size: 16px; margin-bottom: 12px; }
+        .admin-sidebar ul { padding-left: 12px; margin:0; }
+        .admin-sidebar li { margin: 10px 0; list-style: none; }
+        .admin-sidebar a { color: #333; text-decoration: none; }
+        .admin-content { flex: 1; padding: 28px; }
+        .panel-box {
+            border: 1px solid #ddd;
+            padding: 14px;
+            border-radius: 4px;
+            background: #fff;
+        }
+        .field-row { margin-bottom: 12px; }
+        .field-label { font-weight: 600; display:block; margin-bottom:6px; }
+        .btn-group-sm .btn { padding: 6px 12px; }
+        /* 讓主要區域與附圖尺寸靠近 */
+        @media (min-width: 992px) {
+            .admin-content { padding-left: 40px; padding-right: 40px; }
+        }
+    </style>
+</head>
+
+<body>
+
+    <main class="wrapper sb-default">
+
+        <header class="p-3 border-bottom">
+            <div class="container-fluid">
+                <div class="d-flex align-items-center">
+                    <div class="me-auto">
+                        <a href="index.html" class="logo"><img src="assets/img/logo/logo.png" alt="logo" style="height:36px;"></a>
+                    </div>
+                    <div>
+                        <span>管理後台</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="admin-wrapper container-fluid">
+            <!-- 左側後台選單 -->
+            <aside class="admin-sidebar">
+                <h3>後台選單</h3>
+                <ul>
+                    <li><a href="訂單處理1.html" class="fw-bold">訂單處理</a></li>
+                    <li><a href="#">商品管理</a></li>
+                    <li><a href="#">會員管理</a></li>
+                    <li><a href="#">報表</a></li>
+                </ul>
+            </aside>
+
+            <!-- 右側主要內容：出貨處理 -->
+            <section class="admin-content">
+                <div class="d-flex align-items-center mb-3">
+                    <h2 class="mb-0">出貨處理</h2>
+                </div>
+
+                <div class="panel-box" style="max-width: 760px;">
+                    <form id="shippingForm">
+                        <div class="field-row">
+                            <label class="field-label">訂單編號：</label>
+                            <div id="orderId" class="form-control-plaintext">ODR001</div>
+                        </div>
+
+                        <div class="field-row">
+                            <label class="field-label">目前狀態：</label>
+                            <div id="orderStatus" class="form-control-plaintext">已付款</div>
+                        </div>
+
+                        <div class="field-row">
+                            <label class="field-label" for="trackingNo">物流編號：</label>
+                            <input id="trackingNo" name="trackingNo" type="text" class="form-control" placeholder="請輸入物流編號">
+                        </div>
+
+                        <div class="field-row mt-3">
+                            <label class="field-label">備註（選填）：</label>
+                            <textarea name="note" class="form-control" rows="3" placeholder="可輸入配送備註或備註訊息"></textarea>
+                        </div>
+
+                        <div class="mt-4 d-flex">
+                            <button id="confirmBtn" type="button" class="btn btn-primary btn-group-sm">確認出貨</button>
+                            <button id="cancelBtn" type="button" class="btn btn-outline-secondary btn-group-sm ms-3">取消</button>
+                        </div>
+                    </form>
+                </div>
+            </section>
+        </div>
+
+        <footer class="p-3 border-top text-center">
+            <small>© <span id="copyright_year"></span> The Mantu</small>
+        </footer>
+
+    </main>
+
+    <!-- Vendor JS -->
+    <script src="assets/js/vendor/jquery-3.7.1.min.js"></script>
+    <script src="assets/js/vendor/bootstrap.bundle.min.js"></script>
+
+    <!-- Main JS -->
+    <script src="assets/js/main.js"></script>
+
+    <script>
+        // footer 年份
+        document.getElementById('copyright_year').textContent = new Date().getFullYear();
+
+        // 範例按鈕行為：可替換為實際 AJAX 呼叫或表單送出
+        document.getElementById('confirmBtn').addEventListener('click', function () {
+            var tracking = document.getElementById('trackingNo').value.trim();
+            if (!tracking) {
+                alert('請輸入物流編號後再確認出貨。');
+                return;
+            }
+            // 這裡可以放 AJAX 呼叫或送出表單
+            alert('已確認出貨\n訂單：' + document.getElementById('orderId').textContent + '\n物流編號：' + tracking);
+        });
+
+        document.getElementById('cancelBtn').addEventListener('click', function () {
+            if (confirm('確定要取消出貨處理嗎？')) {
+                // 若要清空欄位或跳回列表，可在此處處理
+                document.getElementById('trackingNo').value = '';
+            }
+        });
+    </script>
+</body>
+
+</html>

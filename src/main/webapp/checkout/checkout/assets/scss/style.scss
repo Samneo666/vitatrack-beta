@@ -1,0 +1,103 @@
+@charset "UTF-8";
+
+/*-----------------------------------------------------------------------------------
+
+    Item Name: Mantu - eCommerce HTML Template
+    Author: Maraviya Infotech
+    Version: 1.0
+    Copyright 2025
+
+-----------------------------------------------------------------------------------*/
+
+/*---------------------------------------------------------------------------------
+    Included CSS INDEX
+-----------------------------------------------------------------------------------
+
+01. Typography
+02. Components
+    - Breadcrumb
+    - Cart Sidebar
+    - Wishlist
+    - Search Sidebar
+    - Common
+    - Main Content
+    - Header
+    - Sidebar
+    - Footer
+    - Footer Nav
+    - Quickview
+    - Shop Sidebar
+
+03. Layout 
+    - Hero-1
+    - Category
+    - Product
+    - Service
+    - Banner
+    - Blog
+    - Testimonial
+    - Instagram
+
+04. Pages
+    - About Page
+    - Shop Page
+    - Product Page
+    - Blog Page
+    - FAQ Page
+    - Contact Page
+    - Cart Page
+    - Checkout Page
+    - Compare Page
+    - Login Page
+    - Register Page
+    - Terms Page
+    - Track Order Page
+    - Wishlist Page
+-----------------------------------------------------------------------------------*/
+
+// Typography
+@import "base/_typography";
+
+// Utilities
+@import "utilities/_variables";
+@import "utilities/_mixins";
+
+// Components
+@import "components/_breadcrumb";
+@import "components/_cart-sidebar";
+@import "components/_wishlist-sidebar";
+@import "components/_search-sidebar";
+@import "components/_common";
+@import "components/_main-content";
+@import "components/_header";
+@import "components/_sidebar";
+@import "components/_footer";
+@import "components/_footer-nav";
+@import "components/_quickview";
+@import "components/_shop-sidebar";
+
+// Layouts
+@import "layouts/_hero-1";
+@import "layouts/_category";
+@import "layouts/_product";
+@import "layouts/_service";
+@import "layouts/_banner";
+@import "layouts/_blog";
+@import "layouts/_testimonials";
+@import "layouts/_instagram";
+
+// Pages
+@import "pages/_about-page";
+@import "pages/_shop-page";
+@import "pages/_product-page";
+@import "pages/_blog-page";
+@import "pages/_faq-page";
+@import "pages/_contact-page";
+@import "pages/_cart-page";
+@import "pages/_checkout-page";
+@import "pages/_compare-page";
+@import "pages/_login-page";
+@import "pages/_register-page";
+@import "pages/_terms-page";
+@import "pages/_track-order-page";
+@import "pages/_wishlist-page";

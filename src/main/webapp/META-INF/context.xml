@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context>
+
+	<Resource name="jdbc/vitatrack" type="javax.sql.DataSource"
+		driverClassName="com.mysql.cj.jdbc.Driver"
+		jdbcUrl="jdbc:mysql://tibame.c8gprzfylp8c.us-east-1.rds.amazonaws.com:3306/vitatrack"
+		username="admin"
+		password="tibame24708053" 
+		factory="com.zaxxer.hikari.HikariJNDIFactory"
+		dataSource.cachePrepStmts="true" 
+		dataSource.prepStmtCacheSize="250"
+		dataSource.prepStmtCacheSqlLimit="2048" 
+	/>
+
+    <!-- Google OAuth Configuration -->
+    <Environment name="google/client-id"
+                 value="${GOOGLE_CLIENT_ID}"
+                 type="java.lang.String"/>
+    <Environment name="google/client-secret"
+                 value="${GOOGLE_CLIENT_SECRET}"
+                 type="java.lang.String"/>
+    <Environment name="google/redirect-uri"
+                 value="${GOOGLE_REDIRECT_URI:-http://localhost:8080/api/oauth/google/callback}"
+                 type="java.lang.String"/>
+
+    <!-- JWT Configuration -->
+    <Environment name="jwt/access-secret"
+                 value="${JWT_ACCESS_SECRET}"
+                 type="java.lang.String"/>
+    <Environment name="jwt/refresh-secret"
+                 value="${JWT_REFRESH_SECRET}"
+                 type="java.lang.String"/>
+    <Environment name="jwt/access-expiry"
+                 value="${JWT_ACCESS_EXPIRY:-1800}"
+                 type="java.lang.Integer"/>
+    <Environment name="jwt/refresh-expiry"
+                 value="${JWT_REFRESH_EXPIRY:-604800}"
+                 type="java.lang.Integer"/>
+
+    <!-- AWS S3 Configuration -->
+    <Environment name="aws.s3.bucket"
+                 value="${AWS_S3_BUCKET}"
+                 type="java.lang.String"/>
+    <Environment name="aws.s3.region"
+                 value="${AWS_REGION:-us-east-1}"
+                 type="java.lang.String"/>
+    <Environment name="aws.s3.access-key-id"
+                 value="${AWS_S3_ACCESS_KEY_ID}"
+                 type="java.lang.String"/>
+    <Environment name="aws.s3.secret-access-key"
+                 value="${AWS_S3_SECRET_ACCESS_KEY}"
+                 type="java.lang.String"/>
+
+    <!-- AWS Bedrock Configuration -->
+    <Environment name="aws.bedrock.region"
+                 value="${AWS_REGION:-us-east-1}"
+                 type="java.lang.String"/>
+    <Environment name="aws.bedrock.model-id"
+                 value="${AWS_BEDROCK_MODEL_ID:-anthropic.claude-3-5-sonnet-20241022-v2:0}"
+                 type="java.lang.String"/>
+    <Environment name="aws.bedrock.access-key-id"
+                 value="${AWS_BEDROCK_ACCESS_KEY_ID}"
+                 type="java.lang.String"/>
+    <Environment name="aws.bedrock.secret-access-key"
+                 value="${AWS_BEDROCK_SECRET_ACCESS_KEY}"
+                 type="java.lang.String"/>
+
+    <!-- Redis Configuration -->
+    <Environment name="redis.host"
+                 value="${REDIS_HOST:-localhost}"
+                 type="java.lang.String"/>
+    <Environment name="redis.port"
+                 value="${REDIS_PORT:-6379}"
+                 type="java.lang.Integer"/>
+
+
+</Context>

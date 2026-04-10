@@ -1,0 +1,63 @@
+    /* 讓彈窗永遠在視窗內，超出就捲動，不會爆版 */
+    #editModal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.4);
+      display: none;
+      z-index: 9999;
+    }
+
+    #editModal .modal-content {
+      width: min(980px, 94vw);
+      max-height: 88vh;
+      overflow: auto;
+      background: #fff;
+      margin: 4vh auto;
+      padding: 16px;
+      box-sizing: border-box;
+      border: 1px solid #999;
+    }
+
+    #editModal .modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    #editModal label {
+      display: block;
+      font-size: 14px;
+      margin: 8px 0 4px;
+    }
+
+    #editModal input,
+    #editModal textarea {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 6px;
+    }
+
+    /* 允許上下拉，但不讓寬度把版面撐爆；也可改成 resize:none */
+    #editModal textarea {
+      max-width: 100%;
+      resize: vertical;
+    }
+
+    #editModal .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    #editModal .actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    #editModal .readonly {
+      background: #f2f2f2;
+    }

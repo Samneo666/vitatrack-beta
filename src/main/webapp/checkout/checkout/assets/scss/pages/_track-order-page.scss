@@ -1,0 +1,195 @@
+/*-------------------------------------------------
+  Track Order Page CSS
+---------------------------------------------------*/
+.mn-track {
+	.mn-track-box {
+		border-radius: $radius-15;
+	}
+	.mn-track-card {
+		height: 100%;
+		padding: 30px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex-direction: column;
+		border: 1px solid $border-e5e5e5;
+		border-radius: $radius-15;
+		color: $text-777;
+		text-align: center;
+		font-size: 15px;
+		background-color: $fff;
+		.mn-track-title {
+			margin-bottom: 5px;
+			color: $title-color;
+			text-transform: capitalize;
+			font-size: 16px;
+			font-weight: 500;
+		}
+	}
+	.mn-steps {
+		margin-top: 30px;
+		border: 1px solid $border-e5e5e5;
+		border-radius: $radius-15;
+		background-color: $fff;
+	}	
+	.mn-steps-header {
+		padding: 15px;
+		border-top: 1px solid $border-e5e5e5;
+	}	
+	.mn-steps-header {
+		.progress {
+			height: 30px;
+			.progress-bar {
+				background-color: $primary;
+			}
+		}
+	}	
+	.mn-steps-body {
+		display: table;
+		table-layout: fixed;
+		width: 100%;
+	}	
+	.mn-step {
+		padding: 30px 15px;
+		display: table-cell;
+		position: relative;
+		-webkit-transition: all 0.25s ease-in-out;
+		transition: all 0.25s ease-in-out;
+		border-right: 1px solid $border-e5e5e5;
+		color: $text-777;
+		font-weight: 400;
+		text-align: center;
+		text-decoration: none;
+		text-transform: capitalize;
+		&:last-child {
+			border-right: 0;
+		}
+		&:hover {
+			color: $title-color;;
+			text-decoration: none;
+			.mn-step-indicator {
+				-webkit-transition: all 0.25s ease-in-out;
+				transition: all 0.25s ease-in-out;
+				border-color: transparent;
+				background-color: $border-e5e5e5;
+			}
+			.mn-step-icon {
+				color: $text-777;
+			}
+		}
+	}	
+	.mn-step-indicator {
+		display: block;
+		position: absolute;
+		top: 15px;
+		right: 15px;
+		width: 1.5rem;
+		height: 1.5rem;
+		border: 1px solid $border-e5e5e5;
+		border-radius: 50%;
+		background-color: $white;
+		font-size: .875rem;
+		line-height: 1.375rem;
+	}	
+	.has-indicator {
+		padding-right: 1.5rem;
+		padding-left: 2.375rem;
+		.mn-step-indicator {
+			top: 50%;
+			margin-top: -.75rem;
+		}
+	}	
+	.mn-step-icon {
+		display: block;
+		width: 30px;
+		height: 30px;
+		margin: 0 auto;
+		margin-bottom: .75rem;
+		-webkit-transition: all 0.25s ease-in-out;
+		transition: all 0.25s ease-in-out;
+		color: $text-777;
+		i {
+			font-size: 30px;
+			line-height: 30px;
+		}
+	}
+	.mn-step-active {
+		color: $title-color;
+		pointer-events: none;
+		cursor: default;
+		font-weight: 500;
+		&:hover {
+			color: $title-color;
+			pointer-events: none;
+			cursor: default;
+			.mn-step-icon {
+				color: $secondary;
+			}
+		}
+		.mn-step-icon {
+			color: $secondary;
+		}
+	}	
+	.mn-step-completed{
+		.mn-step-indicator {
+			border-color: transparent;
+			background-color: $secondary;
+			color: $white;
+			line-height: 1.25rem;
+			i {
+				line-height: 24px;
+    			font-size: 18px;
+			}
+		}
+		&:hover {
+			.mn-step-indicator {
+				border-color: transparent;
+				background-color: $secondary;
+				color: $white;
+				line-height: 1.25rem;
+				i {
+					line-height: 23px;
+				}
+			}
+		}
+	}
+}
+
+/* Track order 2 */
+ul.gi {
+    margin: 0;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    padding-top: 0;
+    padding-bottom: 0;
+    list-style-type: none;
+    li {
+		padding: 30px;
+        display: inline-block;
+        text-align: center;
+        line-height: 22px;
+    }
+}
+
+
+/* Responsive track order */
+@media (max-width: 767px) {
+	.mn-track {
+		.mn-steps-body, .mn-step {
+       		display: block;
+       		font-size: 14px;
+    	}
+		.mn-step {
+       		display: block;
+       		font-size: 14px;
+			border-right: 0;
+        	border-bottom: 1px solid #e9ecef;
+			&:last-child {
+				border-bottom: 0;
+			}
+    	}
+		.mn-steps-header {
+			display: none;
+		}
+	}
+}

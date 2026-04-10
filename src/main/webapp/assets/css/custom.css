@@ -1,0 +1,21 @@
+#login-pwd-box {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+#toggleEye {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.mn-login-wrap {
+    margin: 0.5rem 0;
+}
+
+.mn-login-wrapper .mn-login-container .mn-login-form input {
+    margin-bottom: 0 !important;
+}

@@ -1,0 +1,148 @@
+.member-layout {
+  display: flex;
+  align-items: flex-start;
+}
+
+.member-sidebar {
+  width: 160px;
+  flex-shrink: 0;
+}
+
+.member-main {
+  flex: 1;
+  padding-left: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.member-card {
+  width: 100%;
+  max-width: 700px;
+}
+
+.welcome-msg {
+  text-align: center;
+  padding: 60px 20px;
+  color: #888;
+  font-size: 16px;
+}
+
+/* 讓重設密碼表單置中 */
+#resetForm {
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+/* 訂單/購物車表格置中 */
+#content-area > .member-card,
+#content-area > nav {
+  width: 100%;
+  max-width: 800px;
+}
+
+.member-user {
+
+  /* ✔ 元素仍佔空間 ✘ 內容不可見 */
+  visibility: hidden;
+  /* 看不到，但高度還在 */
+}
+
+.form-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 16px;
+  font-size: 14px;
+  min-height: 50px;    /* 給予固定高度讓畫面更穩 */
+  border-bottom: 1px solid #f0f0f0; /* 可選：加入淡淡的底線增加層次感 */
+}
+
+/* 統一 P 標籤與 Input 的樣式，避免換行抖動 */
+.form-row p.readonly, 
+.form-row input.edit-input {
+    margin-bottom: 0;
+    padding-left: 10px;
+    flex: 1; /* 讓內容自動撐開 */
+}
+
+.form-row label {
+  width: 120px;
+  height: 38px;
+  flex-shrink: 0;
+  color: #555;
+}
+
+/* 密碼欄位的眼睛圖示Input 進行優化 */
+.mn-resetPwd-wrap {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.mn-resetPwd-wrap label {
+    font-weight: 500;
+    margin-bottom: 8px;
+    color: #333;
+}
+
+/* 防止 padding 撐開寬度 */
+.mn-resetPwd-wrap *, 
+.mn-resetPwd-wrap *::before, 
+.mn-resetPwd-wrap *::after {
+    box-sizing: border-box;
+}
+
+/* 確保 input 寬度確實受到父層容器限制 */
+.input-group-custom {
+    width: 100%;
+    position: relative;
+}
+
+/* 眼睛圖示放在 input 內、靠右 */
+.input-group-custom i {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  font-size: 18px;
+  color: #888;
+  z-index: 2;
+  transition: color 0.2s ease;
+}
+
+.input-group-custom i:hover {
+  color: #333;
+}
+
+/* input 右側留空間給眼睛圖示 */
+.input-group-custom input {
+  width: 100%;
+  padding: 10px 40px 10px 15px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  outline: none;
+}
+
+/* 欄位格式提醒 */
+.hint-text {
+  display: block;
+  font-size: 13px;
+  margin-bottom: 10px;
+  height: 18px;
+}
+
+
+.member-menu {
+    border-radius: 15px !important;
+    overflow: hidden; /* 關鍵：切掉內部項目的直角邊緣 */
+    border: 1px solid #dee2e6; /* 確保外框線有對齊圓角 */
+}
+
+/* 同時確保第一個與最後一個項目的預設圓角不會干擾 */
+.member-menu .list-group-item:first-child,
+.member-menu .list-group-item:last-child {
+    border-radius: 0;
+}

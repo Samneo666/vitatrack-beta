@@ -1,0 +1,45 @@
+/** Main Content **/
+.mn-main-content.sb-hide {
+	@include ease1;
+	width: calc(100% - 300px);
+	padding: 0 30px 0 30px;
+}
+
+.mn-main-content {
+	@include ease1;
+	width: 100%;
+	min-height: calc(100vh - 485px);
+	padding: 0 30px 0 330px;
+	margin: 30px auto 0 auto;
+}
+
+/* Responsive css */
+@media only screen and (max-width: 1399px) {
+	.mn-main-content.sb-hide {
+		width: 100%;
+	}
+	.mn-main-content {
+		padding: 0 30px 0 30px;
+	}
+}
+@media only screen and (max-width: 991px) {
+	.mn-main-content{
+		width: calc(100% - 30px);
+		padding: 0;
+	}
+	.mn-main-content.sb-hide {
+		padding: 0 15px 0 15px;
+	}
+}
+
+@media only screen and (max-width: 575px) {
+	.mn-main-content.sb-hide{
+		width: calc(100% - 24px);
+        margin: 30px 12px 0 12px;
+		padding: 0;
+	}
+	.mn-main-content{
+		width: calc(100% - 24px);
+        margin: 30px 12px 0 12px;
+	}
+}

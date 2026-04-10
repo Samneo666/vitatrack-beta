@@ -1,0 +1,78 @@
+/*-------------------------------------------------
+  Breadcrumb Style CSS
+---------------------------------------------------*/
+.mn-breadcrumb {
+	.gi_breadcrumb_inner {
+		margin: 0;
+		padding: 15px 5px;
+		border: 1px solid $border-e5e5e5;
+		background-color: $fff;
+		border-radius: $radius-15;
+	}
+	.mn-breadcrumb-title {
+		text-decoration: none;
+		color: $title-color;
+		display: block;
+		font-size: 15px;
+		font-family: $font-family-text;
+		line-height: 22px;
+		font-weight: 600;
+		margin: 0 auto;
+		text-transform: capitalize;
+	}
+}
+.mn-breadcrumb-list {
+	text-align: right;
+	li {
+		display: inline-block;
+		font-size: 14px;
+		font-weight: 400;
+		letter-spacing: 0.02rem;
+		line-height: 1.2;
+		text-transform: capitalize;
+		a {
+			position: relative;
+			color: $title-color;
+			&:hover {
+				color: $secondary;
+			}
+		}
+	}
+	li.active {
+		color: $text-777;
+	}
+	.mn-breadcrumb-item.active {
+		&::before {
+			color: $text-777;
+		}
+	}
+}
+.mn-breadcrumb-item {
+	display: flex;
+	+ {
+		.mn-breadcrumb-item {
+			padding-left: 7px;
+			&::before {
+				display: inline-block;
+				padding-right: 7px;
+				color: $title-color;
+				content: "\f2e5";
+				font-family: $remixico;
+				font-size: 15px;
+			}
+		}
+	}
+}
+
+/* Breadcrumb Responsive css */
+@media (max-width: 767px) {
+	.mn-breadcrumb {
+		.mn-breadcrumb-title {
+			margin-bottom: 10px;
+			text-align: center;
+		}
+	}
+	.mn-breadcrumb-list {
+			text-align: center;
+		}
+}

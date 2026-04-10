@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>付款失敗</title>
+  <link rel="shortcut icon" href="assets/img/favicon/favicon.png">
+  <link href="assets/css/vendor/bootstrap.min.css" rel="stylesheet">
+  <link id="mainCss" href="assets/css/style.css" rel="stylesheet">
+  <style>
+    :root { --accent:#1e88e5; --danger:#e53935; --muted:#666; }
+    body { background:#fafafa; color:#222; font-family: "Noto Sans TC", "Microsoft JhengHei", Arial, sans-serif; margin:0; }
+    .container-wrap { min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:flex-start; padding:28px 16px; box-sizing:border-box; }
+    header.title { width:100%; max-width:900px; text-align:center; padding:12px 0; border-bottom:1px dashed #ccc; margin-bottom:20px; }
+    header.title h1 { margin:0; font-size:22px; font-weight:500; }
+    .card {
+      width:900px;
+      max-width:100%;
+      background:#fff;
+      padding:28px;
+      box-sizing:border-box;
+      border-radius:6px;
+      border:1px dashed #d0d0d0;
+      text-align:center;
+    }
+    .status {
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:12px;
+      margin-bottom:18px;
+    }
+    .icon {
+      width:40px; height:40px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+    }
+    .icon.fail { background: #fff0f0; border:1px solid rgba(229,57,53,0.12); color:var(--danger); }
+    .status p { margin:0; font-size:18px; font-weight:500; color:#333; display:flex; align-items:center; gap:8px; }
+    .error-box {
+      border:1px solid #bfbfbf;
+      background:#fff;
+      padding:20px;
+      text-align:left;
+      margin: 10px auto 18px;
+      max-width:760px;
+      border-radius:2px;
+      min-height:80px;
+      box-sizing:border-box;
+    }
+    .error-box .hint { color:var(--muted); font-size:14px; }
+    .ops-frame {
+      border:1px solid #bfbfbf;
+      background:#fff;
+      padding:16px;
+      margin:18px auto 0;
+      max-width:760px;
+      border-radius:2px;
+      box-sizing:border-box;
+    }
+    .ops-frame .label { text-align:left; color:#333; margin-bottom:10px; font-weight:600; }
+    .ops {
+      display:flex;
+      gap:18px;
+      justify-content:center;
+      flex-wrap:wrap;
+    }
+    .ops .btn {
+      min-width:140px;
+      padding:10px 14px;
+      border-radius:8px;
+    }
+    .muted-note { color:var(--muted); font-size:13px; margin-top:12px; text-align:left; max-width:760px; margin-left:auto; margin-right:auto; }
+    @media (max-width:600px) {
+      .card { padding:18px; }
+      .ops .btn { min-width:120px; padding:8px 10px; }
+      header.title h1 { font-size:18px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container-wrap">
+    <header class="title" role="banner" aria-hidden="false">
+      <h1>付款失敗</h1>
+    </header>
+
+    <main class="card" role="main" aria-labelledby="statusTitle">
+      <div class="status" aria-live="polite">
+        <div class="icon fail" aria-hidden="true">
+          <!-- red X icon -->
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+            <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <p id="statusTitle">付款失敗，交易未完成</p>
+      </div>
+
+      <div class="error-box" role="status" aria-live="assertive" id="errorBox">
+        <div style="text-align:center;font-weight:600;margin-bottom:6px;">錯誤訊息區</div>
+        <div class="hint" id="errorMsg">例如：授權失敗 / 餘額不足 / 交易逾時等</div>
+      </div>
+
+      <div class="ops-frame" aria-label="可選操作">
+        <div class="label">可選操作：</div>
+        <div class="ops" role="group" aria-label="操作按鈕">
+          <button id="retryBtn" class="btn btn-outline-primary" type="button">重新付款</button>
+          <button id="changeMethodBtn" class="btn btn-outline-secondary" type="button">更換付款方式</button>
+          <a id="backCartBtn" class="btn btn-outline-dark" href="cart.html">返回購物車</a>
+        </div>
+      </div>
+
+      <div class="muted-note">
+        若需要協助，請先確認卡片資訊與餘額，或聯絡發卡銀行；系統同時會寄送錯誤通知到訂單聯絡 Email（若有）。
+      </div>
+    </main>
+  </div>
+
+  <script>
+    // 支援用 query params 填入錯誤訊息與訂單 id，例如:
+    // checkout-fault.html?err=授權失敗&id=ODR001
+    (function () {
+      const params = new URLSearchParams(window.location.search);
+      const err = params.get('err') || params.get('msg') || '';
+      const orderId = params.get('id') || params.get('order') || '';
+
+      if (err) {
+        document.getElementById('errorMsg').textContent = err;
+      }
+
+      // 若提供訂單編號，可在錯誤訊息下方附註（選擇性）
+      if (orderId) {
+        const note = document.createElement('div');
+        note.style.marginTop = '8px';
+        note.style.fontSize = '13px';
+        note.style.color = '#444';
+        note.textContent = '訂單編號：' + orderId;
+        document.getElementById('errorBox').appendChild(note);
+      }
+
+      // Buttons behaviour
+      document.getElementById('retryBtn').addEventListener('click', function () {
+        // 重新付款：導回 checkout 並保留訂單 id 與必要資訊
+        let url = 'checkout.html';
+        const q = new URLSearchParams();
+        if (orderId) q.set('id', orderId);
+        const amt = params.get('amt');
+        if (amt) q.set('amt', amt);
+        if ([...q].length) url += '?' + q.toString();
+        window.location.href = url;
+      });
+
+      document.getElementById('changeMethodBtn').addEventListener('click', function () {
+        // 變更付款方式：導回 checkout 並導到付款區塊（fragment）
+        let url = 'checkout.html#payment';
+        if (orderId) url += (url.indexOf('?') === -1 ? '?' : '&') + 'id=' + encodeURIComponent(orderId);
+        window.location.href = url;
+      });
+
+      // Back to cart is a normal link (href)
+    })();
+  </script>
+</body>
+</html>

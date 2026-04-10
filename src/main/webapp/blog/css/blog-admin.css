@@ -1,0 +1,205 @@
+/* =============================================
+   Blog Admin Table Styles
+   ============================================= */
+
+/* Base table setup */
+.mn-vendor-card-table {
+  overflow-x: auto;
+}
+
+.mn-vendor-card-table table {
+  width: 100%;
+}
+
+/* Column widths */
+.mn-table thead th:nth-child(2) {
+  width: 35%;
+}
+
+.mn-table thead th:last-child {
+  width: 120px;
+}
+
+/* Cell padding and no-wrap */
+.mn-table thead th,
+.mn-table tbody td {
+  padding: 0 15px;
+  white-space: nowrap;
+}
+
+/* Title cell - allow wrapping for long titles */
+.mn-table tbody tr td:nth-child(2) {
+  white-space: normal;
+  word-break: break-word;
+  max-width: 300px;
+  line-height: 1.5;
+}
+
+/* =============================================
+   Responsive 2-Column Layout (Mobile)
+   ============================================= */
+@media (max-width: 767px) {
+  .mn-table thead th:nth-child(2) {
+    width: 50% !important;
+  }
+  
+  .mn-table thead th:last-child {
+    width: 50% !important;
+  }
+  
+  .mn-table tbody tr td:nth-child(2) {
+    width: 50% !important;
+    max-width: none;
+  }
+  
+  .mn-table tbody tr td:last-child {
+    width: 50% !important;
+  }
+}
+
+/* =============================================
+   Medium Screen Adjustments (5-column mode)
+   ============================================= */
+@media (min-width: 768px) and (max-width: 991px) {
+  .mn-table {
+    min-width: 600px;
+  }
+  
+  .mn-table thead th,
+  .mn-table tbody td {
+    padding: 0 8px;
+  }
+}
+
+/* =============================================
+   Responsive Breakpoints
+   ============================================= */
+
+/* Large Desktop (≥ 992px) */
+@media (min-width: 992px) {
+  .mn-table thead th:nth-child(2) {
+    width: 50%;
+  }
+}
+
+/* Tablet (768px - 991px) */
+@media (min-width: 768px) and (max-width: 991px) {
+  .mn-table thead th:nth-child(2) {
+    width: 40%;
+  }
+}
+
+/* Mobile (< 768px) */
+@media (max-width: 767px) {
+  .mn-vendor-card-table table {
+    table-layout: fixed;
+  }
+  
+  .mn-table thead th:nth-child(2) {
+    width: 60%;
+  }
+  
+  .mn-table thead th:last-child {
+    width: 40%;
+  }
+  
+  .mn-table tbody tr td:last-child .tbl-btn {
+    gap: 4px;
+  }
+  
+  .mn-table tbody tr td:last-child .mn-btn-2,
+  .mn-table tbody tr td:last-child .mn-btn-1 {
+    padding: 8px;
+    min-width: 36px;
+  }
+}
+
+/* =============================================
+   Toast Notifications
+   ============================================= */
+
+.admin-toast {
+  position: fixed;
+  top: 80px;
+  right: 20px;
+  min-width: 300px;
+  padding: 16px 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  z-index: 9999;
+  font-family: 'Quicksand', sans-serif;
+  font-weight: 600;
+  font-size: 15px;
+  animation: slideInRight 0.3s ease-out;
+}
+
+.admin-toast.admin-toast-success {
+  background: #2ab7a5;
+  color: #fff;
+}
+
+.admin-toast.admin-toast-error {
+  background: #f90c4c;
+  color: #fff;
+}
+
+@keyframes slideInRight {
+  from {
+    transform: translateX(400px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* Match Quill editor paragraph spacing */
+#article-content-text p {
+  margin: 0 0 1em 0;
+}
+#article-content-text p:last-child {
+  margin-bottom: 0;
+}
+#article-content-text p br:only-child {
+  display: block;
+  content: "";
+  margin: 0.5em 0;
+}
+
+/* Quill editor text visibility */
+.ql-editor {
+  color: #333;
+}
+
+/* =============================================
+   Admin Table Styles
+   ============================================= */
+
+.admin-table-cell-left {
+  text-align: left;
+  white-space: nowrap;
+}
+
+.admin-table-cell-views {
+  text-align: left;
+  white-space: nowrap;
+  padding-left: 40px;
+}
+
+.admin-table-actions {
+  display: inline-flex;
+  gap: 8px;
+  justify-content: flex-start;
+}
+
+/* =============================================
+   Logout Link Style
+   ============================================= */
+
+.logout-link {
+  color: #dc3545;
+}

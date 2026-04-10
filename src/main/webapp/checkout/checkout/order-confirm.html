@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>訂單已確認</title>
+  <style>
+    body { font-family: Arial, "Microsoft JhengHei", sans-serif; margin: 24px; }
+    .card { border: 1px solid #ddd; border-radius: 10px; padding: 16px; max-width: 720px; }
+    .row { display: flex; gap: 16px; margin: 8px 0; }
+    .label { width: 120px; color: #555; }
+    .value { font-weight: 600; }
+    .hint { color: #666; font-size: 14px; margin-top: 12px; }
+    .status-ok { color: #0a7b2e; }
+    .status-warn { color: #b56b00; }
+    .status-err { color: #b00020; }
+    pre { background: #f6f8fa; padding: 12px; border-radius: 8px; overflow: auto; }
+    button { padding: 10px 14px; border: 1px solid #ccc; border-radius: 8px; cursor: pointer; }
+    button:disabled { opacity: 0.6; cursor: not-allowed; }
+  </style>
+</head>
+
+<body>
+  <h2>訂單已確認</h2>
+
+  <div class="card">
+    <div class="row">
+      <div class="label">訂單編號</div>
+      <div class="value" id="orderId">-</div>
+    </div>
+    <div class="row">
+      <div class="label">訂單金額</div>
+      <div class="value" id="totalAmount">-</div>
+    </div>
+    <div class="row">
+      <div class="label">訂單狀態</div>
+      <div class="value" id="status">-</div>
+    </div>
+
+    <hr style="margin:16px 0; border:none; border-top:1px solid #eee;">
+
+    <div class="row">
+      <div class="label">付款流程</div>
+      <div class="value" id="payFlowMsg">準備中…</div>
+    </div>
+
+    <div class="hint">
+      這頁會在載入後自動呼叫後端 <code>POST /api/checkout/payment</code>。<br>
+      目前先確認「打得到後端 + 回傳結果」；等後端回傳綠界表單參數後，再改成自動跳轉綠界。
+    </div>
+
+    <div style="margin-top:12px;">
+      <button id="retryBtn" type="button">重新呼叫付款 API</button>
+    </div>
+
+    <div style="margin-top:12px;">
+      <div class="hint">後端回應（除錯用）</div>
+      <pre id="debugBox">(尚未呼叫)</pre>
+    </div>
+  </div>
+
+  <script>
+    // =========================
+    // 0) 取得 URL 參數並顯示
+    // =========================
+    const qs = new URLSearchParams(location.search);
+    const orderId = qs.get('orderId') || '';
+    const totalAmount = qs.get('totalAmount') || '';
+    const status = qs.get('status') || '';
+
+    document.getElementById('orderId').textContent = orderId || '-';
+    document.getElementById('totalAmount').textContent = totalAmount || '-';
+    document.getElementById('status').textContent = status || '-';
+
+    const payFlowMsgEl = document.getElementById('payFlowMsg');
+    const debugBoxEl = document.getElementById('debugBox');
+    const retryBtn = document.getElementById('retryBtn');
+
+    function getContextPath() {
+  const parts = window.location.pathname.split('/').filter(Boolean);
+  return parts.length > 0 ? '/' + parts[0] : '';
+}
+
+const CONTEXT_PATH = getContextPath();
+const PAYMENT_API = `${CONTEXT_PATH}/api/checkout/payment`;
+
+    // =========================
+    // 1) 呼叫 PaymentServlet（POST）
+    // =========================
+    async function callPaymentApi() {
+      debugBoxEl.textContent = '(呼叫中...)';
+      retryBtn.disabled = true;
+
+      if (!orderId) {
+        payFlowMsgEl.textContent = '缺少 orderId，無法呼叫付款 API';
+        payFlowMsgEl.className = 'value status-err';
+        debugBoxEl.textContent = '請確認網址有帶 ?orderId=xxx';
+        retryBtn.disabled = false;
+        return;
+      }
+
+      payFlowMsgEl.textContent = '呼叫付款 API 中…';
+      payFlowMsgEl.className = 'value status-warn';
+
+      const url = PAYMENT_API;
+
+      try {
+        const body = `orderId=${encodeURIComponent(orderId)}`;
+
+        const res = await fetch(url, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+            'Accept': 'application/json'
+          },
+          body
+        });
+
+        const bodyText = await res.text(); // 先用 text，避免不是 JSON 時 parse 壞掉
+
+        console.log('PaymentServlet URL:', url);
+        console.log('PaymentServlet response status:', res.status);
+        console.log('PaymentServlet response body:', bodyText);
+
+        debugBoxEl.textContent =
+          `URL: ${url}\n` +
+          `METHOD: POST\n` +
+          `BODY: ${body}\n` +
+          `HTTP: ${res.status}\n\n` +
+          bodyText;
+
+        if (res.status === 200) {
+          // 2) 若後端回傳的是綠界導轉 payload（actionUrl + formParams），就自動送出 form 進綠界
+          let payload = null;
+          try {
+            payload = JSON.parse(bodyText);
+          } catch (err) {
+            // 不是 JSON 就維持除錯模式
+            payload = null;
+          }
+
+          if (payload && payload.actionUrl && payload.formParams) {
+            payFlowMsgEl.textContent = '取得綠界表單參數，準備跳轉到綠界付款頁…';
+            payFlowMsgEl.className = 'value status-ok';
+
+            const form = document.createElement('form');
+            form.method = 'POST';
+            form.action = payload.actionUrl;
+
+            Object.entries(payload.formParams).forEach(([k, v]) => {
+              const input = document.createElement('input');
+              input.type = 'hidden';
+              input.name = k;
+              input.value = v ?? '';
+              form.appendChild(input);
+            });
+
+            document.body.appendChild(form);
+            form.submit();
+            return; // submit 後不需要再往下跑 UI 狀態分支
+          }
+
+          // 仍保留原本「先確認 API 打通」的訊息（當後端還沒回 payload 時）
+          payFlowMsgEl.textContent = '後端回 200（代表：可付款 / API 打通）';
+          payFlowMsgEl.className = 'value status-ok';
+        } else if (res.status === 409) {
+          payFlowMsgEl.textContent = '後端回 409（可能：已付款不可再付）';
+          payFlowMsgEl.className = 'value status-err';
+        } else if (res.status === 404) {
+          payFlowMsgEl.textContent = '後端回 404（訂單不存在）';
+          payFlowMsgEl.className = 'value status-err';
+        } else if (res.status === 400) {
+          payFlowMsgEl.textContent = '後端回 400（參數錯誤）';
+          payFlowMsgEl.className = 'value status-err';
+        } else {
+          payFlowMsgEl.textContent = `後端回 ${res.status}（請看下方回應內容）`;
+          payFlowMsgEl.className = 'value status-err';
+        }
+
+      } catch (e) {
+        console.error('Call PaymentServlet failed:', e);
+        payFlowMsgEl.textContent = '呼叫付款 API 失敗（請看 Console）';
+        payFlowMsgEl.className = 'value status-err';
+        debugBoxEl.textContent = String(e);
+      } finally {
+        retryBtn.disabled = false;
+      }
+    }
+
+    window.addEventListener('load', callPaymentApi);
+    retryBtn.addEventListener('click', callPaymentApi);
+  </script>
+</body>
+</html>

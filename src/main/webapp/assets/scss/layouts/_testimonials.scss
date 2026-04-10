@@ -1,0 +1,146 @@
+/** Testimonials Section **/
+.testim-bg {
+	padding: 30px 15px;
+	background-color: $card-bg;
+	border: 1px solid $border-e5e5e5;
+	border-radius: $main-border-radius;
+	position: relative;
+	overflow: hidden;
+	&:after {
+		content: "";
+		width: 100%;
+		height: 100%;
+		background-image: url("../img/testimonials/bg.png");
+		background-size: cover;
+		background-position: bottom;
+		position: absolute;
+		left: 0;
+		bottom: -1px;
+		opacity: 0.15;
+		z-index: 0;
+	}
+}
+.mn-testimonials {
+	.mn-test-inner {
+		max-width: 730px;
+		margin: 0 auto;
+		cursor: pointer;
+	}
+	.mn-test-item {
+		margin: 0 auto;
+		padding: 0;
+		position: relative;
+		.svg_img {
+			path {
+				fill: $text-999;
+			}
+		}
+	}
+	.mn-test-desc {
+		font-size: 15px;
+		color: $title-color;
+		line-height: 26px;
+		letter-spacing: 0;
+		margin-bottom: 15px;
+	}
+	.mn-test-content {
+		display: flex;
+		flex-direction: column;
+		.mn-test-desc {
+			margin-bottom: 15px;
+			color: $text-777;
+		}
+	}
+	.mn-test-name {
+		font-size: 22px;
+		font-weight: 600;
+		margin-bottom: 6px;
+		color: $secondary;
+		letter-spacing: 0.6px;
+		line-height: 1.2;
+	}
+	.mn-test-designation {
+		margin: 0;
+		font-size: 13px;
+		text-transform: uppercase;
+		color: $text-777;
+		line-height: 1.2;
+		letter-spacing: 0.5px;
+		margin-bottom: 8px;
+	}
+	.mn-test-rating {
+		i {
+			font-size: 11px;
+			margin: 0 0.5px;
+		}
+		margin: 0 auto;
+	}
+}
+.mn-testimonial-slider {
+	margin-bottom: -30px;
+	text-align: center;
+}
+.mn-test-outer {
+	max-width: 700px;
+	margin: auto;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: relative;
+}
+.mn-test-inner {
+	max-width: 700px;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	.mn-test-img {
+		width: 100px;
+		margin: auto auto 30px auto;
+		display: block;
+		img {
+			border-radius: 50%;
+		}
+	}
+}
+.svg_img.test_svg {
+	position: absolute;
+	width: 45px;
+	height: auto;
+	fill: $secondary;
+	opacity: .5;
+}
+.svg_img.test_svg.top {
+	width: 45px;
+	top: -5px;
+	left: 0;
+	right: auto;
+}
+.svg_img.test_svg.bottom {
+	width: 45px;
+	bottom: -5px;
+	right: 0;
+	left: auto;
+}
+
+/* Responsive Testimonial css */
+@media only screen and (max-width: 991px) {
+	.mn-testimonials {
+		.mn-test-name {
+			font-size: 20px;
+		}
+	}
+}
+@media only screen and (max-width: 767px) {
+	.mn-testimonials {
+		.mn-test-name {
+			font-size: 19px;
+		}
+	}
+}
+@media only screen and (max-width: 575px) {
+	.mn-testimonials {
+		.mn-test-name {
+			font-size: 18px;
+		}
+	}
+}

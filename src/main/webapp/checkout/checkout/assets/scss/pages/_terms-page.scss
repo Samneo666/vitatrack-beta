@@ -1,0 +1,34 @@
+/* Terms Condition & Privacy Policy Page CSS */
+.mn-terms-conditions, .mn-privacy-policy {
+	.mn-common-wrapper {
+		padding: 30px;
+		border: 1px solid $border-e5e5e5;
+		max-width: 1140px;
+		margin: 0 auto;
+		background-color: $fff;
+		border-radius: $radius-15;
+	}
+	.mn-cmn-block {
+		h5 {
+			margin-bottom: 10px;
+			font-size: 18px;
+			font-weight: 600;  
+			color: $title-color;  
+		}
+		p {
+			margin-bottom: 30px;
+			color: $text-777;
+			font-size: 14px;
+			font-weight: 400;
+			b {
+				font-weight: 500;
+				color: $title-color;
+			}
+		}
+		&:last-child {
+			p {
+				margin-bottom: 0;
+			}
+		}
+	}
+}

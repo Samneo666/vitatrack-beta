@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords"
+        content="ecommerce, store, mart, fashion, grocery, super store, market, organic food, super market">
+    <meta name="description" content="Best multipurpose ecommerce html template for your online store.">
+    <meta name="author" content="Maraviya Infotech">
+
+    <title>VitaTrack</title>
+
+    <!-- App favicon -->
+    <link rel="shortcut icon" href="assets/img/favicon/favicon.png">
+
+    <!-- Icon CSS -->
+    <link href="assets/css/vendor/materialdesignicons.min.css" rel="stylesheet">
+    <link href="assets/css/vendor/remixicon.css" rel="stylesheet">
+
+    <!-- Vendor -->
+    <link href="assets/css/vendor/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/css/vendor/animate.min.css" rel="stylesheet">
+    <link href="assets/css/vendor/owl.carousel.min.css" rel="stylesheet">
+    <link href="assets/css/vendor/slick.min.css" rel="stylesheet">
+    <link href="assets/css/vendor/swiper-bundle.min.css" rel="stylesheet">
+    <link href="assets/css/vendor/nouislider.css" rel="stylesheet">
+
+    <!-- Main CSS -->
+    <link id="mainCss" href="assets/css/style.css" rel="stylesheet">
+    <style>
+        /* 針對表格中的表頭單元格 */
+        .table thead th {
+            /* 將字體粗細設定為正常 (非粗體) */
+            font-weight: normal !important;
+
+            /* 備註：使用 !important 是為了確保它能夠覆蓋套版或 Bootstrap 可能設定的 font-weight: bold; */
+        }
+    </style>
+
+</head>
+
+<body data-mn-mode="light">
+
+    <main class="wrapper sb-default">
+
+        <!-- Loader -->
+        <div id="mn-overlay">
+            <div class="loader">
+                <img src="assets/img/logo/loader.png" alt="loader">
+                <span class="shape"></span>
+            </div>
+        </div>
+
+        <!-- Sidebar -->
+        <aside class="member-sidebar">
+            <div class="mn-sidebar-overlay"></div>
+            <div class="mn-sidebar">
+                <div class="mn-sidebar-body">
+                    <button type="button" class="side-close" title="Close"></button>
+                    
+                        <ul class="mn-sb-list">
+                            <li class="mn-sb-title condense"><span>網站管理</span></li>
+                            <li class="mn-sb-item sb-drop-item">
+                                <a href="javascript:void(0)" class="mn-drop-toggle">
+                                    <img src="assets/img/icons/bag.svg" alt="member">
+                                    <span class="condense">會員管理<i class="drop-arrow ri-arrow-down-s-line"></i></span>
+                                </a>
+                                <ul class="mn-sb-drop">
+                                    <li class="list">
+                                        <a href="javascript:void(0)" class="mn-page-link drop" id="memberList">會員列表</a>
+                                    </li>
+                                    <li class="list">
+                                        <a href="javascript:void(0)" class="mn-page-link drop" id="memberSearch">會員查詢</a>
+                                    </li>
+                                </ul>
+                            </li>
+
+                            <li class="mn-sb-item sb-drop-item">
+                                <a href="javascript:void(0)" class="mn-drop-toggle">
+                                    <img src="assets/img/icons/bag.svg" alt="box">
+                                    <span class="condense">商品管理<i class="drop-arrow ri-arrow-down-s-line"></i></span>
+                                </a>
+                            </li>
+
+                            <li class="mn-sb-item sb-drop-item">
+                                <a href="javascript:void(0)" class="mn-drop-toggle">
+                                    <img src="assets/img/icons/bag.svg" alt="article">
+                                    <span class="condense">文章管理<i class="drop-arrow ri-arrow-down-s-line"></i></span>
+                                </a>
+                            </li>
+
+
+                            <li class="mn-sb-item sb-drop-item">
+                                <a href="javascript:void(0)" class="mn-drop-toggle">
+                                    <img src="assets/img/icons/bag.svg" alt="order">
+                                    <span class="condense">訂單管理<i class="drop-arrow ri-arrow-down-s-line"></i></span>
+                                </a>
+                            </li>
+                        </ul>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Header -->
+        <header>
+            <div class="mn-header">
+                <div class="mn-header-items">
+                    <div class="left-header">
+                        <!-- <a href="javascript:void(0)" class="mn-toggle-sidebar">
+							<span class="outer-ring">
+								<span class="inner-ring"></span>
+							</span>
+						</a> -->
+                        <a href="index.html" class="logo"><img src="assets/img/logo/logo.png" alt="logo"></a>
+                        <a href="javascript:void(0)" class="mn-toggle-menu">
+                            <div class="header-icon">
+                                <i class="ri-menu-3-fill"></i>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="right-header">
+                        <!-- Main Menu Start -->
+                        <div id="mn-main-menu-desk" class="d-none d-lg-block sticky-nav">
+                            <div class="nav-desk">
+                                <div class="row">
+                                    <div class="col-md-12 align-self-center">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mn-mobile-menu-overlay"></div>
+                        <div id="mn-mobile-menu" class="mn-mobile-menu">
+                            <div class="mn-menu-title">
+                                <span class="menu_title">My Menu</span>
+                                <button type="button" class="mn-close-menu">×</button>
+                            </div>
+                            <div class="mn-menu-inner">
+                                <div class="mn-menu-content">
+                                    <ul>
+                                        <li>
+                                            <a href="admin.html">首頁</a>
+                                        </li>
+
+                                        <li>
+                                            <a href="javascript:void(0)">Products</a>
+                                            <ul class="sub-menu">
+                                                <li><a href="product-detail.html">product detail</a></li>
+                                                <li><a href="product-accordion.html">Product accordion</a></li>
+                                                <li><a href="product-full-width.html">Product full width</a></li>
+                                                <li><a href="product-accordion-full-width.html">accordion full width</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:void(0)">Pages</a>
+                                            <ul class="sub-menu">
+                                                <li><a href="about-us.html">關於我們</a></li>
+                                                <li><a href="contact-us.html">聯絡我們</a></li>
+                                                <li><a href="cart.html">Cart</a></li>
+                                                <li><a href="checkout.html">Checkout</a></li>
+                                                <li><a href="compare.html">Compare</a></li>
+                                                <li><a href="faq.html">Faq</a></li>
+                                                <li><a href="login.html">Login</a></li>
+                                                <li><a href="register.html">Register</a></li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:void(0)">Blog</a>
+                                            <ul class="sub-menu">
+                                                <li><a href="blog-right-sidebar.html">Right Sidebar</a></li>
+                                                <li><a href="blog-full-width.html">Full Width</a></li>
+                                                <li><a href="blog-detail-right-sidebar.html">Detail Right Sidebar</a>
+                                                </li>
+                                                <li><a href="blog-detail-full-width.html">Detail Full Width</a></li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="header-res-lan-curr">
+                                    <!-- Social Start -->
+                                    <div class="header-res-social">
+                                        <div class="header-top-social">
+                                            <ul class="mb-0">
+                                                <li class="list-inline-item">
+                                                    <a href="#"><i class="ri-facebook-fill"></i></a>
+                                                </li>
+                                                <li class="list-inline-item">
+                                                    <a href="#"><i class="ri-twitter-fill"></i></a>
+                                                </li>
+                                                <li class="list-inline-item">
+                                                    <a href="#"><i class="ri-instagram-line"></i></a>
+                                                </li>
+                                                <li class="list-inline-item">
+                                                    <a href="#"><i class="ri-linkedin-fill"></i></a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <!-- Social End -->
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Main menu icons -->
+                        <div class="mn-tool-icons">
+
+                            <div class="mn-tool-user">
+                                <a href="javascript:void(0)" class="mn-main-user">
+                                    <svg class="svg-icon" viewBox="0 0 1024 1024" version="1.1"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M512.476 648.247c-170.169 0-308.118-136.411-308.118-304.681 0-168.271 137.949-304.681 308.118-304.681 170.169 0 308.119 136.411 308.119 304.681C820.594 511.837 682.645 648.247 512.476 648.247L512.476 648.247zM512.476 100.186c-135.713 0-246.12 109.178-246.12 243.381 0 134.202 110.407 243.381 246.12 243.381 135.719 0 246.126-109.179 246.126-243.381C758.602 209.364 648.195 100.186 512.476 100.186L512.476 100.186zM935.867 985.115l-26.164 0c-9.648 0-17.779-6.941-19.384-16.35-2.646-15.426-6.277-30.52-11.142-44.95-24.769-87.686-81.337-164.13-159.104-214.266-63.232 35.203-134.235 53.64-207.597 53.64-73.555 0-144.73-18.537-208.084-53.922-78 50.131-134.75 126.68-159.564 214.549 0 0-4.893 18.172-11.795 46.4-2.136 8.723-10.035 14.9-19.112 14.9L88.133 985.116c-9.415 0-16.693-8.214-15.47-17.452C91.698 824.084 181.099 702.474 305.51 637.615c58.682 40.472 129.996 64.267 206.966 64.267 76.799 0 147.968-23.684 206.584-63.991 124.123 64.932 213.281 186.403 232.277 329.772C952.56 976.901 945.287 985.115 935.867 985.115L935.867 985.115z">
+                                        </path>
+                                    </svg>
+                                </a>
+                                <ul class="sub-menu">
+                                    <li>
+                                        <a href="javascript:void(0)" id="logoutBtn">登出</a>
+                                    </li>
+                                  
+                                    <!-- <li>
+										<a href="checkout.html">Checkout</a>
+									</li> -->
+                                </ul>
+                            </div>
+
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <div class="mn-main-content">
+            <div class="mn-breadcrumb m-b-30">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="row gi_breadcrumb_inner">
+                            <div class="col-md-6 col-sm-12">
+                                <h2 class="mn-breadcrumb-title">會員管理 </h2>
+                            </div>
+                            <div class="col-md-6 col-sm-12">
+                                <ul class="mn-breadcrumb-list">
+                                    <li class="mn-breadcrumb-item"><a href="admin.html">回到網站管理頁</a>
+                                    </li>
+                                    <li class="mn-breadcrumb-item active">會員管理</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+       
+            <div class="member-main" id="contentArea">
+                <div class="welcome-msg">請選擇左側選單以查看資訊</div>
+            </div>
+        </div>
+
+        <!-- <section class="mn-card">
+                        <div class="mn-card-header d-flex justify-content-between align-items-center">
+                            <h4 class="mn-card-title">會員資料查詢與篩選</h4>
+                        </div>
+                        <div class="mn-card-body">
+                            <form class="row g-3" id="memberSearchForm">
+                                <div class="col-md-3">
+                                    <label for="memberId" class="form-label">會員 ID</label>
+                                    <input type="text" class="form-control" id="memberId" placeholder="輸入會員 ID">
+                                </div>
+                                <div class="col-md-3">
+                                    <label for="memberName" class="form-label">會員姓名</label>
+                                    <input type="text" class="form-control" id="memberName" placeholder="輸入姓名">
+                                </div>
+                                <div class="col-md-3">
+                                    <label for="memberStatus" class="form-label">帳號狀態</label>
+                                    <select id="memberStatus" class="form-select">
+                                        <option value="">全部</option>
+                                        <option value="啟用">啟用</option>
+                                        <option value="禁用">停權</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-3">
+                                    <label for="registrationDate" class="form-label">註冊日期範圍</label>
+                                    <input type="text" class="form-control" id="registrationDate" placeholder="選擇日期範圍">
+                                </div>
+                                <div class="col-12 mt-3 text-end">
+                                    <button type="submit" class="btn btn-primary">查詢</button>
+                                    <button type="reset" class="btn btn-secondary">重置</button>
+                                </div>
+                            </form>
+                        </div>
+                    </section>
+ -->
+
+
+
+
+    </main>
+    <!-- Vendor Custom -->
+    <script src="assets/js/vendor/jquery-3.7.1.min.js"></script>
+    <script src="assets/js/vendor/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/vendor/owl.carousel.min.js"></script>
+    <script src="assets/js/vendor/slick.min.js"></script>
+    <script src="assets/js/vendor/swiper-bundle.min.js"></script>
+    <script src="assets/js/vendor/countdownTimer.js"></script>
+    <script src="assets/js/vendor/infiniteslidev2.js"></script>
+    <script src="assets/js/vendor/nouislider.js"></script>
+    <script src="assets/js/vendor/smoothscroll.min.js"></script>
+    <script src="assets/js/vendor/jquery.zoom.min.js"></script>
+
+
+    <!-- Main Custom -->
+    <script src="assets/js/main.js"></script>
+    <script src="member/js/admin.js"></script>
+
+</body>
+
+</html>

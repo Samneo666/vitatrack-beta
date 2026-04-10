@@ -1,0 +1,5 @@
+mail.username=vitatrack168@gmail.com
+mail.password=raos zwxn totp ftld //此碼為應用程式密碼共為16碼
+mail.host=smtp.gmail.com
+mail.port=587
+app.base.url=http://localhost:8080
