@@ -16,6 +16,9 @@ import web.checkout.vo.CheckoutResult;
 import web.checkout.vo.OrderItem;
 import web.checkout.vo.Orders;
 
+/**
+ * 結帳服務實作：處理購物車結帳、建立訂單與訂單明細。
+ */
 @Service
 public class CheckoutServiceImpl implements CheckoutService {
 
@@ -28,38 +31,32 @@ public class CheckoutServiceImpl implements CheckoutService {
 	@Autowired
 	private OrderItemDao orderItemDao;
 
+	/**
+	 * 執行結帳流程：查購物車 → 計算總金額 → 建立訂單與訂單明細 → 綁定購物車。
+	 *
+	 * @param memberId 會員編號
+	 * @return 結帳結果（含訂單編號、總金額、付款狀態）
+	 * @throws RuntimeException 若購物車為空或購物車綁定訂單失敗
+	 */
 	@Override
 	@Transactional
 	public CheckoutResult checkout(int memberId) {
 
-		// 1.查詢 open cart
+		// 查詢該會員的未結帳購物車
 		List<CartRow> cartRows = cartDao.findOpenCartByMemberId(memberId);
-		// 1.1如果查不到，顯示Cart is empty.
 		if (cartRows == null || cartRows.isEmpty()) {
 			throw new RuntimeException("Cart is empty.");
 		}
 
-		// 2.計算總金額
-		BigDecimal totalAmount;
-		totalAmount = BigDecimal.valueOf(0);
+		// 累加各品項小計得出總金額
+		BigDecimal totalAmount = BigDecimal.valueOf(0);
 		for (CartRow row : cartRows) {
-			// 2.1 取得單價
-			BigDecimal price = row.getUnitPrice();
-
-			// 2.2 取得數量
-			int quantity = row.getQuantity();
-
-			// 2.3 將 quantity 轉成 BigDecimal
-			BigDecimal quantityBD = BigDecimal.valueOf(quantity);
-
-			// 2.4 單價 × 數量
-			BigDecimal rowSubtotal = price.multiply(quantityBD);
-			totalAmount = totalAmount.add(rowSubtotal);
+			BigDecimal quantityBD = BigDecimal.valueOf(row.getQuantity());
+			totalAmount = totalAmount.add(row.getUnitPrice().multiply(quantityBD));
 		}
-		// 2.5 將 BigDecimal 轉成 int
 		int totalAmountInt = totalAmount.intValue();
 
-		// 3.建立 orders
+		// 建立訂單，初始付款狀態為 PENDING
 		Orders order = new Orders();
 		order.setMemberId(memberId);
 		order.setTotalAmount(totalAmount);
@@ -69,42 +66,38 @@ public class CheckoutServiceImpl implements CheckoutService {
 		order.setAmount(totalAmount);
 		order.setTransactionId("TXN" + System.currentTimeMillis());
 		order.setPaymentTime(new java.sql.Timestamp(System.currentTimeMillis()));
-
 		orderDao.save(order);
 
-		// 4.建立 order_item
+		// 依購物車內容建立各筆訂單明細
 		Integer orderId = order.getOrderId();
 		for (CartRow row : cartRows) {
 			OrderItem oi = new OrderItem();
-			// 4.1 order_id
 			oi.setOrder(order);
-			// 4.2 sku
 			oi.setSku(row.getSku());
-			// 4.3 product_name
 			oi.setProductName(row.getProductName());
-			// 4.4 unit_price
 			oi.setUnitPrice(row.getUnitPrice());
-			// 4.5 quantity
 			oi.setQuantity(row.getQuantity());
-			// 4.6 subtotal
-			BigDecimal price = row.getUnitPrice();
-			int quantity = row.getQuantity();
-			BigDecimal quantityBD = BigDecimal.valueOf(quantity);
-			BigDecimal subtotal = price.multiply(quantityBD);
+			// 計算小計：單價 × 數量
+			BigDecimal subtotal = row.getUnitPrice().multiply(BigDecimal.valueOf(row.getQuantity()));
 			oi.setSubtotal(subtotal);
 			orderItemDao.save(oi);
 		}
 
-		// 5.更新 cart_item.order_id
+		// 將購物車品項的 order_id 更新為本次新建的訂單
 		int updatedCount = cartDao.attachCartItemsToOrder(orderId, cartRows);
 		if (updatedCount <= 0) {
 			throw new RuntimeException("attachCartItemsToOrder updated 0 rows.");
 		}
 
-		// 6.回傳 CheckoutResult
 		return new CheckoutResult(orderId, totalAmountInt, "PENDING");
 	}
 
+	/**
+	 * 查詢指定會員的未結帳購物車，供結帳頁面顯示商品清單。
+	 *
+	 * @param memberId 會員編號
+	 * @return 購物車明細清單
+	 */
 	@Override
 	@Transactional(readOnly = true)
 	public List<CartRow> getCheckoutCart(int memberId) {
