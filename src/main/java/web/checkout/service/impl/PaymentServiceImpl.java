@@ -10,6 +10,7 @@ import javax.persistence.PersistenceContext;
 
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,6 +20,9 @@ import web.checkout.service.PaymentService;
 import web.checkout.vo.EcpayCheckoutPayload;
 import web.checkout.vo.OrderPaymentInfo;
 
+/**
+ * 綠界付款服務實作：驗證訂單、產生交易號並組裝 ECPay AIO 結帳表單資料。
+ */
 @Service
 public class PaymentServiceImpl implements PaymentService {
 
@@ -31,137 +35,179 @@ public class PaymentServiceImpl implements PaymentService {
 	@PersistenceContext
 	private Session session;
 
-	// === 綠界測試環境網址 ===
+	// 綠界測試環境結帳 API 網址
 	private static final String ECPAY_ACTION_URL_STAGE = "https://payment-stage.ecpay.com.tw/Cashier/AioCheckOut/V5";
 
-	// === 固定參數 ===
-	private static final String MERCHANT_ID = "3002607";
-	private static final String RETURN_URL = "https://leaseless-eventfully-sharyn.ngrok-free.dev/vitatrack/checkout/ecpay/callback";
-	private static final String ORDER_RESULT_URL_BASE =
-	        "https://leaseless-eventfully-sharyn.ngrok-free.dev/vitatrack/checkout/ecpay/return";
+	// 特店編號（從 payment.properties 注入）
+	@Value("${ecpay.merchant_id}")
+	private String merchantId;
+
+	// 付款完成後綠界以 POST 通知後端的回呼網址
+	@Value("${ecpay.return_url}")
+	private String returnUrl;
+
+	// 付款完成後綠界將使用者導回的前端網址（含 orderId 查詢參數）
+	@Value("${ecpay.order_result_url_base}")
+	private String orderResultUrlBase;
+
 	private static final String TRADE_DESC = "Vitatrack訂單";
 	private static final String PAYMENT_TYPE = "aio";
+	// 1 = SHA256 加密
 	private static final String ENCRYPT_TYPE = "1";
 
-	// 合法的 ECPay ChoosePayment 值
+	// ECPay 合法的 ChoosePayment 白名單
 	private static final java.util.Set<String> VALID_CHOOSE_PAYMENTS =
 	        new java.util.HashSet<>(java.util.Arrays.asList("Credit", "ATM", "CVS", "BARCODE", "ALL"));
 
-	private static final String HASH_KEY = "pwFHCqoQZGmho4w6";
-	private static final String HASH_IV = "EkRm7IFT261dpevs";
+	@Value("${ecpay.hash_key}")
+	private String hashKey;
 
-	// 開關 Session + 啟動串金流
+	@Value("${ecpay.hash_iv}")
+	private String hashIv;
+
+	/**
+	 * 驗證訂單可付款後，產生並回傳 ECPay AIO 結帳的 action URL 與表單參數。
+	 *
+	 * @param orderId       訂單編號
+	 * @param choosePayment ECPay 付款方式，不合法時自動回退為 {@code "Credit"}
+	 * @return 結帳 payload；若訂單不存在或已付款成功則回傳 null
+	 */
 	@Override
 	@Transactional
 	public EcpayCheckoutPayload createEcpayCheckout(int orderId, String choosePayment) {
-		// 白名單驗證，不合法則預設 "Credit"
+		// 白名單驗證，不合法的付款方式預設為 "Credit"
 		String payment = (choosePayment != null && VALID_CHOOSE_PAYMENTS.contains(choosePayment))
 		        ? choosePayment : "Credit";
 		return buildEcpayCheckout(orderId, payment);
 	}
 
-	// 驗證是否可付款 + 產生交易號 + 更新 orders.transaction_id + 組 itemName
+	/**
+	 * 驗證訂單是否可付款，並產生唯一交易號、取得商品名稱清單。
+	 *
+	 * @param orderId 訂單編號
+	 * @return 填入交易號與商品名稱的付款資訊；若訂單不存在、已付款或無明細則回傳 null
+	 */
 	private OrderPaymentInfo validateOrderCanPay(int orderId) {
 
-		// 1.查訂單
+		// 查詢訂單的付款資訊
 		OrderPaymentInfo info = orderDao.selectPaymentInfoByOrderId(orderId);
-		// 1.1 訂單不存在
-		if (info == null)
+		if (info == null) {
 			return null;
-		// 2.SUCCESS -> 不可再付款 || 其他狀態 -> 可付款
+		}
+
+		// 已付款成功的訂單不可重複付款
 		if ("SUCCESS".equalsIgnoreCase(info.getPaymentStatus())) {
 			return null;
 		}
-		// 3.產生 transactionId
+
+		// 產生唯一交易號並寫入 orders.transaction_id
 		String transactionId = generateUniqueTxId();
-		// 4.更新 orders.transaction_id
 		int updated = orderDao.updateTransactionId(orderId, transactionId);
 		if (updated <= 0) {
 			throw new RuntimeException("updateTransactionId updated 0 rows.");
 		}
-
 		info.setTransactionId(transactionId);
 
-		// 5.從 order_item 取 product_name
+		// 取得商品名稱清單，組成 ECPay 要求的 # 分隔格式
 		List<String> names = orderItemDao.selectProductNamesByOrderId(orderId);
 		if (names == null || names.isEmpty()) {
 			return null;
 		}
-		// 6.綠界 ItemName 用 # 分隔
 		info.setItemName(String.join("#", names));
 
 		return info;
 	}
 
-	// 組綠界 payload
+	/**
+	 * 組裝並回傳 ECPay AIO 結帳所需的 action URL 與表單參數（含 CheckMacValue）。
+	 *
+	 * @param orderId       訂單編號
+	 * @param choosePayment 已驗證的 ECPay 付款方式
+	 * @return 結帳 payload；若訂單驗證失敗則回傳 null
+	 */
 	private EcpayCheckoutPayload buildEcpayCheckout(int orderId, String choosePayment) {
 
-		// 1.先驗證訂單
+		// 驗證訂單並取得付款所需資訊
 		OrderPaymentInfo info = validateOrderCanPay(orderId);
-		if (info == null)
+		if (info == null) {
 			return null;
+		}
 
-		// 2.產 merchantTradeDate
+		// 產生 ECPay 要求格式的交易日期
 		String merchantTradeDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(new Date());
 
-		// 3.組綠界 payload
+		// 依序填入 ECPay 表單欄位（順序影響 CheckMacValue 計算）
 		Map<String, String> formParams = new LinkedHashMap<>();
-
-		formParams.put("MerchantID", MERCHANT_ID);
+		formParams.put("MerchantID", merchantId);
 		formParams.put("MerchantTradeNo", info.getTransactionId());
 		formParams.put("MerchantTradeDate", merchantTradeDate);
 		formParams.put("PaymentType", PAYMENT_TYPE);
 		formParams.put("TotalAmount", String.valueOf(info.getTotalAmount()));
 		formParams.put("TradeDesc", TRADE_DESC);
 		formParams.put("ItemName", info.getItemName());
-		formParams.put("ReturnURL", RETURN_URL);
-		formParams.put("OrderResultURL", ORDER_RESULT_URL_BASE + "?orderId=" + orderId);
+		formParams.put("ReturnURL", returnUrl);
+		formParams.put("OrderResultURL", orderResultUrlBase + "?orderId=" + orderId);
 		formParams.put("ChoosePayment", choosePayment);
 		formParams.put("EncryptType", ENCRYPT_TYPE);
+		// CheckMacValue 必須在所有欄位填入後才計算
 		formParams.put("CheckMacValue", genCheckMacValueSha256(formParams));
 
-		// 4.回綠界 payload
 		return new EcpayCheckoutPayload(ECPAY_ACTION_URL_STAGE, formParams);
 	}
 
-	// 產生 transactionId
+	/**
+	 * 產生以當前毫秒時間戳為基礎的唯一交易號。
+	 *
+	 * @return 格式為 {@code "TXN" + 毫秒時間戳} 的交易號字串
+	 */
 	private String generateUniqueTxId() {
-
 		String txid = "TXN" + System.currentTimeMillis();
+		// 若極低機率碰撞，仍回傳同一個值（時間戳已不同）
 		boolean exists = orderDao.existsTransactionId(txid);
-		if (!exists)
+		if (!exists) {
 			return txid;
+		}
 		return txid;
 	}
 
-	// 計算 CheckMacValue
+	/**
+	 * 依 ECPay 規格計算 CheckMacValue（排序參數 → URL Encode → SHA256 → 大寫）。
+	 *
+	 * @param params 要計算的表單參數（不含 CheckMacValue）
+	 * @return 大寫的 SHA256 雜湊字串
+	 */
 	private String genCheckMacValueSha256(Map<String, String> params) {
 
-		// 1.排序(A->Z)，不含 CheckMacValue
+		// 將參數按字母升冪排序，移除 CheckMacValue 本身
 		Map<String, String> sorted = new java.util.TreeMap<>();
 		sorted.putAll(params);
 		sorted.remove("CheckMacValue");
 
-		// 2.組成 key=value&key=value...
+		// 組成 key=value&key=value 格式
 		String sb = "";
 		for (Map.Entry<String, String> e : sorted.entrySet()) {
-			if (!sb.equals(""))
+			if (!sb.equals("")) {
 				sb += "&";
+			}
 			String value = (e.getValue() == null) ? "" : e.getValue();
 			sb += e.getKey() + "=" + value;
 		}
 
-		// 3.前後加 HashKey / HashIV
-		String raw = "HashKey=" + HASH_KEY + "&" + sb + "&HashIV=" + HASH_IV;
-
-		// 4.URL Encode -> SHA256 -> 大寫
+		// 前後包上 HashKey / HashIV，再依序 URL Encode → SHA256 → 大寫
+		String raw = "HashKey=" + hashKey + "&" + sb + "&HashIV=" + hashIv;
 		return sha256(ecpayUrlEncode(raw)).toUpperCase();
 	}
 
-	// 轉成 URL Encode 格式
+	/**
+	 * 依 ECPay 規格將字串進行 URL Encode，並還原部分特殊字元後轉小寫。
+	 *
+	 * @param raw 要編碼的原始字串
+	 * @return 符合 ECPay 規格的編碼結果（小寫）
+	 */
 	private String ecpayUrlEncode(String raw) {
 		try {
 			String encoded = java.net.URLEncoder.encode(raw, java.nio.charset.StandardCharsets.UTF_8.name());
+			// 還原 ECPay 規格要求不編碼的特殊字元（大小寫皆處理）
 			encoded = encoded.replace("%2D", "-").replace("%2d", "-");
 			encoded = encoded.replace("%5F", "_").replace("%5f", "_");
 			encoded = encoded.replace("%2E", ".").replace("%2e", ".");
@@ -175,11 +221,17 @@ public class PaymentServiceImpl implements PaymentService {
 		}
 	}
 
-	// 轉成 SHA-256 雜湊值
+	/**
+	 * 將字串以 SHA-256 演算法計算雜湊值，回傳小寫十六進位字串。
+	 *
+	 * @param s 要雜湊的字串
+	 * @return 64 字元的小寫十六進位雜湊字串
+	 */
 	private String sha256(String s) {
 		try {
 			java.security.MessageDigest md = java.security.MessageDigest.getInstance("SHA-256");
 			byte[] bytes = md.digest(s.getBytes(java.nio.charset.StandardCharsets.UTF_8));
+			// 將每個 byte 格式化為兩位十六進位字元
 			StringBuilder sb = new StringBuilder(bytes.length * 2);
 			for (byte b : bytes) {
 				sb.append(String.format("%02x", b));

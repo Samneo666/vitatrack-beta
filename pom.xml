@@ -140,13 +140,7 @@
 				<configuration>
 					<source>11</source>
 					<target>11</target>
-					<annotationProcessorPaths>
-						<path>
-							<groupId>org.projectlombok</groupId>
-							<artifactId>lombok</artifactId>
-							<version>1.18.30</version>
-						</path>
-					</annotationProcessorPaths>
+					
 				</configuration>
 			</plugin>
 			<plugin>
@@ -156,9 +150,23 @@
 			</plugin>
 		</plugins>
 		<resources>
+			<!-- .properties 檔案不做 filtering，避免 ${ENV_VAR:default} 語法被 Maven 解析破壞 -->
 			<resource>
 				<directory>src/main/resources</directory>
-				<filtering>true</filtering>
+				<filtering>false</filtering>
+				<includes>
+					<include>**/*.properties</include>
+					<include>**/*.template</include>
+				</includes>
+			</resource>
+			<!-- 其他資源（如 xml、log4j2.xml 等）可視需要開啟 filtering -->
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>false</filtering>
+				<excludes>
+					<exclude>**/*.properties</exclude>
+					<exclude>**/*.template</exclude>
+				</excludes>
 			</resource>
 		</resources>
 	</build>

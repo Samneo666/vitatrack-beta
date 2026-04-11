@@ -17,4 +17,5 @@ RUN rm -rf /usr/local/tomcat/webapps/ROOT
 COPY --from=builder /app/target/vitatrack.war /usr/local/tomcat/webapps/ROOT.war
 
 EXPOSE 8080
-CMD ["catalina.sh", "run"]
+# 支援 Railway 動態注入的 $PORT 環境變數（預設 8080）
+CMD sed -i "s/port=\"8080\"/port=\"${PORT:-8080}\"/" /usr/local/tomcat/conf/server.xml && catalina.sh run
