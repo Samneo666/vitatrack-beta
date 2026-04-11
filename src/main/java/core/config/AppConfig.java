@@ -40,8 +40,8 @@ public class AppConfig {
 	private String dbPassword;
 
 	//正式環境設為false
-//	@Value("${hibernate.show_sql:false}")
-//	private String showSql;
+	@Value("${hibernate.show_sql:false}")
+	private String showNoSql;
 
 	@Bean
 	public DataSource dataSource() {
@@ -66,7 +66,7 @@ public class AppConfig {
 	private Properties getHibernateProperties() {
 		Properties properties = new Properties();
 		properties.setProperty("hibernate.dialect", MySQLDialect.class.getName());
-		properties.setProperty("hibernate.show_sql", "true");
+		properties.setProperty("hibernate.show_sql", showNoSql);
 		properties.setProperty("hibernate.format_sql", "true");
 		properties.setProperty(
 				"hibernate.current_session_context_class",
