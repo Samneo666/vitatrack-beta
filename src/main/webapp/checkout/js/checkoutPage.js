@@ -27,7 +27,7 @@ document.addEventListener("DOMContentLoaded", function () {
     //------------會員登出------------
     logoutBtn.addEventListener("click", function (e) {
         e.preventDefault();
-        fetch('/api/logout', {
+        fetch('api/logout', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
         })
@@ -129,6 +129,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         if (nameInput.value.trim() === '' || phoneInput.value.trim() === '' || addressInput.value.trim() === '') {
               alert("請填寫完整的收件人資訊");
+              return;
         }
       
         // 禁用按鈕防止重複點擊
