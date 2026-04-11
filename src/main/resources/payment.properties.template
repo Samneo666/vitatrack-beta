@@ -1,0 +1,26 @@
+# ===== 資料庫連線 =====
+# 複製此檔為 payment.properties 並填入實際值，請勿將 payment.properties 提交至版本控制
+#
+# 部署時在平台（如 Railway）設定以下環境變數，會自動覆蓋 : 後的預設值
+
+# JDBC 連線字串（本機預設連 localhost）
+db.url=${DB_URL:jdbc:mysql://localhost:3306/vitatrack?useSSL=false&serverTimezone=Asia/Taipei&characterEncoding=UTF-8}
+db.username=${DB_USERNAME:root}
+db.password=${DB_PASSWORD:}
+
+# ===== ECPay 綠界金流 =====
+# 測試環境特店編號與金鑰可至綠界官方文件取得：
+# https://developers.ecpay.com.tw/?p=2509
+
+# 特店編號
+ecpay.merchant_id=${ECPAY_MERCHANT_ID:YOUR_MERCHANT_ID}
+
+# SHA-256 雜湊金鑰
+ecpay.hash_key=${ECPAY_HASH_KEY:YOUR_HASH_KEY}
+ecpay.hash_iv=${ECPAY_HASH_IV:YOUR_HASH_IV}
+
+# 付款完成後綠界以 POST 通知後端的回呼網址（需為公開可存取的 HTTPS 網址）
+ecpay.return_url=${ECPAY_RETURN_URL:https://your-domain/checkout/ecpay/callback}
+
+# 付款完成後綠界將使用者導回的前端基底網址
+ecpay.order_result_url_base=${ECPAY_ORDER_RESULT_URL_BASE:https://your-domain/checkout/ecpay/return}

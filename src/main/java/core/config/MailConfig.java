@@ -38,7 +38,8 @@ public class MailConfig {
         props.put("mail.transport.protocol", "smtp");
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.starttls.enable", "true");// 啟用TLS安全加密
-        props.put("mail.debug", "true");         // 測試時開啟，可以看到發信過程的log
+        props.put("mail.debug", "true");		  // 測試環境開啟 debug log	
+//        props.put("mail.debug", "false");         // 正式環境關閉 debug log
         props.put("mail.smtp.connectiontimeout", "5000"); // 建立連線逾時5秒
         props.put("mail.smtp.timeout", "5000");           // 讀取資料逾時5秒
         props.put("mail.smtp.writetimeout", "5000");	  // 寫入資料逾時5秒(為了防止因為網路問題導致程式卡死（例如伺服器連不上SMTP）)

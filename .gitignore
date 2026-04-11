@@ -21,3 +21,7 @@ bin/
 bin/
 # 忽略 mail.properties
 mail.properties
+# 忽略 payment.properties（含敏感金鑰，請使用 payment.properties.template 作為範本）
+payment.properties
+# 忽略 context.xml（曾含 hardcode DB 帳密）
+src/main/webapp/META-INF/context.xml

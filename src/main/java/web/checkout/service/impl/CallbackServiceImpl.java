@@ -4,6 +4,7 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,8 +18,11 @@ import web.checkout.vo.Orders;
 @Service
 public class CallbackServiceImpl implements CallbackService {
 
-	private static final String HASH_KEY = "pwFHCqoQZGmho4w6";
-	private static final String HASH_IV = "EkRm7IFT261dpevs";
+	@Value("${ecpay.hash_key}")
+	private String hashKey;
+
+	@Value("${ecpay.hash_iv}")
+	private String hashIv;
 
 	@Autowired
 	private OrderDao orderDao;
@@ -49,7 +53,7 @@ public class CallbackServiceImpl implements CallbackService {
 		}
 
 		// 前後包上 HashKey / HashIV，再經 UrlEncode → SHA256 → 大寫
-		String toSign = "HashKey=" + HASH_KEY + "&" + sb.toString() + "HashIV=" + HASH_IV;
+		String toSign = "HashKey=" + hashKey + "&" + sb.toString() + "HashIV=" + hashIv;
 		String myCmv = sha256(urlEncode(toSign)).toUpperCase();
 		System.out.println("本機算出的 CheckMacValue=" + myCmv);
 
@@ -84,6 +88,11 @@ public class CallbackServiceImpl implements CallbackService {
 		String rtnCode = params.get("RtnCode");
 		String newStatus = "1".equals(rtnCode) ? "SUCCESS" : "FAILED";
 		order.setPaymentStatus(newStatus);
+
+		// 付款成功時更新實際付款時間
+		if ("SUCCESS".equals(newStatus)) {
+			order.setPaymentTime(new java.sql.Timestamp(System.currentTimeMillis()));
+		}
 
 		// 將所有回呼參數序列化為字串，存入 raw_response
 		StringBuilder respSb = new StringBuilder();

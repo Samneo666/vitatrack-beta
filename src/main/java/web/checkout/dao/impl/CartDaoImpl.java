@@ -30,12 +30,13 @@ public class CartDaoImpl implements CartDao {
 	@Override
 	public List<CartRow> findOpenCartByMemberId(int memberId) {
 
-		// 以 HQL 聯結 product 取得完整購物車明細
+		// 以 HQL 聯結 product 取得完整購物車明細，僅取尚未綁定訂單的品項
 		String hql = "SELECT new web.checkout.vo.CartRow("
 				+ "  ci.cartItemId, p.sku, p.productName, p.price, ci.quantity" + ") "
 				+ "FROM CartItem ci "
 				+ "JOIN ci.product p "
-				+ "WHERE ci.memberId = :mid ";
+				+ "WHERE ci.memberId = :mid "
+				+ "AND ci.orderId IS NULL";
 
 		Query<CartRow> query = session.createQuery(hql, CartRow.class);
 		query.setParameter("mid", memberId);

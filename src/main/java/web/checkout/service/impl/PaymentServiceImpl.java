@@ -10,6 +10,7 @@ import javax.persistence.PersistenceContext;
 
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -37,13 +38,18 @@ public class PaymentServiceImpl implements PaymentService {
 	// 綠界測試環境結帳 API 網址
 	private static final String ECPAY_ACTION_URL_STAGE = "https://payment-stage.ecpay.com.tw/Cashier/AioCheckOut/V5";
 
-	// 特店編號（測試用）
-	private static final String MERCHANT_ID = "3002607";
+	// 特店編號（從 payment.properties 注入）
+	@Value("${ecpay.merchant_id}")
+	private String merchantId;
+
 	// 付款完成後綠界以 POST 通知後端的回呼網址
-	private static final String RETURN_URL = "https://leaseless-eventfully-sharyn.ngrok-free.dev/vitatrack/checkout/ecpay/callback";
+	@Value("${ecpay.return_url}")
+	private String returnUrl;
+
 	// 付款完成後綠界將使用者導回的前端網址（含 orderId 查詢參數）
-	private static final String ORDER_RESULT_URL_BASE =
-	        "https://leaseless-eventfully-sharyn.ngrok-free.dev/vitatrack/checkout/ecpay/return";
+	@Value("${ecpay.order_result_url_base}")
+	private String orderResultUrlBase;
+
 	private static final String TRADE_DESC = "Vitatrack訂單";
 	private static final String PAYMENT_TYPE = "aio";
 	// 1 = SHA256 加密
@@ -53,8 +59,11 @@ public class PaymentServiceImpl implements PaymentService {
 	private static final java.util.Set<String> VALID_CHOOSE_PAYMENTS =
 	        new java.util.HashSet<>(java.util.Arrays.asList("Credit", "ATM", "CVS", "BARCODE", "ALL"));
 
-	private static final String HASH_KEY = "pwFHCqoQZGmho4w6";
-	private static final String HASH_IV = "EkRm7IFT261dpevs";
+	@Value("${ecpay.hash_key}")
+	private String hashKey;
+
+	@Value("${ecpay.hash_iv}")
+	private String hashIv;
 
 	/**
 	 * 驗證訂單可付款後，產生並回傳 ECPay AIO 結帳的 action URL 與表單參數。
@@ -129,15 +138,15 @@ public class PaymentServiceImpl implements PaymentService {
 
 		// 依序填入 ECPay 表單欄位（順序影響 CheckMacValue 計算）
 		Map<String, String> formParams = new LinkedHashMap<>();
-		formParams.put("MerchantID", MERCHANT_ID);
+		formParams.put("MerchantID", merchantId);
 		formParams.put("MerchantTradeNo", info.getTransactionId());
 		formParams.put("MerchantTradeDate", merchantTradeDate);
 		formParams.put("PaymentType", PAYMENT_TYPE);
 		formParams.put("TotalAmount", String.valueOf(info.getTotalAmount()));
 		formParams.put("TradeDesc", TRADE_DESC);
 		formParams.put("ItemName", info.getItemName());
-		formParams.put("ReturnURL", RETURN_URL);
-		formParams.put("OrderResultURL", ORDER_RESULT_URL_BASE + "?orderId=" + orderId);
+		formParams.put("ReturnURL", returnUrl);
+		formParams.put("OrderResultURL", orderResultUrlBase + "?orderId=" + orderId);
 		formParams.put("ChoosePayment", choosePayment);
 		formParams.put("EncryptType", ENCRYPT_TYPE);
 		// CheckMacValue 必須在所有欄位填入後才計算
@@ -185,7 +194,7 @@ public class PaymentServiceImpl implements PaymentService {
 		}
 
 		// 前後包上 HashKey / HashIV，再依序 URL Encode → SHA256 → 大寫
-		String raw = "HashKey=" + HASH_KEY + "&" + sb + "&HashIV=" + HASH_IV;
+		String raw = "HashKey=" + hashKey + "&" + sb + "&HashIV=" + hashIv;
 		return sha256(ecpayUrlEncode(raw)).toUpperCase();
 	}
 
