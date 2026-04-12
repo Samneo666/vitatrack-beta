@@ -146,14 +146,14 @@
 	    <div class="mn-product-card">
 	      <div class="mn-product-img">
 	        <div class="mn-img">
-	          <a href="product-detail.html?sku=${sku}" class="image">
+	          <a href="productDetailPage.html?sku=${sku}" class="image">
 	            <img class="main-img" src="${img}" alt="${name}">
 	          </a>
 	        </div>
 	      </div>
 	      <div class="mn-product-detail">
 	        <h5>
-	          <a href="product-detail.html?sku=${sku}">${name}</a>
+	          <a href="productDetailPage.html?sku=${sku}">${name}</a>
 	        </h5>
 	        <div class="mn-price">
 	          <div class="mn-price-new">${price}</div>

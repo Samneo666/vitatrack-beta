@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en" dir="ltr">
 
 <head>
@@ -29,6 +29,61 @@
 
 	<!-- Main CSS -->
 	<link id="mainCss" href="assets/css/style.css" rel="stylesheet">
+
+	<style>
+		/* 商品主圖：固定 800×900，等比例縮放置中 */
+		.single-pro-img {
+			width: 800px;
+			max-width: 100%;
+		}
+
+		.single-pro-img .single-product-scroll,
+		.single-pro-img .single-product-cover,
+		.single-pro-img .single-slide {
+			width: 100%;
+		}
+
+		#productMainImg {
+			display: block;
+			width: 500px;
+			height: 600px;
+			max-width: 100%;
+			max-height: 600px;
+			object-fit: contain;
+			/* 等比例縮放，不裁切、不變形 */
+			object-position: center center;
+			margin: 0 auto;
+		}
+
+		/* API 圖片載入前不顯示破圖或預設圖 */
+		#productMainImg:not([src]),
+		#productMainImg[src=""] {
+			visibility: hidden;
+		}
+
+		/* 相關商品卡片圖片：300×400，等比例縮放 */
+		#relatedProductsContainer .mn-product-card .mn-img {
+			width: 300px;
+			height: 400px;
+			overflow: hidden;
+			margin: 0 auto;
+		}
+
+		#relatedProductsContainer .mn-product-card .mn-img img {
+			width: 300px;
+			height: 400px;
+			object-fit: contain;
+			object-position: center center;
+		}
+
+		#relatedProductsContainer .mn-product-card .mn-product-detail {
+			text-align: center;
+		}
+
+		#relatedProductsContainer .mn-product-card .mn-price {
+			justify-content: center;
+		}
+	</style>
 </head>
 
 <body data-mn-mode="light">
@@ -66,7 +121,7 @@
 												<li class="non-drop">
 													<a href="index.html">首頁</a>
 												</li>
-												
+
 											</ul>
 										</div>
 									</div>
@@ -74,7 +129,7 @@
 							</div>
 						</div>
 						<div class="mn-mobile-menu-overlay"></div>
-						
+
 						<!-- Main menu icons -->
 						<div class="mn-tool-icons">
 							<div class="mn-tool-user">
@@ -87,7 +142,7 @@
 									</svg>
 								</a>
 								<ul class="sub-menu">
-								<li>
+									<li>
 										<div class="d-flex align-items-center ps-3">
 											<i class="ri-login-box-line fs-6"></i>
 											<a href="login.html">登入</a>
@@ -116,9 +171,9 @@
 				</div>
 			</div>
 		</header>
-		
+
 		<!-- 會員登入後的header -->
-		<header id="header-member" class="sb-hide" style="display: none" >
+		<header id="header-member" class="sb-hide" style="display: none">
 			<div class="mn-header">
 				<div class="mn-header-items">
 					<div class="left-header">
@@ -218,9 +273,9 @@
 											<div class="single-pro-img">
 												<div class="single-product-scroll">
 													<div class="single-product-cover">
-														<div class="single-slide zoom-image-hover">
-															<img class="img-responsive" src="assets/img/product/27.jpg"
-																alt="">
+														<div class="single-slide">
+															<img id="productMainImg" class="img-responsive" src=""
+																alt="商品圖片">
 														</div>
 													</div>
 												</div>
@@ -243,11 +298,13 @@
 
 													<div class="mn-single-price-stoke">
 														<div class="mn-single-price">
-															<div class="final-price" id="pPrice">$0<span class="price-des" id="pPriceDes"></span></div>
+															<div class="final-price" id="pPrice">$0<span
+																	class="price-des" id="pPriceDes"></span></div>
 															<div class="mrp" id="pMrp" style="display:none;"></div>
 														</div>
 														<div class="mn-single-stoke">
-															<span class="mn-single-sku">商品編號：<span id="pSku"></span></span>
+															<span class="mn-single-sku">商品編號：<span
+																	id="pSku"></span></span>
 															<span class="mn-single-ps-title" id="pStockText">載入中</span>
 														</div>
 													</div>
@@ -255,9 +312,9 @@
 
 													<div class="mn-single-list">
 														<ul>
-															<li><strong>商品特性 :</strong> 維生素補充品</li>
-															<li><strong>使用方式 :</strong> 一天1~2粒</li>
-															<li><strong>規格 :</strong> 60粒</li>
+															<li><strong>商品特性 :</strong> 營養補充品</li>
+															<li><strong>使用方式 :</strong> 一天2粒(包)</li>
+															<li><strong>規格 :</strong> 60粒(包)</li>
 															<li><strong>商品試用 :</strong> 90天無風險試用；開封後90天內如不適合，可申請退換</li>
 
 														</ul>
@@ -267,7 +324,7 @@
 														<div
 															class="mn-pro-variation-inner mn-pro-variation-size m-b-24">
 															<div class="mn-pro-variation-content">
-																
+
 															</div>
 														</div>
 													</div>
@@ -311,7 +368,9 @@
 										</div>
 										<div class="tab-content  mn-single-pro-tab-content">
 											<div id="mn-spt-nav-details" class="tab-pane fade show active">
-												<div class="mn-single-pro-tab-desc" id="pDesc"><p>載入中...</p></div>
+												<div class="mn-single-pro-tab-desc" id="pDesc">
+													<p>載入中...</p>
+												</div>
 											</div>
 											<div id="mn-spt-nav-info" class="tab-pane fade">
 												<div class="mn-single-pro-tab-moreinfo">
@@ -435,37 +494,7 @@
 														</div>
 
 													</div>
-													<div class="mn-ratting-content">
-														<h3>Add a Review</h3>
-														<div class="mn-ratting-form">
-															<form action="#">
-																<div class="mn-ratting-star">
-																	<span>Your rating:</span>
-																	<div class="mn-t-review-rating mn-pro-rating">
-																		<i class="ri-star-fill"></i>
-																		<i class="ri-star-fill"></i>
-																		<i class="ri-star-fill grey"></i>
-																		<i class="ri-star-fill grey"></i>
-																		<i class="ri-star-fill grey"></i>
-																	</div>
-																</div>
-																<div class="mn-ratting-input">
-																	<input name="your-name" placeholder="Name"
-																		type="text">
-																</div>
-																<div class="mn-ratting-input">
-																	<input name="your-email" placeholder="Email*"
-																		type="email" required>
-																</div>
-																<div class="mn-ratting-input form-submit">
-																	<textarea name="your-commemt"
-																		placeholder="Enter Your Comment"></textarea>
-																	<button class="mn-btn-2" type="submit"
-																		value="Submit"><span>Submit</span></button>
-																</div>
-															</form>
-														</div>
-													</div>
+
 												</div>
 											</div>
 										</div>
@@ -506,22 +535,22 @@
 									<div class="mn-footer-links mn-footer-dropdown">
 										<ul class="align-items-center">
 											<li class="mn-footer-link">
-												<a href="shop-list-left-sidebar.html">腸胃</a>
+												<a href="javascript:void(0)">腸胃</a>
 											</li>
 											<li class="mn-footer-link">
-												<a href="shop-list-left-sidebar.html">眼睛</a>
+												<a href="javascript:void(0)">眼睛</a>
 											</li>
 											<li class="mn-footer-link">
-												<a href="shop-list-left-sidebar.html">膝蓋</a>
+												<a href="javascript:void(0)">膝蓋</a>
 											</li>
 											<li class="mn-footer-link">
-												<a href="shop-list-left-sidebar.html">基礎營養</a>
+												<a href="javascript:void(0)">基礎營養</a>
 											</li>
 											<li class="mn-footer-link">
-												<a href="shop-list-left-sidebar.html">心血管</a>
+												<a href="javascript:void(0)">心血管</a>
 											</li>
 											<li class="mn-footer-link">
-												<a href="shop-list-left-sidebar.html">抗氧化/免疫</a>
+												<a href="javascript:void(0)">抗氧化/免疫</a>
 											</li>
 										</ul>
 									</div>
@@ -533,13 +562,13 @@
 									<div class="mn-footer-links mn-footer-dropdown">
 										<ul class="align-items-center">
 											<li class="mn-footer-link">
-												<a href="about-us.html">關於我們</a>
+												<a href="javascript:void(0)">關於我們</a>
 											</li>
 											<li class="mn-footer-link">
-												<a href="track-order.html">服務條款</a>
+												<a href="javascript:void(0)">服務條款</a>
 											</li>
 											<li class="mn-footer-link">
-												<a href="faq.html">法律聲明</a>
+												<a href="javascript:void(0)">法律聲明</a>
 										</ul>
 									</div>
 								</div>
@@ -556,10 +585,10 @@
 												<a href="cart.html">查看購物車</a>
 											</li>
 											<li class="mn-footer-link">
-												<a href="faq.html">退貨政策</a>
+												<a href="javascript:void(0)">退貨政策</a>
 											</li>
 											<li class="mn-footer-link">
-												<a href="checkout.html">隱私政策</a>
+												<a href="javascript:void(0)">隱私政策</a>
 											</li>
 										</ul>
 									</div>
@@ -623,7 +652,7 @@
 								<div class="footer-copy">
 									<div class="footer-bottom-copy ">
 										<div class="mn-copy">Copyright © <span id="copyright_year"></span>
-											<a class="site-name" href="index.html">VitaTrack</a> all rights
+											<a class="site-name" href="javascript:void(0)">VitaTrack</a> all rights
 											reserved.
 										</div>
 									</div>
@@ -651,27 +680,27 @@
 							<path
 								d="M512.476 648.247c-170.169 0-308.118-136.411-308.118-304.681 0-168.271 137.949-304.681 308.118-304.681 170.169 0 308.119 136.411 308.119 304.681C820.594 511.837 682.645 648.247 512.476 648.247L512.476 648.247zM512.476 100.186c-135.713 0-246.12 109.178-246.12 243.381 0 134.202 110.407 243.381 246.12 243.381 135.719 0 246.126-109.179 246.126-243.381C758.602 209.364 648.195 100.186 512.476 100.186L512.476 100.186zM935.867 985.115l-26.164 0c-9.648 0-17.779-6.941-19.384-16.35-2.646-15.426-6.277-30.52-11.142-44.95-24.769-87.686-81.337-164.13-159.104-214.266-63.232 35.203-134.235 53.64-207.597 53.64-73.555 0-144.73-18.537-208.084-53.922-78 50.131-134.75 126.68-159.564 214.549 0 0-4.893 18.172-11.795 46.4-2.136 8.723-10.035 14.9-19.112 14.9L88.133 985.116c-9.415 0-16.693-8.214-15.47-17.452C91.698 824.084 181.099 702.474 305.51 637.615c58.682 40.472 129.996 64.267 206.966 64.267 77.01 0 148.327-23.795 207.01-64.267 124.411 64.859 213.812 186.469 229.35 330.049C952.56 976.901 945.282 985.115 935.867 985.115z"
 								fill="#000000" opacity="1" data-original="#000000"></path>
-							</svg>
+						</svg>
 					</a>
 				</li>
 			</ul>
 		</div>
-	</div>
+		</div>
 
 		<!-- Vendor Custom -->
-	<script src="assets/js/vendor/jquery-3.7.1.min.js"></script>
-	<script src="assets/js/vendor/bootstrap.bundle.min.js"></script>
-	<script src="assets/js/vendor/owl.carousel.min.js"></script>
-	<script src="assets/js/vendor/slick.min.js"></script>
-	<script src="assets/js/vendor/swiper-bundle.min.js"></script>
-	<script src="assets/js/vendor/countdownTimer.js"></script>
-	<script src="assets/js/vendor/infiniteslidev2.js"></script>
-	<script src="assets/js/vendor/nouislider.js"></script>
-	<script src="assets/js/vendor/smoothscroll.min.js"></script>
-	<script src="assets/js/vendor/jquery.zoom.min.js"></script>
-	<script src="assets/js/main.js"></script>
-	<script src="product/js/addcart.js"></script>
-	<script src="product/js/productDetailPage.js"></script>
+		<script src="assets/js/vendor/jquery-3.7.1.min.js"></script>
+		<script src="assets/js/vendor/bootstrap.bundle.min.js"></script>
+		<script src="assets/js/vendor/owl.carousel.min.js"></script>
+		<script src="assets/js/vendor/slick.min.js"></script>
+		<script src="assets/js/vendor/swiper-bundle.min.js"></script>
+		<script src="assets/js/vendor/countdownTimer.js"></script>
+		<script src="assets/js/vendor/infiniteslidev2.js"></script>
+		<script src="assets/js/vendor/nouislider.js"></script>
+		<script src="assets/js/vendor/smoothscroll.min.js"></script>
+		<script src="assets/js/vendor/jquery.zoom.min.js"></script>
+		<script src="assets/js/main.js"></script>
+		<script src="product/js/addcart.js"></script>
+		<script src="product/js/productDetailPage.js"></script>
 
 </body>
 
