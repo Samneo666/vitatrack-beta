@@ -441,7 +441,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     <tr>
                         <td>${order.orderId}</td>
                         <td>${order.createdAt}</td>
-                        <td>${order.totalAmount}</td>
+                        <td>NT$${order.totalAmount}</td>
                         <td>${order.paymentMethod}</td>
                         <td>${order.status ?? '待付款'}</td>
                         <td>${order.paymentStatus}</td>
