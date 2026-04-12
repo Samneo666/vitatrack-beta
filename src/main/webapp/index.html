@@ -1,4 +1,4 @@
-<!--========================================================= 
+﻿<!--========================================================= 
 Item Name: Mantu - eCommerce HTML Template
 Author: Maraviya Infotech
 Version: 1.0
@@ -40,6 +40,16 @@ Copyright 2025
 	<style>
 		body {
 			font-family: 'Noto Sans TC', 'Poppins', Arial, Helvetica, sans-serif;
+		}
+
+		/* Category Section 商品圖片：500×500 等比例縮放 */
+		.mn-cat-card ul li a img {
+			display: block;
+			width: 400px !important;
+			height: 300px !important;
+			max-width: 100%;
+			object-fit: contain;
+			object-position: center center;
 		}
 	</style>
 </head>
@@ -198,42 +208,42 @@ Copyright 2025
 					<!-- Hero Section -->
 					<section class="mn-hero swiper-container m-b-15">
 						<div class="mn-hero-slider owl-carousel">
-							<div class="mn-hero-slide swiper-slide slide-1">
-								<div class="mn-hero-detail">
-									<p class="label"><span>50%<br>Off</span></p>
-									<h1>維他命C<br>適合日常營養補充</h1>
-									<p>高劑量維他命C補充配方，每顆提供1000mg維他命C。</p>
-									<a href="productDetailPage.html?sku=202603011284"
-										class="mn-btn-2"><span>立即購買</span></a>
-								</div>
+						<div class="mn-hero-slide swiper-slide slide-1">
+							<div class="mn-hero-detail">
+								<p class="label"><span>50%<br>Off</span></p>
+								<h1>維他命C<br>適合日常營養補充</h1>
+								<p>高劑量維他命C補充配方，每顆提供1000mg維他命C。</p>
+								<a href="productDetailPage.html?sku=202603011284"
+									class="mn-btn-2"><span>立即購買</span></a>
 							</div>
-							<div class="mn-hero-slide swiper-slide slide-2">
-								<div class="mn-hero-detail">
-									<p class="label"><span>35%<br>Off</span></p>
-									<h2>維生素B群<br>適合生活忙碌者補充</h2>
-									<p>採用緩釋型設計，使營養素能逐步釋放。</p>
-									<a href="productDetailPage.html?sku=202603012843"
-										class="mn-btn-2"><span>立即購買</span></a>
-								</div>
+						</div>
+						<div class="mn-hero-slide swiper-slide slide-2">
+							<div class="mn-hero-detail">
+								<p class="label"><span>35%<br>Off</span></p>
+								<h2>維生素B群<br>適合生活忙碌者補充</h2>
+								<p>採用緩釋型設計，使營養素能逐步釋放。</p>
+								<a href="productDetailPage.html?sku=202603012843"
+									class="mn-btn-2"><span>立即購買</span></a>
 							</div>
-							<div class="mn-hero-slide swiper-slide slide-3">
-								<div class="mn-hero-detail">
-									<p class="label"><span>44%<br>Off</span></p>
-									<h2>Omega-3魚油<br>適合日常健康維持</h2>
-									<p>富含EPA和DHA，有助於心血管健康和腦部功能。</p>
-									<a href="productDetailPage.html?sku=202603014519"
-										class="mn-btn-2"><span>立即購買</span></a>
-								</div>
+						</div>
+						<div class="mn-hero-slide swiper-slide slide-3">
+							<div class="mn-hero-detail">
+								<p class="label"><span>44%<br>Off</span></p>
+								<h2>Omega-3魚油<br>適合日常健康維持</h2>
+								<p>富含EPA和DHA，有助於心血管健康和腦部功能。</p>
+								<a href="productDetailPage.html?sku=202603014519"
+									class="mn-btn-2"><span>立即購買</span></a>
 							</div>
-							<div class="mn-hero-slide swiper-slide slide-4">
-								<div class="mn-hero-detail">
-									<p class="label"><span>22%<br>Off</span></p>
-									<h2>益生菌 50億<br>適合日常補充與外出使用</h2>
-									<p>搭配益生質配方，幫助維持消化道菌叢平衡。</p>
-									<a href="productDetailPage.html?sku=202603016140"
-										class="mn-btn-2"><span>立即購買</span></a>
-								</div>
+						</div>
+						<div class="mn-hero-slide swiper-slide slide-4">
+							<div class="mn-hero-detail">
+								<p class="label"><span>22%<br>Off</span></p>
+								<h2>益生菌 50億<br>適合日常補充與外出使用</h2>
+								<p>搭配益生質配方，幫助維持消化道菌叢平衡。</p>
+								<a href="productDetailPage.html?sku=202603016140"
+									class="mn-btn-2"><span>立即購買</span></a>
 							</div>
+						</div>
 						</div>
 					</section>
 
@@ -247,12 +257,8 @@ Copyright 2025
 								<h3>益生菌</h3>
 								<p>幫助維持消化道菌叢平衡</p>
 								<ul>
-									<li><a href="shop-right-sidebar.html"><img src="product/img/1.png" alt="益生菌"></a>
-									</li>
-									<li><a href="shop-right-sidebar.html"><img src="assets/img/category/2.jpg"
-												alt="category"></a></li>
-									<li><a href="shop-right-sidebar.html"><img src="assets/img/category/3.jpg"
-												alt="category"></a></li>
+									<li><a href="productDetailPage.html?sku=202603016140"><img src="product/img/probiotics.png" alt="probiotics"></a></li>
+								
 								</ul>
 							</div>
 							<div class="mn-cat-card cat-card-2">
@@ -262,27 +268,18 @@ Copyright 2025
 								<h3>葉黃素</h3>
 								<p>保護視力健康</p>
 								<ul>
-									<li><a href="shop-right-sidebar.html"><img src="assets/img/category/4.jpg"
-												alt="category"></a></li>
-									<li><a href="shop-right-sidebar.html"><img src="assets/img/category/5.jpg"
-												alt="category"></a></li>
-									<li><a href="shop-right-sidebar.html"><img src="assets/img/category/6.jpg"
-												alt="category"></a></li>
+								<li><a href="productDetailPage.html?sku=202603016507"><img src="product/img/Lutein.png" alt="Lutin"></a></li>
+									
 								</ul>
 							</div>
 							<div class="mn-cat-card cat-card-3">
 								<p class="lbl"><span>65%</span></p>
 								<span class="bg">65%</span>
 								<h4>膝蓋</h4>
-								<h3>維骨力</h3>
+								<h3>葡萄糖胺</h3>
 								<p>維持關節靈活</p>
 								<ul>
-									<li><a href="shop-right-sidebar.html"><img src="assets/img/category/7.jpg"
-												alt="category"></a></li>
-									<li><a href="shop-right-sidebar.html"><img src="assets/img/category/8.jpg"
-												alt="category"></a></li>
-									<li><a href="shop-right-sidebar.html"><img src="assets/img/category/9.jpg"
-												alt="category"></a></li>
+								<li><a href="productDetailPage.html?sku=202603013250"><img src="product/img/Glucosamine.png" alt="Glucosamine"></a></li>
 								</ul>
 							</div>
 							<div class="mn-cat-card cat-card-4">
@@ -292,12 +289,7 @@ Copyright 2025
 								<h3>綜合維他命/B群</h3>
 								<p>補充日常營養</p>
 								<ul>
-									<li><a href="shop-right-sidebar.html"><img src="assets/img/category/10.jpg"
-												alt="category"></a></li>
-									<li><a href="shop-right-sidebar.html"><img src="assets/img/category/11.jpg"
-												alt="category"></a></li>
-									<li><a href="shop-right-sidebar.html"><img src="assets/img/category/12.jpg"
-												alt="category"></a></li>
+								<li><a href="productDetailPage.html?sku=202603012843"><img src="product/img/BComplex.png" alt="BComplex"></a></li>
 								</ul>
 							</div>
 							<div class="mn-cat-card cat-card-5">
@@ -307,12 +299,7 @@ Copyright 2025
 								<h3>魚油</h3>
 								<p>富含EPA和DHA</p>
 								<ul>
-									<li><a href="shop-right-sidebar.html"><img src="assets/img/category/13.jpg"
-												alt="category"></a></li>
-									<li><a href="shop-right-sidebar.html"><img src="assets/img/category/14.jpg"
-												alt="category"></a></li>
-									<li><a href="shop-right-sidebar.html"><img src="assets/img/category/15.jpg"
-												alt="category"></a></li>
+								<li><a href="productDetailPage.html?sku=202603014519"><img src="product/img/fishoil.png" alt="FishOil"></a></li>
 								</ul>
 							</div>
 							<div class="mn-cat-card cat-card-6">
@@ -322,12 +309,7 @@ Copyright 2025
 								<h3>維他命C</h3>
 								<p>高劑量維他命C補充配方</p>
 								<ul>
-									<li><a href="shop-right-sidebar.html"><img src="assets/img/category/16.jpg"
-												alt="category"></a></li>
-									<li><a href="shop-right-sidebar.html"><img src="assets/img/category/17.jpg"
-												alt="category"></a></li>
-									<li><a href="shop-right-sidebar.html"><img src="assets/img/category/18.jpg"
-												alt="category"></a></li>
+								<li><a href="productDetailPage.html?sku=202603011284"><img src="product/img/VitaminC.png" alt="VitaminC"></a></li>
 								</ul>
 							</div>
 						</div>
@@ -446,176 +428,11 @@ Copyright 2025
 						</div>
 					</section>
 
-					<!-- Testimonials Section -->
-					<section class="mn-testimonials p-tb-15">
-						<div class="row">
-							<div class="col-md-12">
-								<div class="testim-bg">
-									<div class="section-title d-none">
-										<h2>Customers <span>Review</span></h2>
-									</div>
-									<div class="mn-test-outer mn-testimonials">
-										<ul class="mn-testimonial-slider owl-carousel">
-											<li class="mn-test-item">
-												<img src="assets/img/icons/top-quotes.svg" class="svg_img test_svg top"
-													alt="user">
-												<div class="mn-test-inner">
-													<div class="mn-test-img">
-														<img alt="testimonial" title="testimonial"
-															src="assets/img/user/1.jpg">
-													</div>
-													<div class="mn-test-content">
-														<div class="mn-test-desc">文章推薦保健品1</div>
-														<div class="mn-test-name">作者名</div>
-														<div class="mn-test-designation">(職稱)</div>
-													</div>
-												</div>
-												<img src="assets/img/icons/bottom-quotes.svg"
-													class="svg_img test_svg bottom" alt="">
-											</li>
-											<li class="mn-test-item ">
-												<img src="assets/img/icons/top-quotes.svg" class="svg_img test_svg top"
-													alt="">
-												<div class="mn-test-inner">
-													<div class="mn-test-img">
-														<img alt="testimonial" title="testimonial"
-															src="assets/img/user/2.jpg">
-													</div>
-													<div class="mn-test-content">
-														<div class="mn-test-desc">文章推薦保健品2</div>
-														<div class="mn-test-name">作者名</div>
-														<div class="mn-test-designation">(職稱)</div>
-													</div>
-												</div>
-												<img src="assets/img/icons/bottom-quotes.svg"
-													class="svg_img test_svg bottom" alt="">
-											</li>
-											<li class="mn-test-item">
-												<img src="assets/img/icons/top-quotes.svg" class="svg_img test_svg top"
-													alt="">
-												<div class="mn-test-inner">
-													<div class="mn-test-img">
-														<img alt="testimonial" title="testimonial"
-															src="assets/img/user/3.jpg">
-													</div>
-													<div class="mn-test-content">
-														<div class="mn-test-desc">文章推薦保健品3</div>
-														<div class="mn-test-name">作者名</div>
-														<div class="mn-test-designation">(職稱)</div>
-													</div>
-												</div>
-												<img src="assets/img/icons/bottom-quotes.svg"
-													class="svg_img test_svg bottom" alt="">
-											</li>
-										</ul>
-									</div>
-									<span class="mn-testi-shape-2"></span>
-								</div>
-							</div>
-						</div>
-					</section>
+					
 
 
 
-					<!-- Blog Section Start -->
-					<section class="mn-blog p-tb-15">
-						<div class="mn-title">
-							<h2>推薦<span>文章</span></h2>
-						</div>
-						<div class="mn-blog-carousel owl-carousel">
-							<div class="mn-blog-card">
-								<div class="blog-info">
-									<figure class="blog-img"><a href="#"><img src="assets/img/blog/1.jpg"
-												alt="news imag"></a>
-									</figure>
-									<div class="detail">
-										<label>June 30, 2025 - <a href="#">Fashion</a></label>
-										<h3><a href="#">文章標題1</a></h3>
-										<div class="more-info">
-											<a href="blog-detail-right-sidebar.html">閱讀更多<i
-													class="ri-arrow-right-double-line"></i></a>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="mn-blog-card">
-								<div class="blog-info">
-									<figure class="blog-img"><a href="#"><img src="assets/img/blog/2.jpg"
-												alt="news imag"></a>
-									</figure>
-									<div class="detail">
-										<label>April 02, 2025 - <a href="#">Shoes</a></label>
-										<h3><a href="#">文章標題2</a>
-										</h3>
-										<div class="more-info">
-											<a href="blog-detail-right-sidebar.html">閱讀更多<i
-													class="ri-arrow-right-double-line"></i></a>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="mn-blog-card">
-								<div class="blog-info">
-									<figure class="blog-img"><a href="#"><img src="assets/img/blog/3.jpg"
-												alt="news imag"></a>
-									</figure>
-									<div class="detail">
-										<label>Mar 09, 2025 - <a href="#">Grocery</a></label>
-										<h3><a href="#">文章標題3</a></h3>
-										<div class="more-info">
-											<a href="blog-detail-right-sidebar.html">閱讀更多<i
-													class="ri-arrow-right-double-line"></i></a>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="mn-blog-card">
-								<div class="blog-info">
-									<figure class="blog-img"><a href="#"><img src="assets/img/blog/4.jpg"
-												alt="news imag"></a>
-									</figure>
-									<div class="detail">
-										<label>January 25, 2025 - <a href="#">Bags</a></label>
-										<h3><a href="#">文章標題4</a></h3>
-										<div class="more-info">
-											<a href="blog-detail-right-sidebar.html">閱讀更多<i
-													class="ri-arrow-right-double-line"></i></a>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="mn-blog-card">
-								<div class="blog-info">
-									<figure class="blog-img"><a href="#"><img src="assets/img/blog/5.jpg"
-												alt="news imag"></a>
-									</figure>
-									<div class="detail">
-										<label>December 10, 2026 - <a href="#">Cosmetics</a></label>
-										<h3><a href="#">文章標題5</a></h3>
-										<div class="more-info">
-											<a href="blog-detail-right-sidebar.html">閱讀更多<i
-													class="ri-arrow-right-double-line"></i></a>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="mn-blog-card">
-								<div class="blog-info">
-									<figure class="blog-img"><a href="#"><img src="assets/img/blog/6.jpg"
-												alt="news imag"></a>
-									</figure>
-									<div class="detail">
-										<label>August 08, 2027 - <a href="#">Bags</a></label>
-										<h3><a href="#">文章標題6</a></h3>
-										<div class="more-info">
-											<a href="blog-detail-right-sidebar.html">閱讀更多<i
-													class="ri-arrow-right-double-line"></i></a>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</section>
+					
 				</div>
 			</div>
 		</div>
@@ -640,22 +457,22 @@ Copyright 2025
 									<div class="mn-footer-links mn-footer-dropdown">
 										<ul class="align-items-center">
 											<li class="mn-footer-link">
-												<a href="shop-list-left-sidebar.html">腸胃</a>
+												<a href="javascript:void(0)">腸胃</a>
 											</li>
 											<li class="mn-footer-link">
-												<a href="shop-list-left-sidebar.html">眼睛</a>
+												<a href="javascript:void(0)">眼睛</a>
 											</li>
 											<li class="mn-footer-link">
-												<a href="shop-list-left-sidebar.html">膝蓋</a>
+												<a href="javascript:void(0)">膝蓋</a>
 											</li>
 											<li class="mn-footer-link">
-												<a href="shop-list-left-sidebar.html">基礎營養</a>
+												<a href="javascript:void(0)">基礎營養</a>
 											</li>
 											<li class="mn-footer-link">
-												<a href="shop-list-left-sidebar.html">心血管</a>
+												<a href="javascript:void(0)">心血管</a>
 											</li>
 											<li class="mn-footer-link">
-												<a href="shop-list-left-sidebar.html">抗氧化/免疫</a>
+												<a href="javascript:void(0)">抗氧化/免疫</a>
 											</li>
 										</ul>
 									</div>
@@ -667,13 +484,13 @@ Copyright 2025
 									<div class="mn-footer-links mn-footer-dropdown">
 										<ul class="align-items-center">
 											<li class="mn-footer-link">
-												<a href="about-us.html">關於我們</a>
+												<a href="javascript:void(0)">關於我們</a>
 											</li>
 											<li class="mn-footer-link">
-												<a href="track-order.html">服務條款</a>
+												<a href="javascript:void(0)">服務條款</a>
 											</li>
 											<li class="mn-footer-link">
-												<a href="faq.html">法律聲明</a>
+												<a href="javascript:void(0)">法律聲明</a>
 										</ul>
 									</div>
 								</div>
@@ -690,10 +507,10 @@ Copyright 2025
 												<a href="cart.html">查看購物車</a>
 											</li>
 											<li class="mn-footer-link">
-												<a href="faq.html">退貨政策</a>
+												<a href="javascript:void(0)">退貨政策</a>
 											</li>
 											<li class="mn-footer-link">
-												<a href="checkout.html">隱私政策</a>
+												<a href="javascript:void(0)">隱私政策</a>
 											</li>
 										</ul>
 									</div>
@@ -757,7 +574,7 @@ Copyright 2025
 								<div class="footer-copy">
 									<div class="footer-bottom-copy ">
 										<div class="mn-copy">Copyright © <span id="copyright_year"></span>
-											<a class="site-name" href="index.html">VitaTrack</a> all rights
+											<a class="site-name" href="javascript:void(0)">VitaTrack</a> all rights
 											reserved.
 										</div>
 									</div>
@@ -866,7 +683,7 @@ Copyright 2025
 							<div class="col-md-7 col-sm-12 col-xs-12 mb-24">
 								<div class="quickview-pro-content">
 									<h5 class="mn-quick-title">
-										<a href="product-detail.html">Best cotton fabric women's half sleeve
+										<a href="productDetailPage.html">Best cotton fabric women's half sleeve
 											T-shirt white color.</a>
 									</h5>
 									<div class="mn-pro-rating">
@@ -923,145 +740,9 @@ Copyright 2025
 		</div>
 
 		<!-- Search Sidebar -->
-		<div class="mn-side-search-overlay"></div>
-		<div class="mn-side-search">
-			<div class="mn-search-inner">
-				<div class="mn-search-title">
-					<span class="search_title">搜尋</span>
-					<a href="javascript:void(0)" class="mn-search-close">
-						<i class="ri-close-line"></i>
-					</a>
-				</div>
-				<div class="mn-search">
-					<form>
-						<input type="text" placeholder="在此搜尋...">
-						<a href="javascript:void(0)"><i class="ri-search-line"></i></a>
-					</form>
-				</div>
-				<div class="mn-search-list">
-					<ul class="mn-search-pro-items">
-						<li class="search-sidebar-list">
-							<a href="product-detail.html" class="mn-pro-img"><img src="assets/img/product/9.jpg"
-									alt="product"></a>
-							<div class="mn-pro-content">
-								<a href="product-detail.html" class="search-pro-title">Sport Shoes</a>
-								<a href="shop-right-sidebar.html" class="search-cat">Shoes</a>
-								<ul class="mn-ratings">
-									<li><i class="ri-star-fill"></i></li>
-									<li><i class="ri-star-fill"></i></li>
-									<li><i class="ri-star-fill"></i></li>
-									<li><i class="ri-star-fill"></i></li>
-									<li><i class="ri-star-fill grey"></i></li>
-								</ul>
-								<span class="search-price"><span>$255.00</span><span class="stock">- 11 in
-										Stock</span></span>
-								<a href="javascript:void(0)" class="search-remove-item">×</a>
-							</div>
-						</li>
-						<li class="search-sidebar-list">
-							<a href="product-detail.html" class="mn-pro-img"><img src="assets/img/product/15.jpg"
-									alt="product"></a>
-							<div class="mn-pro-content">
-								<a href="product-detail.html" class="search-pro-title">Leather bag</a>
-								<a href="shop-right-sidebar.html" class="search-cat">Bags</a>
-								<ul class="mn-ratings">
-									<li><i class="ri-star-fill"></i></li>
-									<li><i class="ri-star-fill"></i></li>
-									<li><i class="ri-star-fill grey"></i></li>
-									<li><i class="ri-star-fill grey"></i></li>
-									<li><i class="ri-star-fill grey"></i></li>
-								</ul>
-								<span class="search-price"><span>$65.00</span><span class="stock">- 54 in
-										Stock</span></span>
-								<a href="javascript:void(0)" class="search-remove-item">×</a>
-							</div>
-						</li>
-						<li class="search-sidebar-list">
-							<a href="product-detail.html" class="mn-pro-img"><img src="assets/img/product/1.jpg"
-									alt="product"></a>
-							<div class="mn-pro-content">
-								<a href="product-detail.html" class="search-pro-title">T-shirt for girls</a>
-								<a href="shop-right-sidebar.html" class="search-cat">益生菌</a>
-								<ul class="mn-ratings">
-									<li><i class="ri-star-fill"></i></li>
-									<li><i class="ri-star-fill"></i></li>
-									<li><i class="ri-star-fill"></i></li>
-									<li><i class="ri-star-fill grey"></i></li>
-									<li><i class="ri-star-fill grey"></i></li>
-								</ul>
-								<span class="search-price"><span>$59.00</span><span class="stock">- 4 in
-										Stock</span></span>
-								<a href="javascript:void(0)" class="search-remove-item">×</a>
-							</div>
-						</li>
-					</ul>
-				</div>
-				<div class="mn-search-also m-t-15">
-					<div class="mn-search-title">
-						<span class="search_title">Recently searches</span>
-					</div>
-					<ul>
-						<li><a href="shop-right-sidebar.html">T-shirts</a></li>
-						<li><a href="shop-right-sidebar.html">watches</a></li>
-						<li><a href="shop-right-sidebar.html">Bags</a></li>
-						<li><a href="shop-right-sidebar.html">Belts</a></li>
-					</ul>
-				</div>
-			</div>
-		</div>
 
 		<!-- Wishlist sidebar Start -->
-		<div class="mn-side-wishlist-overlay"></div>
-		<div id="mn-side-wishlist" class="mn-side-wishlist">
-			<div class="mn-wishlist-inner">
-				<div class="mn-wishlist-top">
-					<div class="mn-wishlist-title">
-						<span class="wishlist_title">我的商品清單</span>
-						<a href="javascript:void(0)" class="mn-wishlist-close">
-							<i class="ri-close-line"></i>
-						</a>
-					</div>
-					<ul class="mn-wishlist-pro-items">
-						<li class="wishlist-sidebar-list">
-							<a href="product-detail.html" class="mn-pro-img"><img src="assets/img/product/15.jpg"
-									alt="product"></a>
-							<div class="mn-pro-content">
-								<a href="product-detail.html" class="wishlist-pro-title">Leather bag</a>
-								<span class="wishlist-price"><span>$499.00</span><span class="stock">- 9 in
-										Stock</span></span>
-								<a href="javascript:void(0)" class="wishlist-remove-item">×</a>
-							</div>
-						</li>
-						<li class="wishlist-sidebar-list">
-							<a href="product-detail.html" class="mn-pro-img"><img src="assets/img/product/13.jpg"
-									alt="product"></a>
-							<div class="mn-pro-content">
-								<a href="product-detail.html" class="wishlist-pro-title">Leather Belt</a>
-								<span class="wishlist-price"><span>$59.00</span><span class="stock">- 4 in
-										Stock</span></span>
-								<a href="javascript:void(0)" class="wishlist-remove-item">×</a>
-							</div>
-						</li>
-						<li class="wishlist-sidebar-list">
-							<a href="product-detail.html" class="mn-pro-img"><img src="assets/img/product/5.jpg"
-									alt="product"></a>
-							<div class="mn-pro-content">
-								<a href="product-detail.html" class="wishlist-pro-title">T-Shirt for men</a>
-								<span class="wishlist-price"><span>$65.00</span><span class="stock">- 54 in
-										Stock</span></span>
-								<a href="javascript:void(0)" class="wishlist-remove-item">×</a>
-							</div>
-						</li>
-					</ul>
-				</div>
-				<div class="mn-wishlist-bottom">
-					<div class="wishlist_btn">
-						<a href="wishlist.html" class="mn-btn-1"><span>檢視所有收藏商品<i
-									class="ri-arrow-right-s-line"></i></span></a>
-					</div>
-				</div>
-			</div>
-		</div>
+		
 	</main>
 
 	<!-- Vendor Custom -->

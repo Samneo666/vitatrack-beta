@@ -135,7 +135,7 @@ async function renderCartPage() {
     html += `
       <tr class="mn-cart-product">
         <td data-label="Product" class="mn-cart-pro-name">
-          <a href="product-detail.html?sku=${item.sku || ''}">
+          <a href="productDetailPage.html?sku=${item.sku || ''}">
             <img class="mn-cart-pro-img" src="${item.image || 'assets/img/product/default.jpg'}" alt="">
             ${item.name || item.productName || ''}
           </a>

@@ -127,6 +127,7 @@
 
       document.title = (p.name ? p.name + ' | VitaTrack' : 'VitaTrack');
       bindAddToCart(p);
+      await loadProductImages(skuParam);
 
     } catch (e) {
       console.error('載入失敗 =', e);
@@ -136,8 +137,8 @@
     }
   }
 
-  function buildRelatedCard(p) {
-    var img = p.image || 'assets/img/product/5.jpg';
+  function buildRelatedCard(p, imageUrl) {
+    var img = imageUrl || 'assets/img/product/5.jpg';
     var name = escapeHtml(p.name || '商品名稱');
     var price = formatPrice(p.price);
     var sku = encodeURIComponent(p.sku || '');
@@ -146,14 +147,14 @@
 	    <div class="mn-product-card">
 	      <div class="mn-product-img">
 	        <div class="mn-img">
-	          <a href="product-detail.html?sku=${sku}" class="image">
+	          <a href="productDetailPage.html?sku=${sku}" class="image">
 	            <img class="main-img" src="${img}" alt="${name}">
 	          </a>
 	        </div>
 	      </div>
 	      <div class="mn-product-detail">
 	        <h5>
-	          <a href="product-detail.html?sku=${sku}">${name}</a>
+	          <a href="productDetailPage.html?sku=${sku}">${name}</a>
 	        </h5>
 	        <div class="mn-price">
 	          <div class="mn-price-new">${price}</div>
@@ -163,7 +164,24 @@
 	  `;
   }
 
-  function renderRelatedProducts(list) {
+  async function fetchRelatedImage(sku) {
+    if (!sku) return null;
+    try {
+      var resp = await fetch('product-images?sku=' + encodeURIComponent(sku), {
+        headers: { 'Accept': 'application/json' }
+      });
+      if (!resp.ok) return null;
+      var images = await resp.json();
+      if (!Array.isArray(images) || images.length === 0) return null;
+      var main = images.find(function (img) { return img.isMain === true; }) || images[0];
+      return (main && main.imageUrl) ? main.imageUrl : null;
+    } catch (e) {
+      console.warn('[fetchRelatedImage] sku=' + sku, e);
+      return null;
+    }
+  }
+
+  async function renderRelatedProducts(list) {
     var container = qs('relatedProductsContainer');
     if (!container) return;
 
@@ -172,10 +190,16 @@
       return;
     }
 
+    var products = list.map(function (item) { return mapProduct(item); });
+
+    // 並行呼叫每個 SKU 的圖片 API
+    var imageUrls = await Promise.all(
+      products.map(function (p) { return fetchRelatedImage(p.sku); })
+    );
+
     var html = '';
-    for (var i = 0; i < list.length; i++) {
-      var p = mapProduct(list[i]);
-      html += buildRelatedCard(p);
+    for (var i = 0; i < products.length; i++) {
+      html += buildRelatedCard(products[i], imageUrls[i]);
     }
 
     container.innerHTML = html;
@@ -203,6 +227,45 @@
     }
   }
 
+  async function loadProductImages(sku) {
+    var imgEl = document.getElementById('productMainImg');
+    if (!imgEl || !sku) return;
+
+    try {
+      var resp = await fetch('product-images?sku=' + encodeURIComponent(sku), {
+        method: 'GET',
+        headers: { 'Accept': 'application/json' }
+      });
+
+      // 404 = 無圖片資料，保留預設圖即可
+      if (resp.status === 404) {
+        console.warn('[product-images] 查無圖片，使用預設圖');
+        return;
+      }
+
+      if (!resp.ok) throw new Error('HTTP ' + resp.status);
+
+      var images = await resp.json();
+      console.log('[product-images] 回傳圖片清單 =', images);
+
+      if (!Array.isArray(images) || images.length === 0) return;
+
+      // 優先顯示主圖（isMain === true），沒有則取第一張
+      var main = images.find(function (img) { return img.isMain === true; }) || images[0];
+
+      if (main && main.imageUrl) {
+        imgEl.src = main.imageUrl;
+        imgEl.alt = main.imageUrl.split('/').pop().replace(/\.[^.]+$/, '');
+        imgEl.style.visibility = 'visible';
+        console.log('[product-images] 主圖已更新 =', main.imageUrl);
+      }
+
+    } catch (e) {
+      console.error('[product-images] 載入失敗 =', e);
+      // 載入失敗時保留預設圖，不顯示錯誤給使用者
+    }
+  }
+
   async function loadRelatedProducts() {
     var skuParam = getParam('sku');
     var container = qs('relatedProductsContainer');
@@ -213,7 +276,8 @@
       '202603011284', // 維他命C 1000mg
       '202603012843', // 維生素B群
       '202603014519', // Omega-3 魚油
-      '202603016140'  // 益生菌 50億
+      '202603016140', // 益生菌 50億
+      '202603013250'  // 維骨力
     ];
 
     // 排除目前商品，剩下三個
@@ -241,7 +305,7 @@
       console.log('相關商品 raw =', raw);
 
       var list = Array.isArray(raw) ? raw : (raw.data || []);
-      renderRelatedProducts(list);
+      await renderRelatedProducts(list);
 
     } catch (e) {
       console.error('相關商品載入失敗 =', e);
@@ -333,7 +397,7 @@
         }
       }
 
-      // 呼叫後端 API 將商品加入資料庫購物車
+      // -------------呼叫後端API將商品加入資料庫購物車-------------
       try {
         const response = await fetch('api/addToCart', {
           method: 'POST',
@@ -375,17 +439,6 @@
 // 4. 驗證使用者是否為會員，根據登入狀態顯示不同的頁首選單，並提供查看會員資料、訂單資訊和登出功能。
 
 (function () {
-  var CART_KEY = 'cart';
-
-  // 保留相容用的空陣列
-  function getCart() {
-    return [];
-  }
-
-  function saveCart(cart) {
-    // 停用本地儲存
-  }
-
   async function updateCartBadge() {
     try {
       const resp = await fetch('api/getCartItem');
@@ -410,46 +463,7 @@
     }
   }
 
-  async function addToCart(product) {
-    if (!product || !product.sku) return;
-
-    var quantityToAdd = Number(product.quantity || 1);
-    if (!Number.isFinite(quantityToAdd) || quantityToAdd <= 0) {
-      quantityToAdd = 1;
-    }
-
-    try {
-      const response = await fetch('api/addToCart', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          sku: product.sku,
-          quantity: quantityToAdd
-        })
-      });
-
-      const result = await response.json();
-
-      if (result.success) {
-        alert('加入購物車成功！');
-        updateCartBadge();
-      } else {
-        alert('加入購物車失敗：' + (result.message || '請先登入會員'));
-        if (result.message && result.message.includes('登入')) {
-          window.location.href = 'login.html';
-        }
-      }
-    } catch (err) {
-      console.error('Add to cart error:', err);
-      alert('請先登入會員！');
-      window.location.href = 'login.html';
-    }
-  }
-
   window.CartStore = {
-    getCart: getCart,
-    saveCart: saveCart,
-    addToCart: addToCart,
     updateCartBadge: updateCartBadge
   };
 

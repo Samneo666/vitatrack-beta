@@ -1,65 +1,75 @@
-document.addEventListener("DOMContentLoaded", function () {
-    const guestHeader = document.getElementById("header-guest");
+document.addEventListener("DOMContentLoaded", async function () {
+
+    // ── 取得頁面元素 ──────────────────────────────────────────
+    const guestHeader  = document.getElementById("header-guest");
     const memberHeader = document.getElementById("header-member");
-    const memberInfo = document.getElementById('memberInfo');
-    const orderInfoBtn = document.getElementById('orderInfo');
-    const logoutBtn = document.getElementById('logoutBtn');
+    const memberInfoBtn = document.getElementById("memberInfo");
+    const orderInfoBtn  = document.getElementById("orderInfo");
+    const logoutBtn     = document.getElementById("logoutBtn");
 
-    memberInfo.addEventListener("click", info);
-    orderInfoBtn.addEventListener("click", (e) => orderInfo(e));
-
-    //auth-check
-    //------------驗證是否會員決定首頁Header------------
+    // ── 驗證登入狀態，切換 Header ─────────────────────────────
     if (!guestHeader || !memberHeader) {
-        console.error("Header element not found");
+        console.error("找不到 Header 元素");
         return;
     }
 
-    // 加一個判斷，確保抓到元素才執行
-    fetch('api/loginCheck')
-        .then(response => response.json())
-        .then(data => {
-            if (data.loggedIn) {
-                guestHeader.style.display = "none";
-                memberHeader.style.display = "block";
-            } else {
-                guestHeader.style.display = "block";
-                memberHeader.style.display = "none";
-            }
-        });
-    //------------查看會員資料------------
-    function info(e) {
+    try {
+        const response = await fetch("api/loginCheck");
+        const data = await response.json();
+
+        if (data.loggedIn) {
+            guestHeader.style.display  = "none";
+            memberHeader.style.display = "block";
+        } else {
+            guestHeader.style.display  = "block";
+            memberHeader.style.display = "none";
+        }
+    } catch (error) {
+        console.error("登入狀態檢查失敗：", error);
+    }
+
+    // ── 前往會員中心 ──────────────────────────────────────────
+    memberInfoBtn.addEventListener("click", function (e) {
         e.preventDefault();
         window.location.href = "memberCenter.html";
-
-    };
-
-    //------------查看訂單------------
-   orderInfoBtn.addEventListener('click',function(e){
-    e.preventDefault();
-    window.location.href = "memberCenter.html";
-   });
-
-    //------------會員登出------------
-    logoutBtn.addEventListener('click', function (e) {
-        e.preventDefault();
-        fetch('api/logout', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' }
-        })
-            .then(result => result.json())
-            .then(result => {
-                if (result.success) {
-                    alert(result.message);
-                    window.location.href = 'index.html';
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert("登出過程中發生錯誤，請稍後再試。");
-            });
     });
 
-   
-});
+    // ── 前往訂單查詢 ──────────────────────────────────────────
+    orderInfoBtn.addEventListener("click", function (e) {
+        e.preventDefault();
+        window.location.href = "memberCenter.html";
+    });
 
+    // ── 登出 ──────────────────────────────────────────────────
+    logoutBtn.addEventListener("click", async function (e) {
+        e.preventDefault();
+        try {
+            const response = await fetch("api/logout", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" }
+            });
+            const result = await response.json();
+            if (result.success) {
+                alert(result.message);
+                window.location.href = "index.html";
+            }
+        } catch (error) {
+            console.error("登出失敗：", error);
+            alert("登出過程中發生錯誤，請稍後再試。");
+        }
+    });
+
+    // ── 點擊商品按鈕（.mn-btn-2）記錄 SKU ────────────────────
+    // <a> 標籤本身會自動導頁，這裡只做 console log 方便除錯
+    document.addEventListener("click", function (e) {
+        const anchor = e.target.closest("a.mn-btn-2");
+        if (!anchor) return;
+
+        const params = new URLSearchParams(anchor.search);
+        const sku = params.get("sku");
+        if (sku) {
+            console.log("[mn-btn-2] 點擊商品 SKU =", sku);
+        }
+    });
+
+});
