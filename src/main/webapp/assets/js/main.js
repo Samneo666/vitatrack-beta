@@ -166,21 +166,6 @@
         }
     });
 
-    /*== Add to cart button notify js ==*/
-	$('.mn-add-cart').off("click").on("click", function () {
-	    $('.mn-wish-notify').remove();
-	    $('.mn-compare-notify').remove();
-	    $('.mn-cart-notify').remove();
-
-	    $('footer').after(
-	        '<div class="mn-cart-notify"><p class="compare-note add">已成功加入購物車</p></div>'
-	    );
-
-	    setTimeout(function () {
-	        $('.mn-cart-notify').fadeOut();
-	    }, 2000);
-	});
-
 
     /*== Remove Product (Compare page) ==*/
     $('.remove-compare-product').on("click", function () {

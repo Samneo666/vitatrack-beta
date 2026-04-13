@@ -80,40 +80,77 @@ document.addEventListener("DOMContentLoaded", function () {
     // 找到 checkoutPage.js 裡處理價格資訊的那一段
     fetch('api/getCartItem')
         .then(result => result.json())
-        .then(cartItems => {
+        .then(response => { // 建議改名為 response 較好理解
+            console.log("原始回傳資料:", response);
+
             const cartList = document.getElementById("dynamicCartList");
-            //小計
             const subTotalElem = document.getElementById("subtotal");
-            //總計
             const totalPriceElem = document.getElementById("total");
 
-            if (!cartList) return; // 防呆
+            if (!cartList) return;
 
             let htmlContent = "";
             let totalSum = 0;
 
-            cartItems.forEach(item => {
+            // 關鍵修正：從 response.data 取得陣列
+            const items = response.data || [];
+
+            items.forEach(item => {
+                // 根據你提供的 Log，欄位就在 item 裡面，不需要 item.data.unitPrice
                 const itemSubtotal = item.unitPrice * item.quantity;
                 totalSum += itemSubtotal;
 
-                // 動態產生每一列商品資訊
                 htmlContent += `
-                <div class="summary-item" style="display: flex; justify-content: space-between; margin-bottom: 10px;">
-                    <div style="flex: 2;">
-                        <strong>${item.productName}</strong><br>
-                        <small>單價: $${item.unitPrice} x ${item.quantity}</small>
-                    </div>
-                    <div style="flex: 1; text-align: right;">
-                        $${itemSubtotal}
-                    </div>
-                </div>
-            `;
+    <div class="summary-item" style="
+        display: flex; 
+        align-items: center; 
+        padding: 12px 0; 
+        border-bottom: 1px solid #f0f0f0; 
+        margin-bottom: 8px;">
+        
+        ${item.imageUrl ? `
+            <div style="margin-right: 15px; flex-shrink: 0;">
+                <img src="${item.imageUrl}" alt="${item.productName}" style="
+                    width: 60px; 
+                    height: 60px; 
+                    object-fit: contain; 
+                    border-radius: 8px; 
+                    border: 1px solid #eee;">
+            </div>
+        ` : ''}
+
+        <div style="flex-grow: 1; display: flex; flex-direction: column; justify-content: center;">
+            <div style="
+                font-size: 16px; 
+                font-weight: 600; 
+                color: #333; 
+                margin-bottom: 4px;">
+                ${item.productName}
+            </div>
+            <div style="font-size: 13px; color: #888;">
+                單價: NT$${item.unitPrice} <span style="margin: 0 4px;">×</span> 數量: ${item.quantity}
+            </div>
+        </div>
+
+        <div style="
+            text-align: right; 
+            font-weight: 600; 
+            font-size: 16px; 
+            color: #222; 
+            margin-left: 10px;">
+            NT$${itemSubtotal}
+        </div>
+    </div>
+`
+                cartList.innerHTML = htmlContent;
+                subTotalElem.textContent = totalSum;
+                totalPriceElem.textContent = totalSum;
+
             });
 
-            // 渲染到畫面
-            cartList.innerHTML = htmlContent;
-            subTotalElem.textContent = totalSum;
-            totalPriceElem.textContent = totalSum; // 若有運費需另外加
+
+
+
 
         }).catch(error => {
             console.error('Error:', error);
@@ -128,10 +165,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
         if (nameInput.value.trim() === '' || phoneInput.value.trim() === '' || addressInput.value.trim() === '') {
-              Swal.fire({ icon: 'warning', title: '請填寫完整的收件人資訊', confirmButtonText: '確認' });
-              return;
+            Swal.fire({ icon: 'warning', title: '請填寫完整的收件人資訊', confirmButtonText: '確認' });
+            return;
         }
-      
+
         // 禁用按鈕防止重複點擊
         checkoutBtn.style.pointerEvents = 'none';
         const originalText = checkoutBtn.innerText;

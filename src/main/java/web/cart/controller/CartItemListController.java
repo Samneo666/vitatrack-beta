@@ -21,6 +21,10 @@ public class CartItemListController {
 	@GetMapping("/api/getCartItem")
 	public ApiResponse<List<CartRow>> getCartItem(@SessionAttribute(required = false) Member member) {
 
+		if (member == null) {
+			return new ApiResponse<>(false, "請先登入會員!", null);
+		}
+
 		List<CartRow> items = checkoutService.getCheckoutCart(member.getMemberId());
 		return new ApiResponse<>(true, "success", items);
 

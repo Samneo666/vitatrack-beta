@@ -61,9 +61,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 async function getCart() {
-  const resp = await fetch("api/getCartItem");
-  const result = await resp.json();
-  return result.data || [];
+  try {
+    const resp = await fetch("api/getCartItem");
+    if (!resp.ok) return [];
+    const result = await resp.json();
+    return result.data || [];
+  } catch (e) {
+    console.error('取得購物車失敗', e);
+    return [];
+  }
 }
 
 function saveCart(cart) {

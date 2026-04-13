@@ -299,7 +299,7 @@
                             </div> -->
                             <div class="mn-tool-cart" id="cartIcon">
                                 <a href="javascript:void(0)" class="mn-main-cart mn-cart-toggle">
-                                    <!-- <span class="label lbl-2">4</span> -->
+                                    <span class="cart-count">0</span>
                                     <svg class="svg-icon" viewBox="0 0 1024 1024" version="1.1"
                                         xmlns="http://www.w3.org/2000/svg">
                                         <path
@@ -446,14 +446,14 @@
                                 </div>
                                 <div class="mn-sb-block-content">
                                     <div class="mn-checkout-summary">
-                                        <div id="dynamicCartList" class="cartList">
+                                        <div id="dynamicCartList" class="cartList" style="font-size: 16px">
                                         </div>
 
                                         <hr>
                                         <div>
                                             <span class="text-left">小計</span>
                                             <div class="text-price">
-                                                <span class="text-right" id="subtotal">0</span><span>元</span>
+                                                <span class="text-right" id="subtotal">NT$0</span><span>元</span>
                                             </div>
                                         </div>
                                         <div>
@@ -813,6 +813,7 @@
     <script src="assets/js/main.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="assets/js/swal-defaults.js"></script>
+    <script src="product/js/addcart.js"></script>
 
     <!-- <script>
         document.addEventListener('DOMContentLoaded', async function () {

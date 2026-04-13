@@ -1,118 +1,78 @@
 (function () {
-  var CART_KEY = 'cart';
-
-  function getCart() {
-    try {
-      var raw = localStorage.getItem(CART_KEY);
-      var cart = raw ? JSON.parse(raw) : [];
-      var changed = false;
-
-      cart = cart.map(function (item) {
-        if (item.qty != null) {
-          changed = true;
-        }
-
-        return {
-          sku: item.sku,
-          name: item.name || item.productName || '',
-          price: Number(item.price || 0),
-          quantity: Number(item.quantity != null ? item.quantity : item.qty || 1),
-          image: item.image || ''
-        };
-      });
-
-      if (changed) {
-        localStorage.setItem(CART_KEY, JSON.stringify(cart));
-      }
-
-      return cart;
-    } catch (e) {
-      console.error('讀取購物車失敗', e);
-      return [];
-    }
-  }
-
-  function saveCart(cart) {
-    localStorage.setItem(CART_KEY, JSON.stringify(cart));
-  }
-
-  function getCartTypeCount() {
-    var cart = getCart();
-    var total = 0;
-
-    for (var i = 0; i < cart.length; i++) {
-      total += Number(cart[i].quantity || 0);
-    }
-
-    return total;
-  }
-
+  // 更新購物車圖示數量 (從後端獲取)
   async function updateCartBadge() {
     try {
-      const resp = await fetch('api/getCartItem', { cache: 'no-store' });
+      const resp = await fetch('api/getCartItem');
       if (!resp.ok) return;
-      const cartRows = await resp.json();
       
-      if (Array.isArray(cartRows)) {
-         let total = 0;
-         for (let i = 0; i < cartRows.length; i++) {
-            total += Number(cartRows[i].quantity || 0);
-         }
-         let badges = document.querySelectorAll('#cartBadge, .mn-main-cart .cart-count, .mn-main-cart .label');
-         badges.forEach(function(badge) {
-             badge.textContent = total;
-             badge.style.display = total > 0 ? 'inline-flex' : 'none';
-         });
-      }
+      const result = await resp.json();
+      const cartRows = result.data || [];
+      
+      let total = 0;
+      cartRows.forEach(item => {
+        total += Number(item.quantity || 0);
+      });
+
+      renderBadge(total);
+      return cartRows; // 回傳給其他函式使用
     } catch (e) {
-      console.log('addcart.js Cart Sync: 無需更新或尚未登入');
+      console.error('同步購物車失敗', e);
+      renderBadge(0);
     }
   }
 
-  function addToCart(product) {
+  // 渲染畫面的輔助函式
+  function renderBadge(count) {
+    let badges = document.querySelectorAll('#cartBadge, .mn-main-cart .cart-count, .mn-main-cart .label');
+    badges.forEach(function(badge) {
+      badge.textContent = count;
+      badge.style.display = count > 0 ? 'inline-flex' : 'none';
+    });
+  }
+
+  // 加入購物車 
+  async function addToCart(product) {
     if (!product || !product.sku) return;
 
-    var cart = getCart();
-    var found = null;
-
-    for (var i = 0; i < cart.length; i++) {
-      if (cart[i].sku === product.sku) {
-        found = cart[i];
-        break;
-      }
-    }
-
-    var quantityToAdd = Number(product.quantity || 1);
-    if (!Number.isFinite(quantityToAdd) || quantityToAdd <= 0) {
-      quantityToAdd = 1;
-    }
-
-    if (found) {
-      found.quantity = Number(found.quantity || 0) + quantityToAdd;
-    } else {
-      cart.push({
-        sku: product.sku,
-        name: product.name || '',
-        price: Number(product.price || 0),
-        quantity: quantityToAdd,
-        image: product.image || ''
+    try {
+      // 呼叫後端 API 新增商品到資料庫
+      const resp = await fetch('api/addToCart', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          sku: product.sku,
+          quantity: product.quantity || 1
+        })
       });
-    }
 
-    saveCart(cart);
-    updateCartBadge();
-    console.log('購物車內容', cart);
+      if (resp.ok) {
+        console.log('成功加入後端資料庫');
+        // 加入成功後，重新整理 Badge 數量
+        await updateCartBadge();
+      }
+    } catch (e) {
+      console.error('加入購物車失敗', e);
+      alert('無法加入購物車，請檢查網路連線或登入狀態');
+    }
   }
 
+  // 暴露 API 給外部使用
   window.CartStore = {
-    getCart: getCart,
-    saveCart: saveCart,
     addToCart: addToCart,
-    updateCartBadge: updateCartBadge
+    updateCartBadge: updateCartBadge,
+    // 獲取目前購物車清單 (非同步)
+    getCart: async function() {
+        try {
+            const resp = await fetch('api/getCartItem');
+            if (!resp.ok) return [];
+            const result = await resp.json();
+            return result.data || [];
+        } catch (e) {
+            console.error('取得購物車失敗', e);
+            return [];
+        }
+    }
   };
 
-  document.addEventListener('DOMContentLoaded', function () {
-    updateCartBadge();
-  });
-
+  document.addEventListener('DOMContentLoaded', updateCartBadge);
 })();

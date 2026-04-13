@@ -19,3 +19,24 @@
 .mn-login-wrapper .mn-login-container .mn-login-form input {
     margin-bottom: 0 !important;
 }
+
+/* 修改彈出視窗的寬度 */
+.swal2-popup {
+    width: 300px !important;
+    padding: 1rem; /* 視需求調整內邊距，寬度變窄時建議縮小內距 */
+}
+
+/* 修改主要內容與標題的字體大小 */
+.swal2-title {
+    font-size: 1.2rem !important; /* 標題通常比內容大一點點 */
+}
+
+.swal2-html-container, 
+.swal2-content {
+    font-size: 14px !important;
+}
+
+/* 修改確認/取消按鈕的字體大小 */
+.swal2-styled {
+    font-size: 14px !important;
+}
