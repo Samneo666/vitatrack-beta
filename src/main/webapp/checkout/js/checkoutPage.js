@@ -38,13 +38,13 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
             }).catch(error => {
                 console.error('Error:', error);
-                alert("登出過程中發生錯誤，請稍後再試。");
+                Swal.fire({ icon: 'error', title: '登出過程中發生錯誤，請稍後再試。', confirmButtonText: '確認' });
             });
     });
     //------------結帳頁面購物車點擊跳頁-----------
     const cartIcon = document.getElementById("cartIcon");
     cartIcon.addEventListener("click", function () {
-        window.location.href = "cart.html";
+        window.location.href = "cartPage.html";
     });
 
     //------------渲染地址訊息在頁面------------
@@ -62,7 +62,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
             }).catch(error => {
                 console.error('Error:', error);
-                alert("載入資料時發生錯誤，請稍後再試。");
+                Swal.fire({ icon: 'error', title: '載入資料時發生錯誤，請稍後再試。', confirmButtonText: '確認' });
             });
 
     });
@@ -128,7 +128,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
         if (nameInput.value.trim() === '' || phoneInput.value.trim() === '' || addressInput.value.trim() === '') {
-              alert("請填寫完整的收件人資訊");
+              Swal.fire({ icon: 'warning', title: '請填寫完整的收件人資訊', confirmButtonText: '確認' });
               return;
         }
       
@@ -161,7 +161,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 window.location.href = `orderConfirmationPage.html?${params.toString()}`;
             }).catch(error => {
                 console.error('Error:', error);
-                alert(error.message || "結帳過程中發生錯誤，請稍後再試。");
+                Swal.fire({ icon: 'error', title: error.message || '結帳過程中發生錯誤，請稍後再試。', confirmButtonText: '確認' });
             })
             .finally(() => {
                 // 恢復按鈕狀態

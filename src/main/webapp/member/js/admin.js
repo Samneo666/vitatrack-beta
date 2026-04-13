@@ -30,9 +30,9 @@ function memberInfo(e, page = 1) {
         .then(response => response.json())
         .then(pageResult => {
             console.log("後端回傳：", pageResult);
-            const members = pageResult.content;
-            const totalPages = pageResult.totalPages;
-            const currentPage = pageResult.currentPage;
+            const members = pageResult.data.content;
+            const totalPages = pageResult.data.totalPages;
+            const currentPage = pageResult.data.currentPage;
 
             let tableHtml = `
                 <table id="memberTable" class="table table-hover align-middle">
@@ -117,9 +117,9 @@ function saveStatus(email,newStatus) {
     .then(response => response.json())
     .then(result => {
         if (result.success) {
-            alert(result.message);
+            Swal.fire({ icon: 'success', title: result.message, confirmButtonText: '確認' });
         } else {
-            alert(result.message);
+            Swal.fire({ icon: 'error', title: result.message, confirmButtonText: '確認' });
         }
     })
     .catch(error => {
@@ -135,15 +135,15 @@ function searchMember(e) {
     const keyword = document.getElementById('keyword').value.trim();
 
     if (!keyword || keyword === "") {
-        alert("請輸入搜尋關鍵字");
+        Swal.fire({ icon: 'warning', title: '請輸入搜尋關鍵字', confirmButtonText: '確認' });
         return;
     }
 
-    fetch(`memberSearch?keyword=${encodeURIComponent(keyword)}`)
+    fetch(`api/memberSearch?keyword=${encodeURIComponent(keyword)}`)
         .then(response => response.json())
         .then(members => {
             console.log(members);
-            renderResult(members.content);
+            renderResult(members.data.content);
         })
         .catch(error => {
             console.error("錯誤:", error);
@@ -205,12 +205,13 @@ logoutBtn.addEventListener('click', function (e) {
             .then(result => {
                 if (result.success) {
                     
-                    alert(result.message);
-                    window.location.href = 'admin-login.html';
+                    Swal.fire({ icon: 'success', title: result.message, confirmButtonText: '確認' }).then(() => {
+                        window.location.href = 'admin-login.html';
+                    });
                 }
             })
             .catch(error => {
                 console.error('Error:', error);
-                alert("登出過程中發生錯誤，請稍後再試。");
+                Swal.fire({ icon: 'error', title: '登出過程中發生錯誤，請稍後再試。', confirmButtonText: '確認' });
             });
     });

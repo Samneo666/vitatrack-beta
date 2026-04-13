@@ -367,13 +367,14 @@
         .then(result => result.json())
         .then(result => {
           if (result.success) {
-            alert(result.message);
-            window.location.href = 'index.html';
+            Swal.fire({ icon: 'success', title: result.message, confirmButtonText: '確認' }).then(() => {
+              window.location.href = 'index.html';
+            });
           }
         })
         .catch(error => {
           console.error('Error:', error);
-          alert("登出過程中發生錯誤，請稍後再試。");
+          Swal.fire({ icon: 'error', title: '登出過程中發生錯誤，請稍後再試。', confirmButtonText: '確認' });
         });
     });
   });
@@ -411,20 +412,20 @@
         const result = await response.json();
 
         if (result.success) {
-          alert('加入購物車成功！');
+          Swal.fire({ icon: 'success', title: '加入購物車成功！', confirmButtonText: '確認' });
           // 更新 badge（如果有）
           if (window.CartStore && typeof window.CartStore.updateCartBadge === "function") {
             window.CartStore.updateCartBadge();
           }
         } else {
-          alert('加入購物車失敗：' + (result.message || '請先登入會員'));
+          Swal.fire({ icon: 'error', title: '加入購物車失敗', text: result.message || '請先登入會員', confirmButtonText: '確認' });
           if (result.message === '請先登入會員!') {
             window.location.href = 'login.html';
           }
         }
       } catch (err) {
         console.error('發生錯誤:', err);
-        alert('加入購物車發生異常，請確認已登入！');
+        Swal.fire({ icon: 'error', title: '加入購物車發生異常，請確認已登入！', confirmButtonText: '確認' });
       }
     };
   }

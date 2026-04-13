@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="zh-TW" dir="ltr">
 
 <head>
@@ -138,7 +138,7 @@
                                                         </li>
                                                         <li><a href="about-us.html">關於我們</a></li>
                                                         <li><a href="contact-us.html">聯絡我們</a></li>
-                                                        <li><a href="cart.html">購物車</a></li>
+                                                        <li><a href="cartPage.html">購物車</a></li>
                                                         <li><a href="checkout.html">結帳</a></li>
                                                         <li><a href="compare.html">比較</a></li>
                                                         <li><a href="faq.html">常見問答</a></li>
@@ -203,7 +203,7 @@
                                             <ul class="sub-menu">
                                                 <li><a href="about-us.html">關於我們</a></li>
                                                 <li><a href="contact-us.html">聯絡我們</a></li>
-                                                <li><a href="cart.html">購物車</a></li>
+                                                <li><a href="cartPage.html">購物車</a></li>
                                                 <li><a href="checkout.html">結帳</a></li>
                                                 <li><a href="compare.html">比較</a></li>
                                                 <li><a href="faq.html">常見問答</a></li>
@@ -575,7 +575,7 @@
                                     <div class="mn-footer-links mn-footer-dropdown">
                                         <ul class="align-items-center">
                                             <li class="mn-footer-link">
-                                                <a href="cart.html">檢視購物車</a>
+                                                <a href="cartPage.html">檢視購物車</a>
                                             </li>
                                             <li class="mn-footer-link">
                                                 <a href="javascript:void(0)">退貨政策</a>
@@ -802,7 +802,7 @@
                                             <input class="qty-input" type="text" name="mn-qtybtn" value="1">
                                         </div>
                                         <div class="mn-quickview-cart">
-                                            <a href="cart.html" class="mn-btn-1">
+                                            <a href="cartPage.html" class="mn-btn-1">
                                                 <span><i class="ri-shopping-bag-line"></i>加入購物車</span>
                                             </a>
                                         </div>
@@ -983,7 +983,7 @@
                         </table>
                     </div>
                     <div class="cart_btn">
-                        <a href="cart.html" class="mn-btn-1"><span>購物車<i class="ri-arrow-right-s-line"></i></span></a>
+                        <a href="cartPage.html" class="mn-btn-1"><span>購物車<i class="ri-arrow-right-s-line"></i></span></a>
                         <a href="checkout.html" class="mn-btn-2"><span>結帳<i
                                     class="ri-arrow-right-s-line"></i></span></a>
                     </div>
@@ -1060,6 +1060,8 @@
 
     <!-- Main Custom -->
     <script src="assets/js/main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="assets/js/swal-defaults.js"></script>
 
     <script>
         document.addEventListener('DOMContentLoaded', async function () {
@@ -1088,7 +1090,7 @@
                         : { message: await resp.text() };
 
                     if (!resp.ok) {
-                        alert(data.error || data.message || '建立訂單失敗');
+                        Swal.fire({ icon: 'error', title: data.error || data.message || '建立訂單失敗', confirmButtonText: '確認' });
                         btn.style.pointerEvents = '';
                         if (textSpan) textSpan.textContent = oldText;
                         return;
@@ -1100,7 +1102,7 @@
                         '&status=' + encodeURIComponent(data.status);
 
                 } catch (err) {
-                    alert('系統錯誤或網路異常，請稍後再試');
+                    Swal.fire({ icon: 'error', title: '系統錯誤或網路異常，請稍後再試', confirmButtonText: '確認' });
                     btn.style.pointerEvents = '';
                     if (textSpan) textSpan.textContent = oldText;
                 }

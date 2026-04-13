@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-TW" dir="ltr">
 
 <head>
@@ -129,6 +129,8 @@
 
     <!-- Main JS -->
     <script src="assets/js/main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="assets/js/swal-defaults.js"></script>
 
     <script>
         // footer 年份
@@ -138,15 +140,22 @@
         document.getElementById('confirmBtn').addEventListener('click', function () {
             var tracking = document.getElementById('trackingNo').value.trim();
             if (!tracking) {
-                alert('請輸入物流編號後再確認出貨。');
+                Swal.fire({ icon: 'warning', title: '請輸入物流編號後再確認出貨。', confirmButtonText: '確認' });
                 return;
             }
             // 這裡可以放 AJAX 呼叫或送出表單
-            alert('已確認出貨\n訂單：' + document.getElementById('orderId').textContent + '\n物流編號：' + tracking);
+            Swal.fire({ icon: 'success', title: '已確認出貨\n訂單：' + document.getElementById('orderId').textContent + '\n物流編號：' + tracking, confirmButtonText: '確認' });
         });
 
-        document.getElementById('cancelBtn').addEventListener('click', function () {
-            if (confirm('確定要取消出貨處理嗎？')) {
+        document.getElementById('cancelBtn').addEventListener('click', async function () {
+            const result = await Swal.fire({
+                icon: 'question',
+                title: '確定要取消出貨處理嗎？',
+                showCancelButton: true,
+                confirmButtonText: '確認',
+                cancelButtonText: '取消'
+            });
+            if (result.isConfirmed) {
                 // 若要清空欄位或跳回列表，可在此處處理
                 document.getElementById('trackingNo').value = '';
             }

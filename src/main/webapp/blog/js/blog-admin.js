@@ -106,8 +106,15 @@ function confirmDelete() {
         });
 }
 
-function deleteArticle(id, title) {
-    if (!confirm(`確定要刪除文章「${title}」嗎？此操作無法復原。`)) {
+async function deleteArticle(id, title) {
+    const result = await Swal.fire({
+        icon: 'warning',
+        title: `確定要刪除文章「${title}」嗎？此操作無法復原。`,
+        showCancelButton: true,
+        confirmButtonText: '確認',
+        cancelButtonText: '取消'
+    });
+    if (!result.isConfirmed) {
         return;
     }
     

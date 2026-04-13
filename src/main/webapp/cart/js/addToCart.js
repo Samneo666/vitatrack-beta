@@ -34,10 +34,10 @@ function openAddToCart(productId) {
 		.then(data => {
 			document.getElementById("stockQty").innerText = data.stock;
 		})
-		.catch(err => {
-			console.error("openAddToCart error:", err);
-			alert("加入購物車視窗載入失敗");
-		});
+	.catch(err => {
+		console.error("openAddToCart error:", err);
+		Swal.fire({ icon: 'error', title: '加入購物車視窗載入失敗', confirmButtonText: '確認' });
+	});
 }
 
 function changeQty(diff) {
@@ -62,14 +62,14 @@ function confirmAddToCart() {
 		})
 		.then(res => {
 			if (res.ok) {
-				alert("已加入購物車");
+				Swal.fire({ icon: 'success', title: '已加入購物車', confirmButtonText: '確認' });
 				modalInstance.hide();
 			} else {
-				alert("加入失敗");
+				Swal.fire({ icon: 'error', title: '加入失敗', confirmButtonText: '確認' });
 			}
 		})
 		.catch(err => {
 			console.error("add to cart error:", err);
-			alert("加入購物車失敗");
+			Swal.fire({ icon: 'error', title: '加入購物車失敗', confirmButtonText: '確認' });
 		});
 }

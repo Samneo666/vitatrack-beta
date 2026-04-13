@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   function openAddDialog() {
     if (!addDialog) {
-      alert('找不到 addDialog，請確認 HTML 有 <dialog id="addDialog">');
+      Swal.fire({ icon: 'error', title: '找不到 addDialog，請確認 HTML 有 <dialog id="addDialog">', confirmButtonText: '確認' });
       return;
     }
     addDialog.showModal();
@@ -65,14 +65,14 @@ document.addEventListener('DOMContentLoaded', function () {
           if (ok) {
             closeAddDialog();
             loadProducts();
-			alert('新增成功');
+			Swal.fire({ icon: 'success', title: '新增成功', confirmButtonText: '確認' });
           } else {
-            alert('新增失敗' + (json && json.message ? '：' + json.message : ''));
+            Swal.fire({ icon: 'error', title: '新增失敗' + (json && json.message ? '：' + json.message : ''), confirmButtonText: '確認' });
           }
         })
         .catch(function (err) {
           console.error(err);
-          alert('新增失敗，請看 Console');
+          Swal.fire({ icon: 'error', title: '新增失敗，請看 Console', confirmButtonText: '確認' });
         });
     });
   }
@@ -98,7 +98,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   function openEditModal(product) {
     if (!editModal) {
-      alert('找不到 editModal，請確認 HTML 有 <div id="editModal">');
+      Swal.fire({ icon: 'error', title: '找不到 editModal，請確認 HTML 有 <div id="editModal">', confirmButtonText: '確認' });
       return;
     }
 
@@ -135,7 +135,7 @@ document.addEventListener('DOMContentLoaded', function () {
   if (btnSaveEdit) {
     btnSaveEdit.addEventListener('click', function () {
       if (currentEditingSku == null) {
-        alert('找不到要編輯的商品 SKU');
+        Swal.fire({ icon: 'warning', title: '找不到要編輯的商品 SKU', confirmButtonText: '確認' });
         return;
       }
 
@@ -164,14 +164,14 @@ document.addEventListener('DOMContentLoaded', function () {
           if (json && json.success) {
             closeEditModal();
             loadProducts();
-			alert('更新成功');
+			Swal.fire({ icon: 'success', title: '更新成功', confirmButtonText: '確認' });
           } else {
-            alert('更新失敗' + (json && json.message ? '：' + json.message : ''));
+            Swal.fire({ icon: 'error', title: '更新失敗' + (json && json.message ? '：' + json.message : ''), confirmButtonText: '確認' });
           }
         })
         .catch(function (err) {
           console.error(err);
-          alert('更新失敗，請看 Console');
+          Swal.fire({ icon: 'error', title: '更新失敗，請看 Console', confirmButtonText: '確認' });
         });
     });
   }
@@ -217,8 +217,15 @@ document.addEventListener('DOMContentLoaded', function () {
       btnDelete.type = 'button';
       btnDelete.textContent = '刪除';
       btnDelete.addEventListener('click', (function (p) {
-        return function () {
-          if (!confirm('確定刪除' + p.productName + ' ?')) return;
+        return async function () {
+          const result = await Swal.fire({
+            icon: 'warning',
+            title: '確定刪除' + p.productName + ' ?',
+            showCancelButton: true,
+            confirmButtonText: '確認',
+            cancelButtonText: '取消'
+          });
+          if (!result.isConfirmed) return;
 
           fetch(CONTEXT_PATH + '/product-delete', {
             method: 'POST',
@@ -234,12 +241,12 @@ document.addEventListener('DOMContentLoaded', function () {
               if (json && json.success) {
                 loadProducts();
               } else {
-                alert('刪除失敗' + (json && json.message ? '：' + json.message : ''));
+                Swal.fire({ icon: 'error', title: '刪除失敗' + (json && json.message ? '：' + json.message : ''), confirmButtonText: '確認' });
               }
             })
             .catch(function (err) {
               console.error(err);
-              alert('刪除失敗，請看 Console');
+              Swal.fire({ icon: 'error', title: '刪除失敗，請看 Console', confirmButtonText: '確認' });
             });
         };
       })(product));
@@ -261,14 +268,14 @@ document.addEventListener('DOMContentLoaded', function () {
       .then(function (data) {
         if (!Array.isArray(data)) {
           console.error('product-list 回傳不是 array：', data);
-          alert('載入商品清單失敗（回傳格式不符）');
+          Swal.fire({ icon: 'error', title: '載入商品清單失敗（回傳格式不符）', confirmButtonText: '確認' });
           return;
         }
         renderProducts(data);
       })
       .catch(function (err) {
         console.error(err);
-        alert('載入商品清單失敗');
+        Swal.fire({ icon: 'error', title: '載入商品清單失敗', confirmButtonText: '確認' });
       });
   }
 

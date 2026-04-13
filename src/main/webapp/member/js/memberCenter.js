@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", function () {
     order.addEventListener("click", (e) => orderInfo(e));
     cartIcon.addEventListener("click", function (e) {
         e.preventDefault();
-        window.location.href = "cart.html";
+        window.location.href = "cartPage.html";
     });
 
     password.addEventListener("click", showPasswordChangeBtn);
@@ -36,8 +36,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 // 先判斷 HTTP status
                 if (!res.ok) {
                     if (res.status === 401) {
-                        alert("您尚未登入，請先登入會員。");
-                        window.location.href = "login.html";
+                        Swal.fire({ icon: 'warning', title: '您尚未登入，請先登入會員。', confirmButtonText: '確認' }).then(() => {
+                            window.location.href = "login.html";
+                        });
                         return Promise.reject(); // 中斷後續
                     }
                 }
@@ -50,8 +51,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 // API 邏輯錯誤
                 if (result.success === false) {
-                    alert(result.message);
-                    window.location.href = "login.html";
+                    Swal.fire({ icon: 'error', title: result.message, confirmButtonText: '確認' }).then(() => {
+                        window.location.href = "login.html";
+                    });
                     return;
                 }
 
@@ -65,7 +67,7 @@ document.addEventListener("DOMContentLoaded", function () {
             .catch(err => {
                 if (err) {
                     console.error("系統錯誤", err);
-                    alert("系統異常，請稍後再試");
+                    Swal.fire({ icon: 'error', title: '系統異常，請稍後再試', confirmButtonText: '確認' });
                 }
             });
     }
@@ -172,15 +174,16 @@ document.addEventListener("DOMContentLoaded", function () {
                 console.log();
 
                 if (result.success) {
-                    alert(result.message);
-                    location.reload();
+                    Swal.fire({ icon: 'success', title: result.message, confirmButtonText: '確認' }).then(() => {
+                        location.reload();
+                    });
                 } else {
-                    alert("更新失敗：" + result.message);
+                    Swal.fire({ icon: 'error', title: '更新失敗：' + result.message, confirmButtonText: '確認' });
                 }
             })
             .catch(error => {
                 console.error('Error:', error);
-                alert("更新過程中發生錯誤，請稍後再試。");
+                Swal.fire({ icon: 'error', title: '更新過程中發生錯誤，請稍後再試。', confirmButtonText: '確認' });
             });
     }
     //-------------點擊產生密碼變更按鈕-------------------------------------------------------------------------------------
@@ -336,14 +339,17 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // 基本檢查
         if (!oldPassword) {
-            return alert("請輸入原密碼以驗證身份");
+            Swal.fire({ icon: 'warning', title: '請輸入原密碼以驗證身份', confirmButtonText: '確認' });
+            return;
         }
 
         if (!newPassword || newPassword.length < 8) {
-            return alert("新密碼格式不符!");
+            Swal.fire({ icon: 'warning', title: '新密碼格式不符!', confirmButtonText: '確認' });
+            return;
         }
         if (newPassword !== confirmPassword) {
-            return alert("確認密碼與新密碼不一致!");
+            Swal.fire({ icon: 'warning', title: '確認密碼與新密碼不一致!', confirmButtonText: '確認' });
+            return;
         }
 
         fetch('changePassword', {
@@ -360,31 +366,47 @@ document.addEventListener("DOMContentLoaded", function () {
             .then(result => {
                 console.log("回傳資料:", result);
                 if (result.success) {
-                    alert(result.message);
-                    window.location.href = "login.html";
+                    Swal.fire({ icon: 'success', title: result.message, confirmButtonText: '確認' }).then(() => {
+                        window.location.href = "login.html";
+                    });
                 } else {
-                    alert(result.message);
+                    Swal.fire({ icon: 'error', title: result.message, confirmButtonText: '確認' });
                 }
             })
             .catch(error => {
                 console.error('Error:', error);
-                alert("系統發生錯誤，請稍後再試");
+                Swal.fire({ icon: 'error', title: '系統發生錯誤，請稍後再試', confirmButtonText: '確認' });
 
             });
     }
     //-------------------註銷帳號------------------------------------------------------------------------------
-    function deleteAccount() {
-        if (!confirm("確定要註銷帳號嗎？此操作將使帳號停用！")) {
-            return;
-        }
+    async function deleteAccount() {
+        const confirm1 = await Swal.fire({
+            icon: 'warning',
+            title: '確定要註銷帳號嗎？',
+            text: '此操作將使帳號停用！',
+            showCancelButton: true,
+            confirmButtonText: '確認',
+            cancelButtonText: '取消'
+        });
+        if (!confirm1.isConfirmed) return;
 
-        // 2. 二次確認：要求輸入密碼 (安全關鍵)      !!!!改用輸入框!!!!!!
-        const password = prompt("為了安全起見，請輸入您的密碼以確認註銷：");
+        // 2. 二次確認：要求輸入密碼 (安全關鍵)
+        const confirm2 = await Swal.fire({
+            title: '請輸入密碼',
+            text: '為了安全起見，請輸入您的密碼以確認註銷：',
+            input: 'password',
+            inputPlaceholder: '請輸入密碼',
+            showCancelButton: true,
+            confirmButtonText: '確認',
+            cancelButtonText: '取消',
+            inputValidator: (value) => {
+                if (!value) return '必須輸入密碼才能執行此操作';
+            }
+        });
+        if (!confirm2.isConfirmed) return;
 
-        if (!password) {
-            alert("必須輸入密碼才能執行此操作");
-            return;
-        }
+        const password = confirm2.value;
 
         fetch('api/deleteAccount', {
             method: 'POST',
@@ -396,16 +418,17 @@ document.addEventListener("DOMContentLoaded", function () {
             .then(result => result.json())
             .then(result => {
                 if (result.success) {
-                    alert(result.message);
-                    localStorage.removeItem("token");
-                    window.location.href = 'index.html';
+                    Swal.fire({ icon: 'success', title: result.message, confirmButtonText: '確認' }).then(() => {
+                        localStorage.removeItem("token");
+                        window.location.href = 'index.html';
+                    });
                 } else {
-                    alert("註銷帳號失敗：" + result.message);
+                    Swal.fire({ icon: 'error', title: '註銷帳號失敗：' + result.message, confirmButtonText: '確認' });
                 }
             })
             .catch(error => {
                 console.error('Error:', error);
-                alert("處理過程中發生錯誤，請稍後再試。");
+                Swal.fire({ icon: 'error', title: '處理過程中發生錯誤，請稍後再試。', confirmButtonText: '確認' });
             });
     }
 
@@ -510,7 +533,7 @@ document.addEventListener("DOMContentLoaded", function () {
             })
             .catch(error => {
                 console.error(error);
-                alert("取得訂單資料過程發生錯誤，請稍後再試。");
+                Swal.fire({ icon: 'error', title: '取得訂單資料過程發生錯誤，請稍後再試。', confirmButtonText: '確認' });
             });
 
     }
@@ -587,7 +610,7 @@ document.addEventListener("DOMContentLoaded", function () {
             })
             .catch(err => {
                 console.error("載入購物車失敗", err);
-                alert("購物車載入失敗，請稍後再試");
+                Swal.fire({ icon: 'error', title: '購物車載入失敗，請稍後再試', confirmButtonText: '確認' });
             });
     }
 
@@ -601,13 +624,14 @@ document.addEventListener("DOMContentLoaded", function () {
             .then(result => result.json())
             .then(result => {
                 if (result.success) {
-                    alert(result.message);
-                    window.location.href = 'index.html';
+                    Swal.fire({ icon: 'success', title: result.message, confirmButtonText: '確認' }).then(() => {
+                        window.location.href = 'index.html';
+                    });
                 }
             })
             .catch(error => {
                 console.error('Error:', error);
-                alert("登出過程中發生錯誤，請稍後再試。");
+                Swal.fire({ icon: 'error', title: '登出過程中發生錯誤，請稍後再試。', confirmButtonText: '確認' });
             });
     });
 

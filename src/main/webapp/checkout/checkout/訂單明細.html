@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-TW" dir="ltr">
 
 <head>
@@ -202,14 +202,23 @@
 
     <!-- Main JS -->
     <script src="assets/js/main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="assets/js/swal-defaults.js"></script>
 
     <script>
         // 設定 footer 年份
         document.getElementById('copyright_year').textContent = new Date().getFullYear();
 
         // 範例：標記已出貨（目前為前端示範，需接後端 API 才能生效）
-        document.getElementById('markShippedBtn').addEventListener('click', function () {
-            if (!confirm('確定要將此訂單標記為「已出貨」嗎？')) return;
+        document.getElementById('markShippedBtn').addEventListener('click', async function () {
+            const result = await Swal.fire({
+                icon: 'question',
+                title: '確定要將此訂單標記為「已出貨」嗎？',
+                showCancelButton: true,
+                confirmButtonText: '確認',
+                cancelButtonText: '取消'
+            });
+            if (!result.isConfirmed) return;
 
             // 示範 AJAX（需要後端 endpoint 才會真的生效）
             // 範例：
@@ -218,7 +227,7 @@
             //  .fail(function(){ alert('發生錯誤'); });
 
             // 目前以前端提示替代
-            alert('（示範）已標記為「已出貨」 — 若接後端，會在此送出請求。');
+            Swal.fire({ icon: 'info', title: '（示範）已標記為「已出貨」 — 若接後端，會在此送出請求。', confirmButtonText: '確認' });
             // 可在此更新 UI，例如把按鈕改為 disabled 或顯示狀態
             this.disabled = true;
             this.textContent = '已出貨';

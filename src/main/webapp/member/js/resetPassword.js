@@ -32,7 +32,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const token = urlParams.get("token");
 
     if (!token || token.trim() === "") {
-        alert("連結無效或已失效");
+        Swal.fire({ icon: 'error', title: '連結無效或已失效', confirmButtonText: '確認' });
         resetBtn.disabled = true;
         return;
     }
@@ -76,12 +76,12 @@ document.addEventListener("DOMContentLoaded", function () {
         const confirmPwd = confirmPassword.value.trim();
 
         if (!pwd || !pwd.match(/^(?=.*[A-Za-z])(?=.*\d).{8,}$/)) {
-            alert("密碼格式錯誤或未填寫!");
+            Swal.fire({ icon: 'warning', title: '密碼格式錯誤或未填寫!', confirmButtonText: '確認' });
             return;
         }
 
         if (confirmPwd !== pwd || confirmPwd === "") {
-            alert("與設定密碼不一致，請重新輸入!");
+            Swal.fire({ icon: 'warning', title: '與設定密碼不一致，請重新輸入!', confirmButtonText: '確認' });
             return;
         }
 
@@ -106,19 +106,18 @@ document.addEventListener("DOMContentLoaded", function () {
             })
             .then(result => {
                 if (result && result.success) {
-                    alert("密碼重設成功\n請重新登入");
-                    setTimeout(() => {
+                    Swal.fire({ icon: 'success', title: '密碼重設成功', text: '請重新登入', confirmButtonText: '確認' }).then(() => {
                         window.location.href = "login.html";
-                    }, 2000);
+                    });
                 } else {
-                    alert(result?.message || "重設失敗");
+                    Swal.fire({ icon: 'error', title: result?.message || "重設失敗", confirmButtonText: '確認' });
                     isSubmitting = false;
                     resetBtn.disabled = false;
                 }
             })
             .catch(error => {
                 console.error(error);
-                alert("系統發生錯誤，請稍後再試");
+                Swal.fire({ icon: 'error', title: '系統發生錯誤，請稍後再試', confirmButtonText: '確認' });
                 isSubmitting = false;
                 resetBtn.disabled = false;
             });

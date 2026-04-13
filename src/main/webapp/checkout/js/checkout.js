@@ -38,7 +38,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
             }).catch(error => {
                 console.error('Error:', error);
-                alert("登出過程中發生錯誤，請稍後再試。");
+                Swal.fire({ icon: 'error', title: '登出過程中發生錯誤，請稍後再試。', confirmButtonText: '確認' });
             });
     });
 });

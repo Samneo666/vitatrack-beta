@@ -303,13 +303,14 @@
             .then(result => result.json())
             .then(result => {
                 if (result.success) {
-                    alert(result.message);
-                    window.location.href = 'index.html';
+                    Swal.fire({ icon: 'success', title: result.message, confirmButtonText: '確認' }).then(() => {
+                        window.location.href = 'index.html';
+                    });
                 }
             })
             .catch(error => {
                 console.error('Error:', error);
-                alert("登出過程中發生錯誤，請稍後再試。");
+                Swal.fire({ icon: 'error', title: '登出過程中發生錯誤，請稍後再試。', confirmButtonText: '確認' });
             });
     });
   });

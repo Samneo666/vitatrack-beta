@@ -36,16 +36,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
         if (!account.value || account.value == '') {
-            alert("請填寫帳號和密碼");
+            Swal.fire({ icon: 'warning', title: '請填寫帳號和密碼', confirmButtonText: '確認' });
             return;
         }
         if (!password.value || password.value == '') {
-            alert("請填寫帳號和密碼");
+            Swal.fire({ icon: 'warning', title: '請填寫帳號和密碼', confirmButtonText: '確認' });
             return;
         }
         // 前端格式驗證
         if (!isValidEmail(account.value.trim())) {
-            alert("請輸入正確的 Email 格式");
+            Swal.fire({ icon: 'warning', title: '請輸入正確的 Email 格式', confirmButtonText: '確認' });
             return;
         }
 
@@ -73,7 +73,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
             }).catch(error => {
                 console.error('Error:', error);
-                alert("登入過程中發生錯誤，請稍後再試。");
+                Swal.fire({ icon: 'error', title: '登入過程中發生錯誤，請稍後再試。', confirmButtonText: '確認' });
             });
     });
 

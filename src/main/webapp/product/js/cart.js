@@ -21,16 +21,17 @@ document.addEventListener("DOMContentLoaded", function () {
       .then(response => response.json())
       .then(result => {
         if (result.success) {
-          alert(result.message);
-          window.location.href = 'index.html';
+          Swal.fire({ icon: 'success', title: result.message, confirmButtonText: '確認' }).then(() => {
+            window.location.href = 'index.html';
+          });
         }
         else {
-          alert(result.message);
+          Swal.fire({ icon: 'error', title: result.message, confirmButtonText: '確認' });
         }
       })
       .catch(error => {
         console.error('Error:', error);
-        alert('登出失敗，請稍後再試');
+        Swal.fire({ icon: 'error', title: '登出失敗，請稍後再試', confirmButtonText: '確認' });
       });
   });
 
@@ -77,7 +78,14 @@ function formatPrice(value) {
 
 //------------移除購物車商品------------
 async function removeItem(sku) {
-  if (!confirm("確定要移除此商品嗎？")) return;
+  const result = await Swal.fire({
+    icon: 'warning',
+    title: '確定要移除此商品嗎？',
+    showCancelButton: true,
+    confirmButtonText: '確認',
+    cancelButtonText: '取消'
+  });
+  if (!result.isConfirmed) return;
 
   try {
     const response = await fetch('api/removeCartItem', {
@@ -97,7 +105,7 @@ async function removeItem(sku) {
         window.CartStore.updateCartBadge();
       }
     } else {
-      alert("移除失敗：" + result.message);
+      Swal.fire({ icon: 'error', title: '移除失敗：' + result.message, confirmButtonText: '確認' });
     }
   } catch (err) {
     console.error('Remove error:', err);
@@ -201,7 +209,7 @@ async function changeQty(sku, delta) {
     if (result.success) {
       renderCartPage();
     } else {
-      alert("更新商品數量失敗：" + result.message);
+      Swal.fire({ icon: 'error', title: '更新商品數量失敗：' + result.message, confirmButtonText: '確認' });
     }
   } catch (err) {
     console.error('Update quantity error:', err);
@@ -212,7 +220,7 @@ async function checkoutNow() {
   var cart = await getCart();
 
   if (!cart.length) {
-    alert("購物車是空的");
+    Swal.fire({ icon: 'info', title: '購物車是空的', confirmButtonText: '確認' });
     return;
   }
   // var payloadItems = cart.map(function (item) {

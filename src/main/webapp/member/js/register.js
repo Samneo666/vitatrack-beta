@@ -80,30 +80,30 @@ document.addEventListener("DOMContentLoaded", function () {
         // 如果使用者只輸入空白，trim() 會回傳 ""（空字串）。
         // 1 姓名不能空白
         if (!name.value || name.value.trim() === "") {
-            alert("此欄為必填欄位");
+            Swal.fire({ icon: 'warning', title: '此欄為必填欄位', confirmButtonText: '確認' });
             return;
         }
 
         // 2 電子郵件 必須為^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$
         if (!email.value || !email.value.match(/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/)) {
-            alert("email格式錯誤或未填寫!");
+            Swal.fire({ icon: 'warning', title: 'email格式錯誤或未填寫!', confirmButtonText: '確認' });
             return;
         }
 
         // 3 手機 必須是09開頭且共10位數字("^09[0-9]{8}$") 手機號碼格式錯誤或未填寫!
         if (!phone.value || !phone.value.match(/^09[0-9]{8}$/)) {
-            alert("手機號碼格式錯誤或未填寫!");
+            Swal.fire({ icon: 'warning', title: '手機號碼格式錯誤或未填寫!', confirmButtonText: '確認' });
             return;
         }
 
         // 4 密碼 密碼至少為 8 個字元，且至少包含 1 個英文字母(大小寫皆可)與 1 個數字 密碼格式錯誤或未填寫!
         if (!password.value || !password.value.match(/^(?=.*[A-Za-z])(?=.*\d).{8,}$/)) {
-            alert("密碼格式錯誤或未填寫!");
+            Swal.fire({ icon: 'warning', title: '密碼格式錯誤或未填寫!', confirmButtonText: '確認' });
             return;
         }
         // 5 重新輸入密碼 和密碼 必須一致  與設定密碼不一致，請重新輸入!
         if (confirmPassword.value !== password.value || confirmPassword.value === "") {
-            alert("與設定密碼不一致，請重新輸入!");
+            Swal.fire({ icon: 'warning', title: '與設定密碼不一致，請重新輸入!', confirmButtonText: '確認' });
             return;
         }
 
@@ -139,12 +139,12 @@ document.addEventListener("DOMContentLoaded", function () {
                 } else {
                     //如果後端顯示false，要顯示註冊失敗
                     // result.message 就是在 Service 層調用String register(Member member) 回傳的 errMsg 內容
-                    alert("註冊失敗: " + result.message);
+                    Swal.fire({ icon: 'error', title: '註冊失敗', text: result.message, confirmButtonText: '確認' });
                 }
             })
             .catch(error => {
                 console.error('Error:', error);
-                alert("發生系統錯誤，請稍後再試。");
+                Swal.fire({ icon: 'error', title: '發生系統錯誤，請稍後再試。', confirmButtonText: '確認' });
             })
     });
     // 彈窗按鈕 → 前往登入頁面 
