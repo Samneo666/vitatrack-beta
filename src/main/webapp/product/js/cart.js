@@ -61,11 +61,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
 async function getCart() {
   const resp = await fetch("api/getCartItem", {
-    cache: 'no-store' 
+    cache: 'no-store'
   });
-  return await resp.json();
-
-
+  const result = await resp.json();
+  return result.data || [];
 }
 
 function saveCart(cart) {

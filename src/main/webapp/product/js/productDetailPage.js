@@ -443,7 +443,8 @@
     try {
       const resp = await fetch('api/getCartItem');
       if (!resp.ok) return;
-      const cartRows = await resp.json();
+      const result = await resp.json();
+      const cartRows = result.data || [];
 
       let total = 0;
       if (Array.isArray(cartRows)) {

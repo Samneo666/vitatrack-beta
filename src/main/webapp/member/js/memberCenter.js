@@ -417,9 +417,10 @@ document.addEventListener("DOMContentLoaded", function () {
             .then(res => res.json())
             .then(result => {
                 console.log("後端回傳：", result);
-                const orders = result.content;
-                const totalPages = result.totalPages;
-                const currentPage = result.currentPage;
+                const data = result.data || {};
+                const orders = data.content;
+                const totalPages = data.totalPages;
+                const currentPage = data.currentPage;
 
                 if (!orders || orders.length === 0) {
                     contentArea.innerHTML = `
@@ -520,7 +521,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
         fetch('api/myCartItem')
             .then(res => res.json())
-            .then(cartItems => {
+            .then(result => {
+                const cartItems = result.data || [];
                 console.log("這是後端回傳:", cartItems);
 
                 // 如果購物車沒有商品

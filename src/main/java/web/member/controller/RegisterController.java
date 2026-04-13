@@ -1,13 +1,11 @@
 package web.member.controller;
 
-import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-
 import org.springframework.web.bind.annotation.RestController;
 
+import core.dto.ApiResponse;
 import web.member.service.MemberService;
 import web.member.vo.Member;
 
@@ -17,9 +15,9 @@ public class RegisterController {
 	private MemberService memberService;
 
 	@PostMapping("/api/register")
-	public Map<String, Object> register(@RequestBody Member member) {
+	public ApiResponse<Void> register(@RequestBody Member member) {
 		memberService.register(member);
-		return Map.of("success", true, "message", "註冊成功");
+		return new ApiResponse<>(true, "註冊成功", null);
 	}
 
 }
