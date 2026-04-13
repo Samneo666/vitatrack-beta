@@ -212,6 +212,9 @@ async function changeQty(sku, delta) {
     const result = await response.json();
     if (result.success) {
       renderCartPage();
+      if (window.CartStore && typeof window.CartStore.updateCartBadge === "function") {
+        window.CartStore.updateCartBadge();
+      }
     } else {
       Swal.fire({ icon: 'error', title: '更新商品數量失敗：' + result.message, confirmButtonText: '確認' });
     }
