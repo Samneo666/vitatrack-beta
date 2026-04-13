@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
+import core.dto.ApiResponse;
 import web.member.dto.EditMemberStatusRequest;
 
 import web.member.vo.Admin;
@@ -22,11 +23,11 @@ public class EditStatusController {
 	// 編輯會員狀態
 	@PostMapping("/api/editStatus")
 	@ResponseBody
-	public Map<String, Object> editStatus(@SessionAttribute("admin") Admin admin,
+	public ApiResponse<Void> editStatus(@SessionAttribute("admin") Admin admin,
 			@RequestBody EditMemberStatusRequest editMember) {
 
 		memberAdminService.editMemberStatus(admin, editMember);
-		return Map.of("success", true, "message", "會員狀態更新成功!");
+		return new ApiResponse<Void>( true,"會員狀態更新成功!",null);
 	}
 
 }
