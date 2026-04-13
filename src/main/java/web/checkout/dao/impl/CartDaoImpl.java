@@ -30,11 +30,14 @@ public class CartDaoImpl implements CartDao {
 	@Override
 	public List<CartRow> findOpenCartByMemberId(int memberId) {
 
-		// 以 HQL 聯結 product 取得完整購物車明細，僅取尚未綁定訂單的品項
+		// 以 HQL 聯結 product 取得完整購物車明細，並 LEFT JOIN ProductImage 取主圖（isMain = true）
+		// 僅取尚未綁定訂單的品項
 		String hql = "SELECT new web.checkout.vo.CartRow("
-				+ "  ci.cartItemId, p.sku, p.productName, p.price, ci.quantity" + ") "
+				+ "ci.cartItemId, p.sku, p.productName, p.price, ci.quantity, pi.imageUrl) "
 				+ "FROM CartItem ci "
 				+ "JOIN ci.product p "
+				+ "LEFT JOIN ProductImage pi "
+				+ "  ON pi.sku = p.sku AND pi.isMain = true "
 				+ "WHERE ci.memberId = :mid "
 				+ "AND ci.orderId IS NULL";
 
@@ -63,10 +66,9 @@ public class CartDaoImpl implements CartDao {
 		// 批次更新 cart_item.order_id
 		String hql = "UPDATE CartItem ci SET ci.orderId = :oid WHERE ci.cartItemId IN (:ids)";
 
-		Query query = session.createQuery(hql);
-		query.setParameter("oid", orderId);
-		query.setParameterList("ids", ids);
-
-		return query.executeUpdate();
+		return session.createQuery(hql)
+		.setParameter("oid", orderId)
+		.setParameterList("ids", ids)
+		.executeUpdate();
 	}
 }

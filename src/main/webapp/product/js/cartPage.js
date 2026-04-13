@@ -61,9 +61,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 async function getCart() {
-  const resp = await fetch("api/getCartItem", {
-    cache: 'no-store'
-  });
+  const resp = await fetch("api/getCartItem");
   const result = await resp.json();
   return result.data || [];
 }
@@ -143,7 +141,7 @@ async function renderCartPage() {
       <tr class="mn-cart-product">
         <td data-label="Product" class="mn-cart-pro-name">
           <a href="productDetailPage.html?sku=${item.sku || ''}">
-            <img class="mn-cart-pro-img" src="${item.image || 'assets/img/product/default.jpg'}" alt="">
+            <img class="mn-cart-pro-img" src="${item.imageUrl || 'assets/img/product/default.jpg'}" alt="">
             ${item.name || item.productName || ''}
           </a>
         </td>
