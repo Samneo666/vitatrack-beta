@@ -7,23 +7,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
    
 
-    //彈窗相關
-    const customAlert = document.getElementById("customAlert");
-    const alertMessage = document.getElementById("alertMessage");
-    const alertBtn = document.getElementById("alertBtn");
-
-    // 定義彈窗顯示函式
-    function showAlert(message) {
-        alertMessage.innerHTML = message;
-        customAlert.style.display = "flex"; //視窗彈出(.style.display = "flex")
-    }
-
-    // 定義彈窗關閉函式
-    alertBtn.onclick = function () {
-        customAlert.style.display = "none";
-    };
-
-
     // === 前端格式驗證函式 ===
     function isValidEmail(account) {
         // 簡單正規檢查 email 格式
@@ -60,15 +43,14 @@ document.addEventListener("DOMContentLoaded", function () {
                 console.log("這是後端回傳結果：", result);
                 if (result.success) {
 
-                    showAlert("後台管理登入成功<br>歡迎回來！"); 
-                    alertBtn.onclick = function () {
+                    Swal.fire({ icon: 'success', title: '後台管理登入成功', text: '歡迎回來！', confirmButtonText: '確認' }).then(() => {
                         window.location.href = "admin.html";
-                    };
+                    });
                     loginForm.reset();
 
                 } else {
 
-                    showAlert("帳號或密碼錯誤<br>請重新輸入!");
+                    Swal.fire({ icon: 'error', title: '帳號或密碼錯誤', text: '請重新輸入!', confirmButtonText: '確認' });
                     loginForm.reset();
                 }
             }).catch(error => {
