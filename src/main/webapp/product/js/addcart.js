@@ -3,7 +3,10 @@
   async function updateCartBadge() {
     try {
       const resp = await fetch('api/getCartItem');
-      if (!resp.ok) return;
+      if (resp.status === 401) {
+            renderBadge(0); // 未登入，badge 顯示 0，不報錯
+            return [];
+        }
       
       const result = await resp.json();
       const cartRows = result.data || [];
@@ -22,39 +25,44 @@
   }
 
   // 渲染畫面的輔助函式
-  function renderBadge(count) {
-    let badges = document.querySelectorAll('#cartBadge, .mn-main-cart .cart-count, .mn-main-cart .label');
-    badges.forEach(function(badge) {
-      badge.textContent = count;
-      badge.style.display = count > 0 ? 'inline-flex' : 'none';
-    });
-  }
+  // 修改 addcart.js 中的 renderBadge 函式
+function renderBadge(count) {
+  // 同時更新所有可能出現 count 的地方
+  let badges = document.querySelectorAll('.cart-count, .label.lbl-1');
+  badges.forEach(function(badge) {
+    badge.textContent = count;
+    // 確保父層如果是隱藏的，也要考慮進去，或者統一顯示
+    badge.style.display = count > 0 ? 'inline-flex' : 'none';
+  });
+}
 
   // 加入購物車 
-  async function addToCart(product) {
+async function addToCart(product) {
     if (!product || !product.sku) return;
 
     try {
-      // 呼叫後端 API 新增商品到資料庫
-      const resp = await fetch('api/addToCart', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          sku: product.sku,
-          quantity: product.quantity || 1
-        })
-      });
+        const resp = await fetch('api/addToCart', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ sku: product.sku, quantity: product.quantity || 1 })
+        });
 
-      if (resp.ok) {
-        console.log('成功加入後端資料庫');
-        // 加入成功後，重新整理 Badge 數量
-        await updateCartBadge();
-      }
+        const result = await resp.json();
+
+        if (result.success) {
+            Swal.fire({ icon: 'success', title: '已加入購物車', timer: 1000, showConfirmButton: false });
+            await updateCartBadge(); // ← badge 在這裡更新
+        } else {
+            Swal.fire({ icon: 'error', title: result.message || '請先登入會員', confirmButtonText: '確認' });
+            if (result.message === '請先登入會員!') {
+                window.location.href = 'login.html';
+            }
+        }
     } catch (e) {
-      console.error('加入購物車失敗', e);
-      alert('無法加入購物車，請檢查網路連線或登入狀態');
+        console.error('加入購物車失敗', e);
+        Swal.fire({ icon: 'error', title: '加入購物車發生異常，請確認已登入！', confirmButtonText: '確認' });
     }
-  }
+}
 
   // 暴露 API 給外部使用
   window.CartStore = {

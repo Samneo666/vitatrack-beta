@@ -88,7 +88,7 @@ document.addEventListener("DOMContentLoaded", function () {
                             <div class="form-row d-flex align-items-center" data-field="name"><label>姓名</label><p class="readonly">${member.data.name}</p></div>
                             <div class="form-row d-flex align-items-center" data-editable="false"><label>Email</label><p class="readonly">${member.data.email}</p></div>
                             <div class="form-row d-flex align-items-center" data-field="address"><label>地址</label><p class="readonly">${member.data.address ?? '尚未填寫'}</p></div>
-                            <div class="form-row d-flex align-items-center" data-field="phone"><label>手機號碼</label><p class="readonly">${member.data.phone}</p></div>
+                            <div class="form-row d-flex align-items-center" data-field="phone"><label>手機號碼</label><p class="readonly">${member.data.phone ?? '尚未填寫'}</p></div>
 
                             <div class="form-actions" >
                           

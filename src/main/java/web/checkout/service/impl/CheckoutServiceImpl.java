@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import web.checkout.dao.CartDao;
+import web.cart.dao.CartDao;
 import web.checkout.dao.OrderDao;
 import web.checkout.dao.OrderItemDao;
 import web.checkout.service.CheckoutService;
@@ -83,12 +83,15 @@ public class CheckoutServiceImpl implements CheckoutService {
 			orderItemDao.save(oi);
 		}
 
-		// 將購物車品項的 order_id 更新為本次新建的訂單
-		int updatedCount = cartDao.attachCartItemsToOrder(orderId, cartRows);
-		if (updatedCount <= 0) {
-			throw new RuntimeException("attachCartItemsToOrder updated 0 rows.");
+		
+		List<String> skus = cartRows.stream()
+			    .map(CartRow::getSku)
+			    .collect(java.util.stream.Collectors.toList());
+		
+		int deletedCount = cartDao.deleteCartItems(memberId, skus);
+		if (deletedCount <= 0) {
+		    throw new RuntimeException("deleteCartItems deleted 0 rows.");
 		}
-
 		return new CheckoutResult(orderId, totalAmountInt, "PENDING");
 	}
 

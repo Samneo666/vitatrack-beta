@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", async function () {
   const guestHeader = document.getElementById("header-guest");
   const memberHeader = document.getElementById("header-member");
   const logoutBtn = document.getElementById("logoutBtn");
@@ -42,14 +42,13 @@ document.addEventListener("DOMContentLoaded", function () {
     return;
   }
 
-  fetch('api/loginCheck')
+  await fetch('api/loginCheck')
     .then(response => response.json())
     .then(data => {
       if (data.loggedIn) {
         guestHeader.style.display = "none";
         memberHeader.style.display = "block";
-      }
-      else {
+      } else {
         guestHeader.style.display = "block";
         memberHeader.style.display = "none";
       }
@@ -60,11 +59,21 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 
+
 async function getCart() {
   try {
     const resp = await fetch("api/getCartItem");
     if (!resp.ok) return [];
     const result = await resp.json();
+    if (!result.success) {
+      console.warn('取得購物車失敗：' + result.message);
+      if (result.message && result.message.includes('登入')) {
+        Swal.fire({ icon: 'warning', title: '請先登入會員', confirmButtonText: '前往登入' }).then(() => {
+          window.location.href = 'login.html';
+        });
+      }
+      return [];
+    }
     return result.data || [];
   } catch (e) {
     console.error('取得購物車失敗', e);

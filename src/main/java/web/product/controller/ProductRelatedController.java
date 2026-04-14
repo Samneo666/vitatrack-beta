@@ -19,16 +19,18 @@ public class ProductRelatedController {
 	@Autowired
 	private ProductService productService;
 
+	
 	@GetMapping("/product-related")
-	public ResponseEntity<List<Product>> getRelatedProducts(@RequestParam("skus") List<String> skus) {
-
-		if (skus == null || skus.isEmpty()) {
-			throw new BusinessException("請提供至少一個商品編號");
-		}
-
-		List<Product> list = productService.selectBySkus(skus);
-
-		return ResponseEntity.ok(list);
+	public ResponseEntity<List<Product>> getRelatedProducts(@RequestParam("sku") String sku) {
+	    // 確保參數不為空
+	    if (sku == null || sku.isBlank()) {
+	        return ResponseEntity.badRequest().build();
+	    }
+	    
+	    // 改為呼叫獲取「清單」的方法
+	    List<Product> list = productService.getRelatedProducts(sku); 
+	    
+	    return ResponseEntity.ok(list);
 	}
 
 }

@@ -88,7 +88,7 @@ document.addEventListener("DOMContentLoaded", function () {
         isSubmitting = true;
         resetBtn.disabled = true;
 
-        fetch('resetPassword', {
+        fetch('api/resetPassword', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

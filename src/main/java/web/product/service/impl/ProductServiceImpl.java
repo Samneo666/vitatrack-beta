@@ -124,12 +124,13 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	public Product selectBySku(String sku) {
-		if (sku == null || sku.trim().isEmpty()) {
-			return null;
-		}
-		return productDao.selectBySku(sku);
+	    // 使用 Spring 內建工具類檢查字串，簡潔且安全
+	    if (sku == null || sku.isBlank()) { 
+	        return null;
+	    }
+	    return productDao.selectBySku(sku);
 	}
-
+	
 	public List<Product> selectRelatedBySku(String sku, int size) {
 
 		Product currentProduct = productDao.selectBySku(sku);
@@ -159,6 +160,21 @@ public class ProductServiceImpl implements ProductService {
 		}
 
 		return result;
+	}
+	
+	@Override
+	public List<Product> getRelatedProducts(String sku) {
+	    // 1. 先獲取當前商品資訊
+	    Product currentProduct = productDao.selectBySku(sku);
+	    
+	    // 2. 防禦性判斷：如果找不到該商品，回傳空清單或預設推薦
+	    if (currentProduct == null) {
+	        return new ArrayList<>(); 
+	    }
+
+	    // 3. 根據當前商品的類別 (categoryId) 撈取相關商品
+	    // 排除自己 (currentSku)，並限制回傳數量 (例如 4 筆)
+	    return productDao.selectByCategory(currentProduct.getCategoryId(), sku, 4);
 	}
 
 }

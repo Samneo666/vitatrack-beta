@@ -19,6 +19,7 @@ import core.interceptor.LoginInterceptor;
 @EnableWebMvc
 @ComponentScan({ "core.exception", "web.*.controller", "core.interceptor" })
 public class MvcConfig implements WebMvcConfigurer {
+	
 	@Autowired
 	private LoginInterceptor loginInterceptor;
 
@@ -37,11 +38,15 @@ public class MvcConfig implements WebMvcConfigurer {
 	}
 
 	@Override
-	public void addInterceptors(InterceptorRegistry registry) {
 	
-	    registry.addInterceptor(loginInterceptor)
-	            .addPathPatterns("/api/**") 
-	            .excludePathPatterns("/api/login/**", "/api/register/**","/api/loginCheck"); 
+	public void addInterceptors(InterceptorRegistry registry) {
+
+		registry.addInterceptor(loginInterceptor)
+		.addPathPatterns("/api/**")
+		.excludePathPatterns("/api/login/**",
+				"/api/register/**", "/api/loginCheck", 
+				"/api/forgetPassword", "/api/resetPassword", 
+				"/api/adminLogin","/api/admin/**","/api/adminLogout");
 	}
 
 }

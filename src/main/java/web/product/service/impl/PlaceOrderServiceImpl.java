@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import core.exception.BusinessException;
-import web.checkout.dao.CartDao;
+import web.cart.dao.CartDao;
 import web.checkout.dao.OrderDao;
 import web.checkout.dao.OrderItemDao;
 import web.checkout.vo.CartRow;
@@ -104,10 +104,10 @@ public class PlaceOrderServiceImpl implements PlaceOrderService{
 		}
 
 		// 5.更新 cart_item.order_id
-		int updatedCount = cartDao.attachCartItemsToOrder(orderId, cartRows);
-		if (updatedCount <= 0) {
-			throw new BusinessException("商品加入訂單更新0筆!");
-		}
+//		int updatedCount = cartDao.attachCartItemsToOrder(orderId, cartRows);
+//		if (updatedCount <= 0) {
+//			throw new BusinessException("商品加入訂單更新0筆!");
+//		}
 
 		// 6.回傳 CheckoutResult
 		return new OrderCreationResponse (memberId, orderId, totalAmountInt, "PENDING");

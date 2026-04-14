@@ -95,29 +95,78 @@
     }
   }
 
-  /**
-   * [相關商品 - 移除寫死 SKU，改向後端請求]
-   */
-  async function loadRelatedProducts() {
+  //**
+ /* [相關商品載入與圖片渲染]
+ */
+async function loadRelatedProducts() {
     var skuParam = getParam('sku');
     var container = qs('relatedProductsContainer');
     if (!skuParam || !container) return;
 
     try {
-      // 調整：不再從前端傳送 fixedSkus，而是告知後端「目前商品」，讓後端撈取相關商品
-      var url = 'product-related?currentSku=' + encodeURIComponent(skuParam);
-      var resp = await fetch(url);
-      if (!resp.ok) throw new Error('HTTP ' + resp.status);
+        var url = 'product-related?sku=' + encodeURIComponent(skuParam);
+        var resp = await fetch(url);
+        var raw = await resp.json();
+        var list = Array.isArray(raw) ? raw : (raw.data || []);
 
-      var raw = await resp.json();
-      var list = Array.isArray(raw) ? raw : (raw.data || []);
-      
-      await renderRelatedProducts(list);
+        // 只取前三筆
+        const subList = list.slice(0, 3);
+        
+        // 渲染外殼
+        container.innerHTML = `<div class="row w-100" id="relatedRow"></div>`;
+        const row = qs('relatedRow');
+
+        for (var item of subList) {
+            var p = mapProduct(item);
+            var sku = p.sku;
+            
+            // 先產生佔位 HTML (包含一個特定的 ID 方便稍後填入圖片)
+            row.innerHTML += `
+                <div class="col-md-4 col-sm-6 m-b-24">
+                    <div class="mn-product-card text-center">
+                        <div class="mn-img">
+                            <a href="productDetailPage.html?sku=${sku}">
+                                <img id="img-rel-${sku}" src="assets/img/product/default.jpg" alt="${escapeHtml(p.name)}">
+                            </a>
+                        </div>
+                        <div class="mn-product-detail">
+                            <h5 class="m-t-10"><a href="productDetailPage.html?sku=${sku}">${escapeHtml(p.name)}</a></h5>
+                            <div class="mn-price-new" style="font-weight:bold; color:#5d69f4;">${formatPrice(p.price)}</div>
+                        </div>
+                    </div>
+                </div>`;
+
+            // 非同步抓取該 SKU 的圖片
+            fetchImageForRelated(sku);
+        }
     } catch (e) {
-      console.error('相關商品載入失敗', e);
-      container.innerHTML = '<p>無法取得相關商品</p>';
+        console.error('相關商品載入失敗', e);
+        container.innerHTML = '<p>無法取得相關商品</p>';
     }
-  }
+}
+
+/**
+ * 針對特定 SKU 抓取圖片並替換
+ */
+async function fetchImageForRelated(sku) {
+    try {
+        // 依照你的要求，呼叫後端 API: product-images
+        var resp = await fetch('product-images?sku=' + encodeURIComponent(sku));
+        if (!resp.ok) return;
+        var images = await resp.json();
+        
+        if (Array.isArray(images) && images.length > 0) {
+            // 尋找 isMain 為 1 的圖片，或取第一張
+            var main = images.find(img => img.is_main == 1 || img.isMain) || images[0];
+            var imgEl = document.getElementById(`img-rel-${sku}`);
+            if (imgEl && main.imageUrl) {
+                imgEl.src = main.imageUrl;
+            }
+        }
+    } catch (e) {
+        console.warn(`SKU: ${sku} 圖片載入失敗`);
+    }
+}
 
   async function renderRelatedProducts(list) {
     var container = qs('relatedProductsContainer');
@@ -142,13 +191,13 @@
     container.innerHTML = html || '<p>目前沒有相關商品</p>';
     
     // 初始化 Owl Carousel (如果存在)
-    if (window.jQuery && jQuery.fn.owlCarousel) {
-      var $container = jQuery(container);
-      $container.owlCarousel({
-        loop: false, margin: 20, nav: true, dots: false,
-        responsive: { 0: { items: 1 }, 768: { items: 2 }, 992: { items: 3 } }
-      });
-    }
+    // if (window.jQuery && jQuery.fn.owlCarousel) {
+    //   var $container = jQuery(container);
+    //   $container.owlCarousel({
+    //     loop: false, margin: 20, nav: true, dots: false,
+    //     responsive: { 0: { items: 1 }, 768: { items: 2 }, 992: { items: 3 } }
+    //   });
+    // }
   }
 
   async function loadProductImages(sku) {
@@ -168,42 +217,20 @@
   /**
    * [購物車功能 - 依照要求保留 fetch 邏輯]
    */
-  function bindAddToCart(product) {
+function bindAddToCart(product) {
     var btn = document.querySelector('.mn-add-cart');
     var qtyInput = document.querySelector('.qty-input');
     if (!btn) return;
 
     btn.onclick = async function (e) {
-      e.preventDefault();
-      e.stopImmediatePropagation();
-      var qty = Math.max(1, Number(qtyInput ? qtyInput.value : 1));
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        var qty = Math.max(1, Number(qtyInput ? qtyInput.value : 1));
 
-      // --- 保留你要求的 Fetch 邏輯 ---
-      try {
-        const response = await fetch('api/addToCart', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ sku: product.sku, quantity: qty })
-        });
-        const result = await response.json();
-
-        if (result.success) {
-          Swal.fire({ icon: 'success', title: '加入購物車成功！', confirmButtonText: '確認' });
-          if (window.CartStore && typeof window.CartStore.updateCartBadge === "function") {
-            await window.CartStore.updateCartBadge();
-          }
-        } else {
-          Swal.fire({ icon: 'error', title: '加入購物車失敗', text: result.message || '請先登入會員', confirmButtonText: '確認' });
-          if (result.message === '請先登入會員!') {
-            window.location.href = 'login.html';
-          }
-        }
-      } catch (err) {
-        console.error('發生錯誤:', err);
-        Swal.fire({ icon: 'error', title: '加入購物車發生異常，請確認已登入！', confirmButtonText: '確認' });
-      }
+        // 不再自己 fetch，交給 CartStore 統一處理
+        await window.CartStore.addToCart({ sku: product.sku, quantity: qty });
     };
-  }
+}
 
   /**
    * [保留不更改的頁面初始化與驗證邏輯]

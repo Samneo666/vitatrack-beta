@@ -18,4 +18,6 @@ public interface ProductService {
 	List<Product> selectBySkus(List<String> skus);
 
 	Product selectBySku(String sku);
+	
+	public List<Product> getRelatedProducts(String sku);
 }

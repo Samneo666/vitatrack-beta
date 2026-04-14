@@ -42,6 +42,7 @@ public class CartServiceImpl implements CartService {
 		if (cartItemDb != null) {
 			//已存在 -> 更新
 			cartItemDb.setQuantity(cartItemDb.getQuantity() + quantity);
+			cartDao.updateById(cartItemDb);
 			return new AddToCartItemResponse(cartItemDb.getSku(), cartItemDb.getQuantity());
 		}else {	
 			//新增
@@ -49,6 +50,7 @@ public class CartServiceImpl implements CartService {
 			cartItemDb.setMemberId(memberId);
 			cartItemDb.setSku(sku);
 			cartItemDb.setQuantity(quantity);
+			cartItemDb.setOrderId(null);
 			cartDao.insert(cartItemDb);		
 		}
 		

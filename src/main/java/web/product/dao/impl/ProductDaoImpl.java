@@ -1,5 +1,6 @@
 package web.product.dao.impl;
 
+
 import java.util.List;
 
 import javax.persistence.PersistenceContext;
@@ -90,5 +91,18 @@ public class ProductDaoImpl implements ProductDao {
 				.setParameterList("skus", skus)
 				.getResultList();
 	}
+	
+	@Override
+	public List<Product> selectByCategory(Integer categoryId, String excludeSku, int limit) {
+	    // 使用 HQL 查詢同類別且非自身的商品
+	    final String hql = "FROM Product p WHERE p.categoryId = :catId AND p.sku != :excludeSku";
+	    
+	    return session.createQuery(hql, Product.class)
+	            .setParameter("catId", categoryId)
+	            .setParameter("excludeSku", excludeSku)
+	            .setMaxResults(limit) // 限制回傳數量
+	            .getResultList();
+	}
 
+	
 }
