@@ -1,11 +1,16 @@
 <!doctype html>
 <html lang="zh-Hant">
+
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>確認訂單 — VitaTrack</title>
   <style>
-    *, *::before, *::after { box-sizing: border-box; }
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
 
     body {
       font-family: "Microsoft JhengHei", Arial, sans-serif;
@@ -33,6 +38,7 @@
       margin-left: auto;
       margin-right: auto;
     }
+
     .step {
       display: flex;
       flex-direction: column;
@@ -42,6 +48,7 @@
       font-size: 12px;
       color: #aaa;
     }
+
     .step::before {
       content: '';
       position: absolute;
@@ -52,7 +59,11 @@
       background: #ddd;
       z-index: 0;
     }
-    .step:last-child::before { display: none; }
+
+    .step:last-child::before {
+      display: none;
+    }
+
     .step-dot {
       width: 28px;
       height: 28px;
@@ -68,15 +79,25 @@
       z-index: 1;
       margin-bottom: 6px;
     }
-    .step.active .step-dot { background: #2d6a4f; }
-    .step.active { color: #2d6a4f; font-weight: 700; }
-    .step.done .step-dot { background: #52b788; }
+
+    .step.active .step-dot {
+      background: #2d6a4f;
+    }
+
+    .step.active {
+      color: #2d6a4f;
+      font-weight: 700;
+    }
+
+    .step.done .step-dot {
+      background: #52b788;
+    }
 
     /* ── 卡片 ── */
     .card {
       background: #fff;
       border-radius: 14px;
-      box-shadow: 0 2px 12px rgba(0,0,0,.08);
+      box-shadow: 0 2px 12px rgba(0, 0, 0, .08);
       max-width: 640px;
       margin: 0 auto 20px;
       padding: 24px 28px;
@@ -99,7 +120,10 @@
       padding: 5px 0;
       color: #444;
     }
-    .summary-row .label { color: #777; }
+
+    .summary-row .label {
+      color: #777;
+    }
 
     /* ── 商品明細表格 ── */
     .item-table {
@@ -108,6 +132,7 @@
       font-size: 14px;
       margin-top: 4px;
     }
+
     .item-table th {
       text-align: left;
       padding: 8px 6px;
@@ -116,13 +141,20 @@
       font-weight: 600;
       font-size: 13px;
     }
+
     .item-table td {
       padding: 10px 6px;
       border-bottom: 1px solid #f0f0f0;
       vertical-align: middle;
     }
-    .item-table tr:last-child td { border-bottom: none; }
-    .item-table .num { text-align: right; }
+
+    .item-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .item-table .num {
+      text-align: right;
+    }
 
     /* ── 商品名稱骨架 loading ── */
     .skeleton {
@@ -132,7 +164,12 @@
       background-size: 200% 100%;
       animation: shimmer 1.2s infinite;
     }
-    @keyframes shimmer { to { background-position: -200% 0; } }
+
+    @keyframes shimmer {
+      to {
+        background-position: -200% 0;
+      }
+    }
 
     /* ── 合計列 ── */
     .total-row {
@@ -146,10 +183,19 @@
       border-top: 2px solid #eee;
       color: #1a1a2e;
     }
-    .total-amount { color: #c0392b; font-size: 18px; }
+
+    .total-amount {
+      color: #c0392b;
+      font-size: 18px;
+    }
 
     /* ── 付款方式選擇 ── */
-    .payment-methods { display: flex; flex-direction: column; gap: 10px; }
+    .payment-methods {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
     .payment-option {
       display: flex;
       align-items: center;
@@ -160,13 +206,44 @@
       cursor: pointer;
       transition: border-color .15s, background .15s;
     }
-    .payment-option:hover { border-color: #52b788; background: #f6fdf9; }
-    .payment-option.selected { border-color: #2d6a4f; background: #f0faf5; }
-    .payment-option input[type="radio"] { accent-color: #2d6a4f; width: 17px; height: 17px; flex-shrink: 0; }
-    .payment-option .pm-icon { font-size: 22px; line-height: 1; }
-    .payment-option .pm-info { display: flex; flex-direction: column; gap: 2px; }
-    .payment-option .pm-name { font-size: 14px; font-weight: 700; }
-    .payment-option .pm-desc { font-size: 12px; color: #888; }
+
+    .payment-option:hover {
+      border-color: #52b788;
+      background: #f6fdf9;
+    }
+
+    .payment-option.selected {
+      border-color: #2d6a4f;
+      background: #f0faf5;
+    }
+
+    .payment-option input[type="radio"] {
+      accent-color: #2d6a4f;
+      width: 17px;
+      height: 17px;
+      flex-shrink: 0;
+    }
+
+    .payment-option .pm-icon {
+      font-size: 22px;
+      line-height: 1;
+    }
+
+    .payment-option .pm-info {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .payment-option .pm-name {
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .payment-option .pm-desc {
+      font-size: 12px;
+      color: #888;
+    }
 
     /* ── 確認付款按鈕 ── */
     .btn-pay {
@@ -185,9 +262,19 @@
       letter-spacing: .5px;
       transition: background .15s, transform .1s;
     }
-    .btn-pay:hover:not(:disabled) { background: #1b4332; }
-    .btn-pay:active:not(:disabled) { transform: scale(.98); }
-    .btn-pay:disabled { opacity: .55; cursor: not-allowed; }
+
+    .btn-pay:hover:not(:disabled) {
+      background: #1b4332;
+    }
+
+    .btn-pay:active:not(:disabled) {
+      transform: scale(.98);
+    }
+
+    .btn-pay:disabled {
+      opacity: .55;
+      cursor: not-allowed;
+    }
 
     /* ── 錯誤提示 ── */
     .error-msg {
@@ -201,7 +288,10 @@
       max-width: 640px;
       margin: 12px auto 0;
     }
-    .error-msg.show { display: block; }
+
+    .error-msg.show {
+      display: block;
+    }
 
     /* ── 跳轉提示 ── */
     .redirect-notice {
@@ -212,10 +302,15 @@
       max-width: 640px;
       margin: 12px auto 0;
     }
-    .redirect-notice.show { display: block; }
+
+    .redirect-notice.show {
+      display: block;
+    }
+
     .spinner {
       display: inline-block;
-      width: 16px; height: 16px;
+      width: 16px;
+      height: 16px;
       border: 2px solid #52b788;
       border-top-color: transparent;
       border-radius: 50%;
@@ -223,7 +318,12 @@
       vertical-align: middle;
       margin-right: 6px;
     }
-    @keyframes spin { to { transform: rotate(360deg); } }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
   </style>
 </head>
 
@@ -275,10 +375,18 @@
       <tbody id="itemTableBody">
         <!-- 載入中骨架 -->
         <tr>
-          <td><div class="skeleton" style="width:80%"></div></td>
-          <td><div class="skeleton" style="width:60%;margin-left:auto"></div></td>
-          <td><div class="skeleton" style="width:40%;margin-left:auto"></div></td>
-          <td><div class="skeleton" style="width:70%;margin-left:auto"></div></td>
+          <td>
+            <div class="skeleton" style="width:80%"></div>
+          </td>
+          <td>
+            <div class="skeleton" style="width:60%;margin-left:auto"></div>
+          </td>
+          <td>
+            <div class="skeleton" style="width:40%;margin-left:auto"></div>
+          </td>
+          <td>
+            <div class="skeleton" style="width:70%;margin-left:auto"></div>
+          </td>
         </tr>
       </tbody>
     </table>
@@ -337,14 +445,14 @@
     }
 
     // ── 取 URL 參數 ───────────────────────────────────
-    const qs           = new URLSearchParams(location.search);
-    const orderId      = qs.get('orderId') || '';
+    const qs = new URLSearchParams(location.search);
+    const orderId = qs.get('orderId') || '';
     const totalAmountQ = qs.get('totalAmount') || '';
-    const statusQ      = qs.get('status') || '';
+    const statusQ = qs.get('status') || '';
 
     document.getElementById('summaryOrderId').textContent = orderId || '-';
-    document.getElementById('summaryStatus').textContent  = statusQ || '-';
-    document.getElementById('totalAmount').textContent    = totalAmountQ ? fmtMoney(totalAmountQ) : '-';
+    document.getElementById('summaryStatus').textContent = statusQ || '-';
+    document.getElementById('totalAmount').textContent = totalAmountQ ? fmtMoney(totalAmountQ) : '-';
 
     // ── 高亮已選付款方式 ──────────────────────────────
     document.querySelectorAll('.payment-option input[type="radio"]').forEach(radio => {
@@ -363,7 +471,7 @@
       }
 
       try {
-        const res  = await fetch(`${CTX}/api/checkout/order-items?orderId=${encodeURIComponent(orderId)}`);
+        const res = await fetch(`${CTX}/api/checkout/order-items?orderId=${encodeURIComponent(orderId)}`);
         const data = await res.json();
 
         if (!res.ok || !Array.isArray(data) || data.length === 0) {
@@ -410,21 +518,21 @@
         return;
       }
 
-      const payBtn       = document.getElementById('payBtn');
+      const payBtn = document.getElementById('payBtn');
       const redirectNote = document.getElementById('redirectNotice');
       const selectedMethod = document.querySelector('input[name="paymentMethod"]:checked')?.value || 'Credit';
 
-      payBtn.disabled    = true;
+      payBtn.disabled = true;
       payBtn.textContent = '處理中…';
 
       try {
         const body = `orderId=${encodeURIComponent(orderId)}&paymentMethod=${encodeURIComponent(selectedMethod)}`;
 
         const res = await fetch(`${CTX}/api/checkout/payment`, {
-          method : 'POST',
+          method: 'POST',
           headers: {
             'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
-            'Accept'       : 'application/json'
+            'Accept': 'application/json'
           },
           body
         });
@@ -433,7 +541,7 @@
 
         if (res.status === 409) {
           showError('此訂單已付款或無效，無法重複付款。');
-          payBtn.disabled    = false;
+          payBtn.disabled = false;
           payBtn.textContent = '確認付款 →';
           return;
         }
@@ -441,14 +549,14 @@
         if (!res.ok || !data) {
           const msg = data?.message || `伺服器錯誤（HTTP ${res.status}）`;
           showError(msg);
-          payBtn.disabled    = false;
+          payBtn.disabled = false;
           payBtn.textContent = '確認付款 →';
           return;
         }
 
         if (!data.actionUrl || !data.formParams) {
           showError('付款服務回應格式異常，請重新整理後再試。');
-          payBtn.disabled    = false;
+          payBtn.disabled = false;
           payBtn.textContent = '確認付款 →';
           return;
         }
@@ -461,10 +569,10 @@
         form.action = data.actionUrl;
 
         Object.entries(data.formParams).forEach(([k, v]) => {
-          const input   = document.createElement('input');
-          input.type    = 'hidden';
-          input.name    = k;
-          input.value   = v ?? '';
+          const input = document.createElement('input');
+          input.type = 'hidden';
+          input.name = k;
+          input.value = v ?? '';
           form.appendChild(input);
         });
 
@@ -474,7 +582,7 @@
       } catch (e) {
         console.error('付款 API 呼叫失敗:', e);
         showError('網路異常，請確認連線後重試。');
-        payBtn.disabled    = false;
+        payBtn.disabled = false;
         payBtn.textContent = '確認付款 →';
       }
     }
@@ -482,8 +590,8 @@
     // ── HTML 跳脫 ─────────────────────────────────────
     function escapeHtml(str) {
       return String(str)
-        .replace(/&/g,'&amp;').replace(/</g,'&lt;')
-        .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+        .replace(/&/g, '&amp;').replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
     }
 
     // ── 初始化 ────────────────────────────────────────
@@ -491,4 +599,5 @@
     document.getElementById('payBtn').addEventListener('click', submitPayment);
   </script>
 </body>
+
 </html>

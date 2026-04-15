@@ -9,8 +9,8 @@ document.addEventListener("DOMContentLoaded", function () {
         contentArea.innerHTML = `
             <div class="search-container">
                 <h5>會員查詢</h5>
-                <input type="text" id="keyword" placeholder="請輸入姓名、電話、地址..." />
-                <button id="searchBtn" class="btn btn-sm btn-primary">搜尋</button>
+                <input type="text" id="keyword"  style="width: 40%" placeholder="請輸入姓名、電話、地址..."  />
+                <button id="searchBtn" class="btn btn-sm btn-primary" style="margin: 25px">搜尋</button>
                 <div id="searchResult"></div>
             </div>
         `;
