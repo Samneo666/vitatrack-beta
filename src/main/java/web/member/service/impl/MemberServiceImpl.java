@@ -55,6 +55,12 @@ public class MemberServiceImpl implements MemberService {
 		// 註冊成功，回傳 null 代表沒有錯誤訊息或 代表的是錯誤訊息為空」。
 		return null;
 	}
+	
+	@Override
+	public boolean isEmailExists(String email) {
+		
+		return memberDao.selectByEmail(email) != null;
+	}
 
 	// 登入
 	@Transactional
@@ -227,5 +233,7 @@ public class MemberServiceImpl implements MemberService {
 
 		return result;
 	}
+
+	
 
 }

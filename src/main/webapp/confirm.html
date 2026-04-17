@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>付款確認中 - Vitatrack</title>
+  <link rel="shortcut icon" href="assets/img/favicon/favicon.png">
+
+  <link href="assets/css/vendor/materialdesignicons.min.css" rel="stylesheet">
+  <link href="assets/css/vendor/remixicon.css" rel="stylesheet">
+
+  <link href="assets/css/vendor/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/css/vendor/animate.min.css" rel="stylesheet">
+  <link href="assets/css/vendor/owl.carousel.min.css" rel="stylesheet">
+  <link href="assets/css/vendor/slick.min.css" rel="stylesheet">
+  <link href="assets/css/vendor/swiper-bundle.min.css" rel="stylesheet">
+  <link href="assets/css/vendor/nouislider.css" rel="stylesheet">
+
+  <link id="mainCss" href="assets/css/style.css" rel="stylesheet">
+
+  <style>
+    .pay-card{
+      border-radius: 18px;
+      box-shadow: 0 10px 25px rgba(0,0,0,.08);
+      border: 1px solid rgba(0,0,0,.06);
+      overflow: hidden;
+    }
+    .iconWrap{
+      width:104px;height:104px;border-radius:999px;
+      background:#fff7ed;border:2px solid #fed7aa;
+      display:flex;align-items:center;justify-content:center;
+      margin: 0 auto 14px;
+    }
+    .title{ font-size:24px; font-weight:800; margin:8px 0 6px; letter-spacing:.5px; }
+    .sub{ color:#6b7280; line-height:1.55; font-size:14.5px; margin:0 0 18px; }
+    .info{
+      background:#f8fafc; border:1px solid #e5e7eb;
+      border-radius:14px; padding:16px 16px 6px; text-align:left;
+    }
+    .rowx{
+      display:flex; justify-content:space-between; gap:12px;
+      padding:10px 0; border-bottom:1px dashed #e5e7eb;
+      font-size:14.5px;
+    }
+    .rowx:last-child{ border-bottom:none; padding-bottom:12px; }
+    .label{ color:#6b7280; }
+    .value{ font-weight:700; color:#111827; word-break:break-all; }
+    .hint{ margin-top: 14px; color:#9ca3af; font-size:12.5px; line-height:1.6; }
+
+    .hourglass{ width:52px;height:52px; animation: spin 1.15s linear infinite; }
+    @keyframes spin { from{transform:rotate(0)} to{transform:rotate(360deg)} }
+  </style>
+</head>
+
+<body data-mn-mode="light">
+<main class="wrapper sb-default">
+
+  <header class="sb-hide">
+    <div class="mn-header">
+      <div class="mn-header-items">
+        <div class="left-header">
+          <a href="index.html" class="logo">
+            <img src="assets/img/logo/logo.png" alt="logo">
+          </a>
+        </div>
+        <div class="right-header">
+          <div class="mn-tool-icons">
+            <div class="mn-tool-cart">
+              <a href="cart.html" class="mn-main-cart">
+                <svg class="svg-icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M351.552 831.424c-35.328 0-63.968 28.64-63.968 63.968 0 35.328 28.64 63.968 63.968 63.968 35.328 0 63.968-28.64 63.968-63.968C415.52 860.064 386.88 831.424 351.552 831.424zM799.296 831.424c-35.328 0-63.968 28.64-63.968 63.968 0 35.328 28.64 63.968 63.968 63.968 35.328 0 63.968-28.64 63.968-63.968C863.264 860.064 834.624 831.424 799.296 831.424z"></path>
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="mn-main-content sb-hide">
+    <div class="container py-5">
+      <div class="row justify-content-center">
+        <div class="col-lg-7 col-xl-6">
+          <div class="bg-white p-4 p-md-5 pay-card text-center">
+            <div class="iconWrap" aria-label="付款確認中">
+              <svg class="hourglass" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M7 2h10v4c0 1.5-1 3-2.2 4 1.2 1 2.2 2.5 2.2 4v4H7v-4c0-1.5 1-3 2.2-4C8 9 7 7.5 7 6V2Z"
+                      stroke="#f59e0b" stroke-width="1.8" stroke-linejoin="round"/>
+                <path d="M9 6c0 1.2 1.2 2.4 3 3 1.8-.6 3-1.8 3-3"
+                      stroke="#f59e0b" stroke-width="1.8" stroke-linecap="round"/>
+                <path d="M15 18c0-1.2-1.2-2.4-3-3-1.8.6-3 1.8-3 3"
+                      stroke="#f59e0b" stroke-width="1.8" stroke-linecap="round"/>
+              </svg>
+            </div>
+
+            <div class="title">付款確認中</div>
+            <p class="sub">我們正在向金流確認交易結果。通常幾秒內完成，請不要關閉頁面。</p>
+
+            <div class="info">
+              <div class="rowx">
+                <div class="label">訂單編號</div>
+                <div class="value" id="orderId">—</div>
+              </div>
+              <div class="rowx">
+                <div class="label">付款金額</div>
+                <div class="value" id="totalAmount">—</div>
+              </div>
+              <div class="rowx">
+                <div class="label">付款時間</div>
+                <div class="value" id="paymentTime">—</div>
+              </div>
+              <div class="rowx">
+                <div class="label">付款方式</div>
+                <div class="value" id="paymentMethod">—</div>
+              </div>
+            </div>
+
+            <div class="mt-4 d-flex gap-2 justify-content-center flex-wrap">
+              <button class="btn btn-dark px-4" id="btnRefresh">重新查詢</button>
+              <button class="btn btn-outline-dark px-4" id="btnBack">返回商城</button>
+            </div>
+
+            <div class="hint">
+              若長時間仍顯示「確認中」，可能是金流回調延遲或網路異常；可點「重新查詢」再次確認。
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<script>
+  // ✅ 自動抓 contextPath：/vitatrack 或 ''
+  const parts = location.pathname.split("/").filter(Boolean);
+  const ctx = parts.length > 0 ? `/${parts[0]}` : "";
+  const API_BASE = `${ctx}/api/checkout/result`;
+
+  const SUCCESS_PAGE = "付款成功.html";
+  const FAILED_PAGE  = "付款失敗.html";
+
+  function getQueryParam(name) {
+    const params = new URLSearchParams(location.search);
+    return params.get(name);
+  }
+
+  function fmtMoney(n) {
+    if (n === null || n === undefined || n === "") return "—";
+    const num = Number(n);
+    if (Number.isNaN(num)) return String(n);
+    return num.toLocaleString("zh-TW");
+  }
+
+  function setText(id, text) {
+    const el = document.getElementById(id);
+    if (el) el.textContent = (text === null || text === undefined || text === "") ? "—" : text;
+  }
+
+  async function fetchResult(orderId) {
+    const url = `${API_BASE}?orderId=${encodeURIComponent(orderId)}`;
+    const res = await fetch(url, { method: "GET" });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    return await res.json();
+  }
+
+  function fillInfo(data) {
+    setText("orderId", data.orderId ?? "—");
+    setText("totalAmount", fmtMoney(data.totalAmount));
+    setText("paymentTime", data.paymentTime ?? "—");
+    setText("paymentMethod", data.paymentMethod ?? "—");
+  }
+
+  function routeByStatus(data) {
+    const status = (data.paymentStatus || "").toUpperCase();
+    if (status === "SUCCESS") {
+      location.href = `${SUCCESS_PAGE}?orderId=${encodeURIComponent(data.orderId)}`;
+      return true;
+    }
+    if (status === "FAILED") {
+      location.href = `${FAILED_PAGE}?orderId=${encodeURIComponent(data.orderId)}`;
+      return true;
+    }
+    return false;
+  }
+
+  async function runOnce() {
+    const orderId = getQueryParam("orderId");
+    if (!orderId) return;
+
+    setText("orderId", orderId);
+
+    try {
+      const data = await fetchResult(orderId);
+      fillInfo(data);
+      routeByStatus(data);
+    } catch (e) {
+      console.warn("fetchResult error:", e);
+    }
+  }
+
+  runOnce();
+
+  document.getElementById("btnRefresh").addEventListener("click", runOnce);
+  document.getElementById("btnBack").addEventListener("click", () => location.href = "index.html");
+</script>
+</body>
+</html>

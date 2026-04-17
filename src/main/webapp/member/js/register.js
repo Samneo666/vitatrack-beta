@@ -24,15 +24,43 @@ document.addEventListener("DOMContentLoaded", function () {
 
     email.addEventListener("blur", function () {
         const hint = document.getElementById("emailHint");
-        console.log(hint);
         const rule = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
-        if (!email.value.match(rule)) {
+        const emailValue = email.value.trim();
+
+        // 1. 必填檢查
+        if (!emailValue) {
+            hint.textContent = "Email為必填欄位";
+            hint.style.color = "red";
+            return;
+        }
+
+        // 2. 格式檢查
+        if (!emailValue.match(rule)) {
             hint.textContent = "請輸入有效的Email，例如：example@mail.com";
             hint.style.color = "red";
-        } else {
-            hint.textContent = "格式正確";
-            hint.style.color = "green";
+            return;
         }
+
+        // 3. 後端驗證
+        hint.textContent = "檢查中...";
+        hint.style.color = "gray";
+
+        fetch(`api/check-email?email=${encodeURIComponent(emailValue)}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.exists) {
+                    hint.textContent = "此帳號已經被註冊了";
+                    hint.style.color = "red";
+                } else {
+                    hint.textContent = "此帳號可以使用";
+                    hint.style.color = "green";
+                }
+            })
+            .catch(error => {
+                console.error("Error:", error);
+                hint.textContent = "暫時無法驗證帳號狀態";
+                hint.style.color = "orange";
+            });
     });
 
     phone.addEventListener("blur", function () {
@@ -74,43 +102,49 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
     registerBtn.addEventListener("click", function (event) {
-        // event.preventDefault();
-        // 驗證註冊功能中各個必填欄位是否為空，若空return 此欄為必填欄位;前端有驗證的後端程式也要驗證
-        // trim() 方法會回傳一個去除了空格的字串，它永遠不會回傳 null（如果原字串不是 null）。
-        // 如果使用者只輸入空白，trim() 會回傳 ""（空字串）。
-        // 1 姓名不能空白
+
+        // ✅ 先做所有驗證，全部通過才禁用按鈕
         if (!name.value || name.value.trim() === "") {
             Swal.fire({ icon: 'warning', title: '此欄為必填欄位', confirmButtonText: '確認' });
             return;
         }
 
-        // 2 電子郵件 必須為^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$
         if (!email.value || !email.value.match(/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/)) {
             Swal.fire({ icon: 'warning', title: 'email格式錯誤或未填寫!', confirmButtonText: '確認' });
             return;
         }
+        
+        //檢查 blur 的即時驗證結果
+        const emailHint = document.getElementById("emailHint");
+        if (emailHint.style.color === "red") {
+            Swal.fire({ icon: 'warning', title: '此帳號已被註冊，請使用其他Email!', confirmButtonText: '確認' });
+            return;
+        }
 
-        // 3 手機 必須是09開頭且共10位數字("^09[0-9]{8}$") 手機號碼格式錯誤或未填寫!
+        // 如果使用者從未 blur（hint 還是空的），強制發一次驗證
+        if (emailHint.textContent === "" || emailHint.textContent === "檢查中...") {
+            Swal.fire({ icon: 'warning', title: '請稍候，Email驗證尚未完成', confirmButtonText: '確認' });
+            return;
+        }
+
         if (!phone.value || !phone.value.match(/^09[0-9]{8}$/)) {
             Swal.fire({ icon: 'warning', title: '手機號碼格式錯誤或未填寫!', confirmButtonText: '確認' });
             return;
         }
 
-        // 4 密碼 密碼至少為 8 個字元，且至少包含 1 個英文字母(大小寫皆可)與 1 個數字 密碼格式錯誤或未填寫!
         if (!password.value || !password.value.match(/^(?=.*[A-Za-z])(?=.*\d).{8,}$/)) {
             Swal.fire({ icon: 'warning', title: '密碼格式錯誤或未填寫!', confirmButtonText: '確認' });
             return;
         }
-        // 5 重新輸入密碼 和密碼 必須一致  與設定密碼不一致，請重新輸入!
+
         if (confirmPassword.value !== password.value || confirmPassword.value === "") {
             Swal.fire({ icon: 'warning', title: '與設定密碼不一致，請重新輸入!', confirmButtonText: '確認' });
             return;
         }
 
-        // 6 判斷帳號是否有重複，資料庫的email不能等於新註冊的email
-        //但前端無法真正「驗證」Email 是否重複（因為前端拿不到資料庫完整清單）。
+        // ✅ 驗證全通過，這裡才禁用（只寫一次）
+        registerBtn.disabled = true;
 
-        // 7 利用ajax 發出請求，接回應
         fetch('register', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -123,22 +157,15 @@ document.addEventListener("DOMContentLoaded", function () {
                 confirmPassword: registerForm.confirmPassword.value
             })
         })
-            .then(response => response.json()) //接收ap server 回傳的json格式，反序列化為js物件
+            .then(response => response.json())
             .then(result => {
-                console.log("這是後端回傳的所有資料：", result); //  將後端回傳的 JSON 字串轉換後的 JS 物件。
                 if (result.success) {
-                    //如果後端顯示true，要顯示註冊成功 
-                    // 顯示自訂彈窗
-                    // 使用 flex 才能觸發 CSS 裡的置中效果
                     const alertTitle = document.querySelector(".alert-title");
                     alertTitle.textContent = result.message;
                     const customAlert = document.getElementById("customAlert");
-                    customAlert.style.display = "flex"; //彈窗顯示
-                    // 清空表單
+                    customAlert.style.display = "flex";
                     registerForm.reset();
                 } else {
-                    //如果後端顯示false，要顯示註冊失敗
-                    // result.message 就是在 Service 層調用String register(Member member) 回傳的 errMsg 內容
                     Swal.fire({ icon: 'error', title: '註冊失敗', text: result.message, confirmButtonText: '確認' });
                 }
             })
@@ -146,6 +173,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 console.error('Error:', error);
                 Swal.fire({ icon: 'error', title: '發生系統錯誤，請稍後再試。', confirmButtonText: '確認' });
             })
+            .finally(() => {
+                registerBtn.disabled = false; // ✅ 只在這裡還原，finally 保證一定執行
+            });
     });
     // 彈窗按鈕 → 前往登入頁面 
     const loginBtn = document.getElementById("loginBtn");

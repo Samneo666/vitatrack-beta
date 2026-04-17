@@ -62,6 +62,9 @@ public interface MemberService {
 	}
 
 	String register(Member member);
+	
+	boolean isEmailExists(String email);
+	
 
 	Member login(Member member);
 
