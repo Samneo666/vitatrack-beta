@@ -111,14 +111,14 @@ async function removeItem(sku) {
     if (!response.ok) {
       throw new Error(`HTTP 錯誤！狀態碼：${response.status}`);
     }
-    const result = await response.json();
-    if (result.success) {
+    const data = await response.json();
+    if (data.success) {
       renderCartPage();
       if (window.CartStore && typeof window.CartStore.updateCartBadge === "function") {
         window.CartStore.updateCartBadge();
       }
     } else {
-      Swal.fire({ icon: 'error', title: '移除失敗：' + result.message, confirmButtonText: '確認' });
+      Swal.fire({ icon: 'error', title: '移除失敗：' + data.message, confirmButtonText: '確認' });
     }
   } catch (err) {
     console.error('Remove error:', err);

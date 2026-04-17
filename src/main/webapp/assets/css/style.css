@@ -248,7 +248,7 @@
 
 .mn-open-cart:before {
   height: 100%;
-  width: 100;
+  width: 100%;
   background: #000;
   opacity: 0.7;
   position: absolute;
@@ -337,7 +337,7 @@
 }
 
 .mn-side-cart .mn-cart-inner .mn-cart-title {
-  width: 100;
+  width: 100%;
   margin-bottom: 20px;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -401,7 +401,7 @@
 
 .mn-side-cart .mn-cart-inner .mn-cart-pro-items li .mn-pro-content {
   -webkit-box-flex: 1;
-  -mn-flex: 1 0 70%;
+  -webkit-flex: 1 0 70%;
   -ms-flex: 1 0 70%;
   flex: 1 0 70%;
   padding-left: 15px;
@@ -472,7 +472,7 @@
   user-select: none;
 }
 
-.mn-side-cart .mn-cart-inner .mn-cart-pro-items li .mn-pro-content .qty-plus-minus .dec.ms_qtybtn {
+.mn-side-cart .mn-cart-inner .mn-cart-pro-items li .mn-pro-content .qty-plus-minus .dec.mn-qtybtn {
   border-right: 1px solid #ddd;
 }
 
@@ -585,7 +585,7 @@
 
 .mn-open-wishlist:before {
   height: 100%;
-  width: 100;
+  width: 100%;
   background: #000;
   opacity: 0.7;
   position: absolute;
@@ -674,7 +674,7 @@
 }
 
 .mn-side-wishlist .mn-wishlist-inner .mn-wishlist-title {
-  width: 100;
+  width: 100%;
   margin-bottom: 20px;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -741,7 +741,7 @@
 
 .mn-side-wishlist .mn-wishlist-inner .mn-wishlist-pro-items li .mn-pro-content {
   -webkit-box-flex: 1;
-  -mn-flex: 1 0 70%;
+  -webkit-flex: 1 0 70%;
   -ms-flex: 1 0 70%;
   flex: 1 0 70%;
   padding-left: 15px;
@@ -837,7 +837,7 @@
 
 .mn-open-search:before {
   height: 100%;
-  width: 100;
+  width: 100%;
   background: #000;
   opacity: 0.7;
   position: absolute;
@@ -923,7 +923,7 @@
 }
 
 .mn-side-search .mn-search-inner .mn-search-title {
-  width: 100;
+  width: 100%;
   margin-bottom: 20px;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -1016,7 +1016,7 @@
 
 .mn-side-search .mn-search-inner .mn-search-pro-items>li .mn-pro-content {
   -webkit-box-flex: 1;
-  -mn-flex: 1 0 70%;
+  -webkit-flex: 1 0 70%;
   -ms-flex: 1 0 70%;
   flex: 1 0 70%;
   padding-left: 15px;
@@ -8091,7 +8091,7 @@ button.btn-close.qty_close {
 
 .width-50 {
   -webkit-box-flex: 0 !important;
-  -mn-flex: 0 0 auto !important;
+  -webkit-flex: 0 0 auto !important;
   -ms-flex: 0 0 auto !important;
   flex: 0 0 auto !important;
   width: 50% !important;
