@@ -30,61 +30,68 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    loginBtn.addEventListener("click", function (event) {
-        event.preventDefault();
+   loginBtn.addEventListener("click", function (event) {
+    event.preventDefault();
 
-        if (!email.value || email.value == '') {
-            Swal.fire({ icon: 'warning', title: '請填寫帳號和密碼', confirmButtonText: '確認' });
-            return;
-        }
-        if (!password.value || password.value == '') {
-            Swal.fire({ icon: 'warning', title: '請填寫帳號和密碼', confirmButtonText: '確認' });
-            return;
-        }
-        if (!isValidEmail(email.value.trim())) {
-            Swal.fire({ icon: 'warning', title: '請輸入正確的 Email 格式', confirmButtonText: '確認' });
-            return;
-        }
+    // 簡化空值寫法
+    if (!email.value.trim()) {
+        Swal.fire({ icon: 'warning', title: '請填寫帳號和密碼', confirmButtonText: '確認' });
+        return;
+    }
+    if (!password.value.trim()) {
+        Swal.fire({ icon: 'warning', title: '請填寫帳號和密碼', confirmButtonText: '確認' });
+        return;
+    }
+    if (!isValidEmail(email.value.trim())) {
+        Swal.fire({ icon: 'warning', title: '請輸入正確的 Email 格式', confirmButtonText: '確認' });
+        return;
+    }
 
-        //登入時記住帳號
-        if (rememberMeCheck.checked) {
-            localStorage.setItem("account", email.value);
-        } else {
-            localStorage.removeItem("account");
-        }
+    // 記住帳號
+    if (rememberMeCheck.checked) {
+        localStorage.setItem("account", email.value);
+    } else {
+        localStorage.removeItem("account");
+    }
 
-        fetch('api/login', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email: loginForm.email.value, password: loginForm.password.value })
-        }).then(result => result.json())
-            .then(response => {
-                console.log("這是後端回傳結果：", response);
+    //驗證通過才禁用按鈕
+    loginBtn.disabled = true;
 
-                if (response.success) {
-                    Swal.fire({
-                        icon: 'success',
-                        title: '登入成功',
-                        text: '歡迎回來！',
-                        confirmButtonText: '確認'
-                    }).then(() => {
-                        window.location.href = "memberCenter.html";
-                    });
-                    loginForm.reset();
-                } else {
-                    Swal.fire({
-                        icon: 'error',
-                        title: '登入失敗',
-                        text: response.message,
-                        confirmButtonText: '確認'
-                    });
-                    loginForm.reset();
-                }
-            }).catch(error => {
-                console.error('Error:', error);
-                Swal.fire({ icon: 'error', title: '登入過程中發生錯誤，請稍後再試', confirmButtonText: '確認' });
-            });
-    });
+    fetch('api/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: loginForm.email.value, password: loginForm.password.value })
+    })
+        .then(result => result.json())
+        .then(response => {
+            if (response.success) {
+                Swal.fire({
+                    icon: 'success',
+                    title: '登入成功',
+                    text: '歡迎回來！',
+                    confirmButtonText: '確認'
+                }).then(() => {
+                    window.location.href = "memberCenter.html"; //跳轉放在彈窗確認後
+                });
+                //reset 移除，跳頁後自然清空
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: '登入失敗',
+                    text: response.message,
+                    confirmButtonText: '確認'
+                });
+                loginForm.reset(); //失敗清空
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            Swal.fire({ icon: 'error', title: '登入過程中發生錯誤，請稍後再試', confirmButtonText: '確認' });
+        })
+        .finally(() => {
+            loginBtn.disabled = false; //無論成功失敗都還原
+        });
+});
 
     // 忘記密碼功能（使用 SweetAlert2 input 對話框）
     fpLink.addEventListener("click", async function (event) {
