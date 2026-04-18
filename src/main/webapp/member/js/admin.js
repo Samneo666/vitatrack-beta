@@ -2,18 +2,20 @@ document.addEventListener("DOMContentLoaded", function () {
     const contentArea = document.getElementById('contentArea');
     const memberList = document.getElementById('memberList');
     const memberSearch = document.getElementById('memberSearch');
-   
+
     memberList.addEventListener("click", memberInfo);
     memberSearch.addEventListener("click", function () {
 
         contentArea.innerHTML = `
-            <div class="search-container">
-                <h5>會員查詢</h5>
-                <input type="text" id="keyword"  style="width: 40%" placeholder="請輸入姓名、電話、地址..."  />
-                <button id="searchBtn" class="btn btn-sm btn-primary" style="margin: 25px">搜尋</button>
-                <div id="searchResult"></div>
-            </div>
-        `;
+    <div class="search-container" style="text-align: center; margin-top: 30px;">
+        <h5>會員查詢</h5>
+        <div style="display: flex; justify-content: center; align-items: center; gap: 10px;">
+            <input type="text" id="keyword" class="form-control" style="width: 40%;" placeholder="請輸入姓名、電話、地址..." />
+            <button id="searchBtn" class="btn btn-sm btn-primary">搜尋</button>
+        </div>
+        <div id="searchResult" style="margin-top: 20px;"></div>
+    </div>
+`;
 
         //綁定搜尋事件
         document.getElementById("searchBtn").addEventListener("click", searchMember);
@@ -50,7 +52,7 @@ function memberInfo(e, page = 1) {
                     </thead>
                 <tbody>`;
             members.forEach(m => {
-               
+
                 tableHtml += `
                         <tr>
                             <td>${m.memberId}</td>
@@ -104,27 +106,28 @@ function memberInfo(e, page = 1) {
 //--------------------------------------------------------------------------------------------------
 
 //儲存會員狀態變更
-function saveStatus(email,newStatus) {
+function saveStatus(email, newStatus) {
     fetch('api/editStatus', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ 
-           email: email, 
-           memberStatus: newStatus})
+        body: JSON.stringify({
+            email: email,
+            memberStatus: newStatus
+        })
     })
-    .then(response => response.json())
-    .then(result => {
-        if (result.success) {
-            Swal.fire({ icon: 'success', title: result.message, confirmButtonText: '確認' });
-        } else {
-            Swal.fire({ icon: 'error', title: result.message, confirmButtonText: '確認' });
-        }
-    })
-    .catch(error => {
-        console.error('會員狀態變更:', error.message);
-    });
+        .then(response => response.json())
+        .then(result => {
+            if (result.success) {
+                Swal.fire({ icon: 'success', title: result.message, confirmButtonText: '確認' });
+            } else {
+                Swal.fire({ icon: 'error', title: result.message, confirmButtonText: '確認' });
+            }
+        })
+        .catch(error => {
+            console.error('會員狀態變更:', error.message);
+        });
 }
 
 //點擊編輯按鈕後，切換會員狀態
@@ -172,7 +175,7 @@ function renderResult(members) {
                     </thead>
                 <tbody>`;
     members.forEach(m => {
-      
+
         tableHtml += `
                         <tr>
                             <td>${m.memberId}</td>
@@ -196,22 +199,22 @@ function renderResult(members) {
 //--------------------管理員登出----------------------------------------
 const logoutBtn = document.getElementById('logoutBtn');
 logoutBtn.addEventListener('click', function (e) {
-        e.preventDefault();
-        fetch('api/adminLogout', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' }
+    e.preventDefault();
+    fetch('api/adminLogout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' }
+    })
+        .then(result => result.json())
+        .then(result => {
+            if (result.success) {
+
+                Swal.fire({ icon: 'success', title: result.message, confirmButtonText: '確認' }).then(() => {
+                    window.location.href = 'admin-login.html';
+                });
+            }
         })
-            .then(result => result.json())
-            .then(result => {
-                if (result.success) {
-                    
-                    Swal.fire({ icon: 'success', title: result.message, confirmButtonText: '確認' }).then(() => {
-                        window.location.href = 'admin-login.html';
-                    });
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                Swal.fire({ icon: 'error', title: '登出過程中發生錯誤，請稍後再試。', confirmButtonText: '確認' });
-            });
-    });
+        .catch(error => {
+            console.error('Error:', error);
+            Swal.fire({ icon: 'error', title: '登出過程中發生錯誤，請稍後再試。', confirmButtonText: '確認' });
+        });
+});

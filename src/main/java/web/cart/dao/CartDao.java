@@ -18,12 +18,8 @@ public interface CartDao {
 	CartItem SelectByMemberIdAndSku(Integer memberId, String sku);
 	
 	List<CartItem> selectBySkus(Integer memberId,List<String> skus);
-	
-
 	 //查詢指定會員尚未結帳的購物車明細。
-	
 	List<CartRow> findOpenCartByMemberId(int memberId);
-
 
 	int deleteCartItems(int memberId, List<String> skus);
 	
