@@ -27,21 +27,21 @@ document.addEventListener("DOMContentLoaded", function () {
         const rule = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
         const emailValue = email.value.trim();
 
-        // 1. 必填檢查
+        // 1.必填檢查
         if (!emailValue) {
             hint.textContent = "Email為必填欄位";
             hint.style.color = "red";
             return;
         }
 
-        // 2. 格式檢查
+        // 2.格式檢查
         if (!emailValue.match(rule)) {
             hint.textContent = "請輸入有效的Email，例如：example@mail.com";
             hint.style.color = "red";
             return;
         }
 
-        // 3. 後端驗證
+        // 3.後端驗證
         hint.textContent = "檢查中...";
         hint.style.color = "gray";
 
@@ -103,7 +103,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
     registerBtn.addEventListener("click", function (event) {
 
-        // ✅ 先做所有驗證，全部通過才禁用按鈕
+        // 先做所有驗證，全部通過才禁用按鈕
         if (!name.value || name.value.trim() === "") {
             Swal.fire({ icon: 'warning', title: '此欄為必填欄位', confirmButtonText: '確認' });
             return;
@@ -142,7 +142,7 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-        // ✅ 驗證全通過，這裡才禁用（只寫一次）
+        // 驗證全通過，這裡才禁用（只寫一次）
         registerBtn.disabled = true;
 
         fetch('register', {

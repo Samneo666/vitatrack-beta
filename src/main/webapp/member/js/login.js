@@ -34,11 +34,11 @@ document.addEventListener("DOMContentLoaded", function () {
     event.preventDefault();
 
     // 簡化空值寫法
-    if (!email.value.trim()) {
+    if (!email.value || email.value.trim() === "") {
         Swal.fire({ icon: 'warning', title: '請填寫帳號和密碼', confirmButtonText: '確認' });
         return;
     }
-    if (!password.value.trim()) {
+    if (!password.value || password.value.trim() === "") {
         Swal.fire({ icon: 'warning', title: '請填寫帳號和密碼', confirmButtonText: '確認' });
         return;
     }
