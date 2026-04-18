@@ -22,7 +22,7 @@
 
 /* 修改彈出視窗的寬度 */
 .swal2-popup {
-    width: 400px !important;
+    width: 300px !important;
     padding: 1rem; /* 視需求調整內邊距，寬度變窄時建議縮小內距 */
 }
 

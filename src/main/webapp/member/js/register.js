@@ -145,7 +145,7 @@ document.addEventListener("DOMContentLoaded", function () {
         // 驗證全通過，這裡才禁用（只寫一次）
         registerBtn.disabled = true;
 
-        fetch('register', {
+        fetch('api/register', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
