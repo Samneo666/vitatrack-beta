@@ -160,11 +160,15 @@ document.addEventListener("DOMContentLoaded", function () {
             .then(response => response.json())
             .then(result => {
                 if (result.success) {
-                    const alertTitle = document.querySelector(".alert-title");
-                    alertTitle.textContent = result.message;
-                    const customAlert = document.getElementById("customAlert");
-                    customAlert.style.display = "flex";
                     registerForm.reset();
+                    Swal.fire({
+                        icon: 'success',
+                        title: '註冊成功',
+                        text: result.message,
+                        confirmButtonText: '前往登入頁面'
+                    }).then(() => {
+                        window.location.href = 'login.html';
+                    });
                 } else {
                     Swal.fire({ icon: 'error', title: '註冊失敗', text: result.message, confirmButtonText: '確認' });
                 }
@@ -176,12 +180,6 @@ document.addEventListener("DOMContentLoaded", function () {
             .finally(() => {
                 registerBtn.disabled = false; // ✅ 只在這裡還原，finally 保證一定執行
             });
-    });
-    // 彈窗按鈕 → 前往登入頁面 
-    const loginBtn = document.getElementById("loginBtn");
-    loginBtn.addEventListener("click", function () {
-        console.log("前往登入頁按鈕被按！");
-        window.location.href = "login.html"; // 跳轉到我的登入頁面
     });
 
     // 明碼遮罩功能顯示

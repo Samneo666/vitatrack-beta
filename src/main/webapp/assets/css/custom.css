@@ -21,10 +21,10 @@
 }
 
 /* 修改彈出視窗的寬度 */
-.swal2-popup {
+/* .swal2-popup {
     width: 300px !important;
     padding: 1rem; /* 視需求調整內邊距，寬度變窄時建議縮小內距 */
-}
+ /*} */
 
 /* 修改主要內容與標題的字體大小 */
 .swal2-title {
