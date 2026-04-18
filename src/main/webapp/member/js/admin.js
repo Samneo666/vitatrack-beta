@@ -57,7 +57,7 @@ function memberInfo(e, page = 1) {
                             <td>${m.name}</td>
                             <td>${m.email}</td>
                             <td>${m.phone}</td>
-                            <td>${m.address}</td>
+                            <td>${m.address ?? '尚未填寫'}</td>
                             <td>
                                 <select class="form-select form-select-sm"  id="status-${m.memberId}" onchange="saveStatus('${m.email}',  this.value )">
                                     <option value="1" ${m.memberStatus === 1 ? "selected" : ""} class="text-success">啟用</option>
@@ -179,7 +179,7 @@ function renderResult(members) {
                             <td>${m.name}</td>
                             <td>${m.email}</td>
                             <td>${m.phone}</td>
-                            <td>${m.address}</td>
+                            <td>${m.address ?? '尚未填寫'}</td>
                             <td>
                                 <select class="form-select form-select-sm"  id="status-${m.memberId}" onchange="saveStatus('${m.email}',  this.value )">
                                     <option value="1" ${m.memberStatus === 1 ? "selected" : ""} class="text-success">啟用</option>
