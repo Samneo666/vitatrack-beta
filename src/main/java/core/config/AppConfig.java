@@ -20,7 +20,7 @@ import org.springframework.transaction.TransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
-@ComponentScan({"web.*.*.impl"," web.*.util"})
+@ComponentScan({"web.*.*.impl","web.*.util"})
 @EnableTransactionManagement
 @Import(MailConfig.class)
 public class AppConfig {
