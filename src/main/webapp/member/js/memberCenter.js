@@ -352,7 +352,7 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-        fetch('changePassword', {
+        fetch('api/changePassword', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
