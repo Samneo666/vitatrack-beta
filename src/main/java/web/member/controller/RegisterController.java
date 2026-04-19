@@ -21,7 +21,6 @@ public class RegisterController {
 	
 	@GetMapping("/api/check-email")
 	public ResponseEntity<?> checkEmail(@RequestParam String email) {
-	    
 	    boolean exists = memberService.isEmailExists(email);
 	    return ResponseEntity.ok(Map.of("exists", exists));
 	}
