@@ -14,18 +14,18 @@
 
 Tech Stack
 
-層級	              技術
-語言	              Java 11
-建置工具	            Maven (WAR)
-Web 框架	          Spring MVC 5.3.39
-ORM	                Hibernate 5.6.15
-資料庫	              MySQL（透過 JNDI jdbc/vitatrack）
-連線池              	HikariCP 7.0.2
-認證	              Session-based + BCrypt
-JSON	              Jackson + Gson
-信件	              JavaMail + Spring
-日誌	              Log4j2
-
+| 層級       | 技術                          |
+|:-----------|:------------------------------|
+| 語言       | Java 11                       |
+| 建置工具   | Maven (WAR)                  |
+| Web 框架   | Spring MVC 5.3.39            |
+| ORM        | Hibernate 5.6.15             |
+| 資料庫     | MySQL（透過 JNDI jdbc/vitatrack） |
+| 連線池     | HikariCP 7.0.2               |
+| 認證       | Session-based + BCrypt       |
+| JSON       | Jackson + Gson               |
+| 信件       | JavaMail + Spring            |
+| 日誌       | Log4j2                       |
 
 
 目錄結構
