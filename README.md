@@ -1,9 +1,31 @@
 
 ```text
+
 專題名稱:  VitaTrack-wellness foods E-commerce 
 
 專題起源:
 我們希望打造一個健康食品為主軸電商平台，讓使用者不只買到適合的產品，更能持續維持健康習慣。
+
+專題名稱:  VitaTrack-wellness foods E-commerce 
+
+專題起源:
+我們希望打造一個健康食品為主軸電商平台，讓使用者不只買到適合的產品，更能持續維持健康習慣。
+
+
+Tech Stack
+
+層級	              技術
+語言	              Java 11
+建置工具	            Maven (WAR)
+Web 框架	          Spring MVC 5.3.39
+ORM	                Hibernate 5.6.15
+資料庫	              MySQL（透過 JNDI jdbc/vitatrack）
+連線池              	HikariCP 7.0.2
+認證	              Session-based + BCrypt
+JSON	              Jackson + Gson
+信件	              JavaMail + Spring
+日誌	              Log4j2
+
 
 
 目錄結構
