@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>付款確認中 - Vitatrack</title>
+  <link rel="shortcut icon" href="assets/img/favicon/favicon.png">
+
+  <link href="assets/css/vendor/materialdesignicons.min.css" rel="stylesheet">
+  <link href="assets/css/vendor/remixicon.css" rel="stylesheet">
+
+  <link href="assets/css/vendor/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/css/vendor/animate.min.css" rel="stylesheet">
+  <link href="assets/css/vendor/owl.carousel.min.css" rel="stylesheet">
+  <link href="assets/css/vendor/slick.min.css" rel="stylesheet">
+  <link href="assets/css/vendor/swiper-bundle.min.css" rel="stylesheet">
+  <link href="assets/css/vendor/nouislider.css" rel="stylesheet">
+
+  <link id="mainCss" href="assets/css/style.css" rel="stylesheet">
+
+  <style>
+    .pay-card {
+      border-radius: 18px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, .08);
+      border: 1px solid rgba(0, 0, 0, .06);
+      overflow: hidden;
+    }
+    .iconWrap {
+      width: 104px; height: 104px; border-radius: 999px;
+      background: #fffbeb; border: 2px solid #fde68a;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 14px;
+    }
+    .title { font-size: 24px; font-weight: 800; margin: 8px 0 6px; letter-spacing: .5px; }
+    .sub { color: #6b7280; line-height: 1.55; font-size: 14.5px; margin: 0 0 18px; }
+    .info {
+      background: #f8fafc; border: 1px solid #e5e7eb;
+      border-radius: 14px; padding: 16px 16px 6px; text-align: left;
+    }
+    .rowx {
+      display: flex; justify-content: space-between; gap: 12px;
+      padding: 10px 0; border-bottom: 1px dashed #e5e7eb;
+      font-size: 14.5px;
+    }
+    .rowx:last-child { border-bottom: none; padding-bottom: 12px; }
+    .label { color: #6b7280; }
+    .value { font-weight: 700; color: #111827; word-break: break-all; }
+
+    /* Spinner */
+    .spinner-ring {
+      width: 52px; height: 52px;
+      border: 5px solid #fde68a;
+      border-top-color: #d97706;
+      border-radius: 50%;
+      animation: spin .85s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* Dot animation under subtitle */
+    .dots::after {
+      content: '';
+      animation: dots 1.5s steps(4, end) infinite;
+    }
+    @keyframes dots {
+      0%   { content: '';   }
+      25%  { content: '.';  }
+      50%  { content: '..'; }
+      75%  { content: '...'; }
+    }
+
+    /* Progress bar */
+    .progress-bar-wrap {
+      background: #f3f4f6; border-radius: 99px;
+      height: 6px; margin: 16px 0 6px; overflow: hidden;
+    }
+    .progress-bar-fill {
+      height: 100%; width: 0%;
+      background: linear-gradient(90deg, #fbbf24, #d97706);
+      border-radius: 99px;
+      transition: width .4s ease;
+    }
+    .progress-label {
+      font-size: 12px; color: #9ca3af; text-align: right;
+    }
+
+    /* Timeout message */
+    .timeout-msg {
+      display: none;
+      background: #fff7ed; border: 1px solid #fed7aa;
+      border-radius: 12px; padding: 14px 16px;
+      font-size: 13.5px; color: #92400e;
+      margin-top: 16px; text-align: left;
+    }
+    .timeout-msg.show { display: block; }
+    .timeout-msg a { color: #d97706; font-weight: 700; text-decoration: underline; cursor: pointer; }
+  </style>
+</head>
+
+<body data-mn-mode="light">
+<main class="wrapper sb-default">
+
+  <!-- Header（精簡版） -->
+  <header class="sb-hide">
+    <div class="mn-header">
+      <div class="mn-header-items">
+        <div class="left-header">
+          <a href="index.html" class="logo">
+            <img src="assets/img/logo/logo.png" alt="logo">
+          </a>
+        </div>
+        <div class="right-header">
+          <div class="mn-tool-icons">
+            <div class="mn-tool-cart">
+              <a href="cartPage.html" class="mn-main-cart">
+                <svg class="svg-icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M351.552 831.424c-35.328 0-63.968 28.64-63.968 63.968 0 35.328 28.64 63.968 63.968 63.968 35.328 0 63.968-28.64 63.968-63.968C415.52 860.064 386.88 831.424 351.552 831.424zM799.296 831.424c-35.328 0-63.968 28.64-63.968 63.968 0 35.328 28.64 63.968 63.968 63.968 35.328 0 63.968-28.64 63.968-63.968C863.264 860.064 834.624 831.424 799.296 831.424z"></path>
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <div class="mn-main-content sb-hide">
+    <div class="container py-5">
+      <div class="row justify-content-center">
+        <div class="col-lg-7 col-xl-6">
+          <div class="bg-white p-4 p-md-5 pay-card text-center">
+
+            <div class="iconWrap" aria-label="付款確認中">
+              <div class="spinner-ring"></div>
+            </div>
+
+            <div class="title">付款確認中</div>
+            <p class="sub">正在向綠界確認您的付款結果，請稍候<span class="dots"></span></p>
+
+            <div class="info">
+              <div class="rowx">
+                <div class="label">訂單編號</div>
+                <div class="value" id="orderId">—</div>
+              </div>
+              <div class="rowx">
+                <div class="label">付款狀態</div>
+                <div class="value" id="paymentStatus">確認中</div>
+              </div>
+            </div>
+
+            <!-- Progress bar -->
+            <div class="progress-bar-wrap">
+              <div class="progress-bar-fill" id="progressBar"></div>
+            </div>
+            <div class="progress-label" id="progressLabel">0 / 10 次確認</div>
+
+            <!-- Timeout message -->
+            <div class="timeout-msg" id="timeoutMsg">
+              付款結果尚未確認，可能因網路延遲。您可以
+              <a id="goOrderList">前往會員中心</a>查看訂單狀態，
+              或 <a id="goHome">返回首頁</a>。
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<script>
+  // ── 工具 ──────────────────────────────────────────────────
+  const parts = location.pathname.split("/").filter(Boolean);
+  const ctx = parts.length > 0 ? `/${parts[0]}` : "";
+  const API_RESULT = `${ctx}/api/checkout/result`;
+
+  function getQueryParam(name) {
+    return new URLSearchParams(location.search).get(name);
+  }
+  function setText(id, text) {
+    const el = document.getElementById(id);
+    if (el) el.textContent = (text == null || text === "") ? "—" : text;
+  }
+
+  // ── 輪詢設定 ──────────────────────────────────────────────
+  const POLL_INTERVAL_MS = 3000;   // 每 3 秒查一次
+  const MAX_POLLS        = 10;     // 最多查 10 次（30 秒）
+  let   pollCount        = 0;
+  let   pollTimer        = null;
+
+  const orderId = getQueryParam("orderId");
+  setText("orderId", orderId);
+
+  // ── 更新進度條 ─────────────────────────────────────────────
+  function updateProgress() {
+    const pct = Math.min((pollCount / MAX_POLLS) * 100, 100);
+    document.getElementById("progressBar").style.width = pct + "%";
+    document.getElementById("progressLabel").textContent =
+      `${pollCount} / ${MAX_POLLS} 次確認`;
+  }
+
+  // ── 單次輪詢 ──────────────────────────────────────────────
+  async function poll() {
+    pollCount++;
+    updateProgress();
+
+    try {
+      const res  = await fetch(`${API_RESULT}?orderId=${encodeURIComponent(orderId)}`);
+      const data = await res.json();
+
+      const status = (data.paymentStatus || "").toUpperCase();
+
+      if (status === "SUCCESS") {
+        clearTimeout(pollTimer);
+        setText("paymentStatus", "付款成功");
+        location.href = `paymentSuccessPage.html?orderId=${encodeURIComponent(orderId)}`;
+        return;
+      }
+
+      if (status === "FAILED") {
+        clearTimeout(pollTimer);
+        setText("paymentStatus", "付款失敗");
+        location.href = `paymentFailedPage.html?orderId=${encodeURIComponent(orderId)}`;
+        return;
+      }
+
+      // 仍是 PENDING
+      setText("paymentStatus", "確認中");
+
+    } catch (e) {
+      console.warn("輪詢失敗:", e);
+    }
+
+    // 還沒到上限 → 繼續輪詢
+    if (pollCount < MAX_POLLS) {
+      pollTimer = setTimeout(poll, POLL_INTERVAL_MS);
+    } else {
+      // 超過上限：顯示逾時提示，不再輪詢
+      updateProgress();
+      setText("paymentStatus", "尚未確認");
+      document.getElementById("timeoutMsg").classList.add("show");
+    }
+  }
+
+  // ── 初始化 ────────────────────────────────────────────────
+  if (!orderId || orderId === "0") {
+    setText("paymentStatus", "無效的訂單編號");
+    document.getElementById("timeoutMsg").classList.add("show");
+  } else {
+    pollTimer = setTimeout(poll, POLL_INTERVAL_MS);
+  }
+
+  document.getElementById("goOrderList").addEventListener("click", () => {
+    location.href = "memberCenter.html";
+  });
+  document.getElementById("goHome").addEventListener("click", () => {
+    location.href = "index.html";
+  });
+</script>
+</body>
+</html>
