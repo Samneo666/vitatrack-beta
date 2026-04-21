@@ -2,6 +2,8 @@ package web.checkout.controller;
 
 import java.util.Map;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -14,6 +16,8 @@ import web.checkout.service.CallbackService;
  */
 @RestController
 public class CallbackController {
+
+    private static final Logger log = LogManager.getLogger(CallbackController.class);
 
     @Autowired
     private CallbackService callbackService;
@@ -28,10 +32,7 @@ public class CallbackController {
     @PostMapping("/checkout/ecpay/callback")
     public String handleCallback(@RequestParam Map<String, String> params) {
 
-        // 印出綠界回傳的所有參數，方便除錯
-        for (Map.Entry<String, String> entry : params.entrySet()) {
-            System.out.println(entry.getKey() + "=" + entry.getValue());
-        }
+        log.debug("收到綠界回呼，參數: {}", params);
 
         return callbackService.handleCallback(params);
     }

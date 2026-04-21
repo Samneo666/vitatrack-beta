@@ -57,6 +57,8 @@ public class CheckoutServiceImpl implements CheckoutService {
 		int totalAmountInt = totalAmount.intValue();
 
 		// 建立訂單，初始付款狀態為 PENDING
+		// 注意：transactionId 由 PaymentServiceImpl 在發起付款時才正式產生並寫入
+		//       paymentTime 由 CallbackServiceImpl 在收到綠界成功回調時才寫入
 		Orders order = new Orders();
 		order.setMemberId(memberId);
 		order.setTotalAmount(totalAmount);
@@ -64,8 +66,6 @@ public class CheckoutServiceImpl implements CheckoutService {
 		order.setPaymentMethod("ECPAY");
 		order.setCreatedAt(new java.sql.Timestamp(System.currentTimeMillis()));
 		order.setAmount(totalAmount);
-		order.setTransactionId("TXN" + System.currentTimeMillis());
-		order.setPaymentTime(new java.sql.Timestamp(System.currentTimeMillis()));
 		orderDao.save(order);
 
 		// 依購物車內容建立各筆訂單明細

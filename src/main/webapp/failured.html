@@ -183,7 +183,9 @@
 
   document.getElementById("btnBackToPending").addEventListener("click", () => {
     const orderId = getQueryParam("orderId");
-    location.href = orderId ? `付款確認中.html?orderId=${encodeURIComponent(orderId)}` : "付款確認中.html";
+    location.href = orderId
+      ? `orderConfirmationPage.html?orderId=${encodeURIComponent(orderId)}&status=FAILED`
+      : "orderConfirmationPage.html";
   });
 
   document.getElementById("btnHome").addEventListener("click", () => {

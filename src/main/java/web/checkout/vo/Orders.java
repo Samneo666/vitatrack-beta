@@ -11,8 +11,15 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 @Entity
 @Table(name = "orders")
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Orders {
 
     @Id
@@ -52,92 +59,15 @@ public class Orders {
     @Column(name = "raw_response")
     private String rawResponse;
 
-	public Integer getOrderId() {
-		return orderId;
-	}
+    @Column(name = "receiver_name")
+    private String receiverName;
 
-	public void setOrderId(Integer orderId) {
-		this.orderId = orderId;
-	}
+    @Column(name = "receiver_phone")
+    private String receiverPhone;
 
-	public Integer getMemberId() {
-		return memberId;
-	}
+    @Column(name = "receiver_address")
+    private String receiverAddress;
 
-	public void setMemberId(Integer memberId) {
-		this.memberId = memberId;
-	}
-
-	public BigDecimal getTotalAmount() {
-		return totalAmount;
-	}
-
-	public void setTotalAmount(BigDecimal totalAmount) {
-		this.totalAmount = totalAmount;
-	}
-
-	public String getPaymentMethod() {
-		return paymentMethod;
-	}
-
-	public void setPaymentMethod(String paymentMethod) {
-		this.paymentMethod = paymentMethod;
-	}
-
-	public java.sql.Timestamp getCreatedAt() {
-		return createdAt;
-	}
-
-	public void setCreatedAt(java.sql.Timestamp createdAt) {
-		this.createdAt = createdAt;
-	}
-
-	public String getPaymentStatus() {
-		return paymentStatus;
-	}
-
-	public void setPaymentStatus(String paymentStatus) {
-		this.paymentStatus = paymentStatus;
-	}
-
-	public BigDecimal getAmount() {
-		return amount;
-	}
-
-	public void setAmount(BigDecimal amount) {
-		this.amount = amount;
-	}
-
-	public String getTransactionId() {
-		return transactionId;
-	}
-
-	public void setTransactionId(String transactionId) {
-		this.transactionId = transactionId;
-	}
-
-	public java.sql.Timestamp getPaymentTime() {
-		return paymentTime;
-	}
-
-	public void setPaymentTime(java.sql.Timestamp paymentTime) {
-		this.paymentTime = paymentTime;
-	}
-
-	public String getFailureReason() {
-		return failureReason;
-	}
-
-	public void setFailureReason(String failureReason) {
-		this.failureReason = failureReason;
-	}
-
-	public String getRawResponse() {
-		return rawResponse;
-	}
-
-	public void setRawResponse(String rawResponse) {
-		this.rawResponse = rawResponse;
-	}
+	
 
 }

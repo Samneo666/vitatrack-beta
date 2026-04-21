@@ -183,7 +183,10 @@
 
   document.getElementById("btnBackToPending").addEventListener("click", () => {
     const orderId = getQueryParam("orderId");
-    location.href = orderId ? `付款確認中.html?orderId=${encodeURIComponent(orderId)}` : "付款確認中.html";
+    // 返回訂單確認頁讓使用者重新發起付款
+    location.href = orderId
+      ? `orderConfirmationPage.html?orderId=${encodeURIComponent(orderId)}&status=FAILED`
+      : "orderConfirmationPage.html";
   });
 
   document.getElementById("btnHome").addEventListener("click", () => {
