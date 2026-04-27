@@ -3,7 +3,6 @@ package web.member.controller;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,9 +19,9 @@ public class RegisterController {
 	private MemberService memberService;
 	
 	@GetMapping("/api/check-email")
-	public ResponseEntity<?> checkEmail(@RequestParam String email) {
+	public ApiResponse<Map<String, Boolean>> checkEmail(@RequestParam String email) {
 	    boolean exists = memberService.isEmailExists(email);
-	    return ResponseEntity.ok(Map.of("exists", exists));
+	    return new ApiResponse<>(true, "success", Map.of("exists", exists));
 	}
 	
 	@PostMapping("/api/register")

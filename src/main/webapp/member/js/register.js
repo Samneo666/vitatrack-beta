@@ -48,7 +48,7 @@ document.addEventListener("DOMContentLoaded", function () {
         fetch(`api/check-email?email=${encodeURIComponent(emailValue)}`)
             .then(response => response.json())
             .then(data => {
-                if (data.exists) {
+                if (data.data.exists) {
                     hint.textContent = "此帳號已經被註冊了";
                     hint.style.color = "red";
                 } else {
