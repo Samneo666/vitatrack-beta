@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
+import core.dto.ApiResponse;
 import web.member.vo.Member;
 import web.product.dto.OrderCreationResponse;
 import web.product.dto.PlaceOrderRequest;
@@ -33,7 +34,7 @@ public class PlaceOrderController {
 
         if (member == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                    .body("{\"message\":\"請先登入\"}");
+                    .body(new ApiResponse<>(false, "請先登入", null));
         }
 
         OrderCreationResponse result = placeOrderService.checkout(member.getMemberId(), request);
