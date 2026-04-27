@@ -35,7 +35,7 @@ public class PasswordResetTokensServiceImpl implements PasswordResetTokensServic
 
 	private static final Logger logger = LogManager.getLogger(PasswordResetTokensServiceImpl.class);
 	
-	//建立token
+	//1.建立token
 	@Transactional
 	@Override
 	public void createResetToken(String email) {
@@ -65,7 +65,7 @@ public class PasswordResetTokensServiceImpl implements PasswordResetTokensServic
 
 	}
 
-	// 確認這個Token是否合法、有效、可使用
+	//2.確認這個Token是否合法、有效、可使用
 	@Transactional(readOnly = true)
 	@Override
 	public PasswordResetTokens validateToken(String token) {
