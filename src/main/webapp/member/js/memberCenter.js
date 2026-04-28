@@ -436,8 +436,16 @@ document.addEventListener("DOMContentLoaded", function () {
         e.preventDefault();
 
         fetch(`api/myOrder?page=${page}`)
-            .then(res => res.json())
+            .then(res => {
+                if (res.status === 401) {
+                    Swal.fire({ icon: 'warning', title: '您尚未登入，請先登入會員。', confirmButtonText: '確認' })
+                        .then(() => window.location.href = 'login.html');
+                    return Promise.reject();
+                }
+                return res.json();
+            })
             .then(result => {
+                if (!result) return;
                 console.log("後端回傳：", result);
                 const data = result.data || {};
                 const orders = data.content;
@@ -465,7 +473,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         <td>${order.orderId}</td>
                         <td>${order.createdAt}</td>
                         <td>NT$${order.totalAmount}</td>
-                        <td>${order.paymentMethod}</td>
+                        <td>${formatPaymentMethod(order.paymentMethod)}</td>
                         <td>${formatPaymentStatus(order.paymentStatus)}</td>
                     </tr>
                 `;
@@ -542,6 +550,14 @@ document.addEventListener("DOMContentLoaded", function () {
             'FAILED':  '付款失敗'
         };
         return map[status] ?? status;
+    }
+
+    //---------------------付款方式中文轉換----------------------------------------------------------------------
+    function formatPaymentMethod(method) {
+        const map = {
+            'ECPAY': '綠界支付'
+        };
+        return map[method] ?? method;
     }
 
     //---------------------查看購物車---------------------------------------------------------------------------
