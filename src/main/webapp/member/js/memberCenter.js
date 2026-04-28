@@ -419,8 +419,7 @@ document.addEventListener("DOMContentLoaded", function () {
             .then(result => {
                 if (result.success) {
                     Swal.fire({ icon: 'success', title: result.message, confirmButtonText: '確認' }).then(() => {
-                        localStorage.removeItem("token");
-                        window.location.href = 'index.html';
+                            window.location.href = 'index.html';
                     });
                 } else {
                     Swal.fire({ icon: 'error', title: '註銷帳號失敗：' + result.message, confirmButtonText: '確認' });
