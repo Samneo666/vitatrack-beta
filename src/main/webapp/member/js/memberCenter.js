@@ -466,8 +466,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         <td>${order.createdAt}</td>
                         <td>NT$${order.totalAmount}</td>
                         <td>${order.paymentMethod}</td>
-                        <td>${order.status ?? '待付款'}</td>
-                        <td>${order.paymentStatus}</td>
+                        <td>${formatPaymentStatus(order.paymentStatus)}</td>
                     </tr>
                 `;
 
@@ -490,7 +489,6 @@ document.addEventListener("DOMContentLoaded", function () {
                                     <th>訂單時間</th>
                                     <th>金額</th>
                                     <th>付款方式</th>
-                                    <th>訂單狀態</th>
                                     <th>付款狀態</th>
                                 </tr>
                             </thead>
@@ -536,6 +534,16 @@ document.addEventListener("DOMContentLoaded", function () {
             });
 
     }
+    //---------------------付款狀態中文轉換----------------------------------------------------------------------
+    function formatPaymentStatus(status) {
+        const map = {
+            'PENDING': '待付款',
+            'SUCCESS': '付款成功',
+            'FAILED':  '付款失敗'
+        };
+        return map[status] ?? status;
+    }
+
     //---------------------查看購物車---------------------------------------------------------------------------
     function loadCartItems() {
         // 假設 contentArea 已定義，是用來放購物車或訂單的區域
